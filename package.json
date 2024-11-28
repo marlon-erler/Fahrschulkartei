@@ -5,12 +5,14 @@
     "main": "index.js",
     "scripts": {
         "test": "bun test.ts",
-	"bundle": "esbuild Core/index.ts --outfile=index.js"
+        "bundle": "esbuild Core/index.ts --outfile=index.js",
+        "build": "electron-builder -mlw"
     },
     "dependencies": {
         "pfsdb": "^1.0.0-beta1"
     },
     "devDependencies": {
+        "dmg-license": "^1.0.11",
         "electron": "^33.2.1",
         "electron-builder": "^25.1.8"
     }
