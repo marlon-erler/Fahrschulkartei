@@ -4,8 +4,9 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
+	"start": "electron index.js",
         "test": "bun test.ts",
-        "bundle": "esbuild Core/index.ts --outfile=index.js",
+        "bundle": "esbuild Core/index.ts --platform=node --outfile=index.js",
         "build": "electron-builder -mlw"
     },
     "dependencies": {
