@@ -2,11 +2,11 @@
     "name": "Fahrschulkartei",
     "author": "Louis Marlon Erler",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "Core/index.js",
     "scripts": {
 	"start": "electron Core/index.js",
         "test": "bun test.ts",
-        "build": "electron-builder -mlw"
+        "build": "tsc; electron-builder -mlw"
     },
     "dependencies": {
         "pfsdb": "^1.0.0-beta1"
