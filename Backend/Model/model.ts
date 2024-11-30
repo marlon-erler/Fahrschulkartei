@@ -2,7 +2,8 @@ import Os from "os";
 import Path from "path";
 
 import {Database, Table} from "pfsdb";
-import {PricingChartKeys, SchoolKeys, StudentKeys, StudentLegalRequirementKeys} from "./keys";
+import {PricingChartKeys, SchoolKeys, StudentKeys, StudentLegalRequirementKeys, TheoryClassAttendanceKeys, TheoryClassKeys} from "./keys";
+import {generateTheoryAttendanceId} from "../Core/utility";
 
 const BASE_PATH = Path.join(Os.homedir(), "Fahrschulkartei");
 const SCHOOL_ENTRY_ID = "main";
@@ -102,4 +103,52 @@ export default class Model {
 	const key: keyof typeof StudentLegalRequirementKeys = "student";
 	return await this.studentTable.getEntriesByFieldValue(key, [studentId]);
     }
+
+    /*
+     * Theory Classes
+     */
+    async setTheoryClassData(classId: string, key: keyof typeof TheoryClassKeys, value: string): Promise<void> {
+	return await this.theoryClassTable.setFieldValuesForEntry(classId, key, [value]);
+    }
+
+    async getTheoryClassData(classId: string, key: keyof typeof TheoryClassKeys): Promise<string|undefined> {
+	const values = await this.theoryClassTable.getValuesForField(classId, key);
+	return values[0] ?? undefined;
+    }
+
+    async addStudentToTheoryClass(classId: string, studentId: string, signature: string): Promise<void> {
+	const attendanceId: string = generateTheoryAttendanceId(classId, studentId);
+	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "student" as keyof typeof TheoryClassAttendanceKeys, [studentId]);
+	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "class" as keyof typeof TheoryClassAttendanceKeys, [classId]);
+	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "signature" as keyof typeof TheoryClassAttendanceKeys, [signature]);
+    }
+
+    async getTheoryClassAttendancesForStudent(studentId: string): Promise<string[]> {
+	return await this.theoryClassAttendanceTable.getEntriesByFieldValue("student", [studentId]);
+    }
+
+    async getTheoryClassesForDay(date: string): Promise<string[]> {
+	return await this.theoryClassAttendanceTable.getEntriesByFieldValue("date", [date]);
+    }
+
+    /*
+     * Practical Classes
+     */
+    async setPracticalClassData(classId: string, key: keyof typeof TheoryClassKeys, value: string): Promise<void> {
+	return await this.practicalClassTable.setFieldValuesForEntry(classId, key, [value]);
+    }
+
+    async getPracticalClassData(classId: string, key: keyof typeof TheoryClassKeys): Promise<string|undefined> {
+	const values = await this.practicalClassTable.getValuesForField(classId, key);
+	return values[0] ?? undefined;
+    }
+
+    async getPracticalClassesForStudent(studentId: string): Promise<string[]> {
+	return await this.practicalClassTable.getEntriesByFieldValue("student", [studentId]);
+    }
+
+    async getPracticalClassesForDay(date: string): Promise<string[]> {
+	return await this.practicalClassTable.getEntriesByFieldValue("date", [date]);
+    }
+
 }
