@@ -1,9 +1,10 @@
-import Os from "os";
+import Os, {endianness} from "os";
 import Path from "path";
 
 import {Database, Table} from "pfsdb";
 import {PracticalClassKeys, PricingChartKeys, SchoolKeys, StudentKeys, StudentLegalRequirementKeys, TheoryClassAttendanceKeys, TheoryClassKeys} from "./keys";
 import {generateTheoryAttendanceId} from "../Core/utility";
+import {DeletionErrors} from "../errors";
 
 const BASE_PATH = Path.join(Os.homedir(), "Fahrschulkartei");
 const SCHOOL_ENTRY_ID = "main";
@@ -121,6 +122,10 @@ export default class Model {
 	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "signature" as keyof typeof TheoryClassAttendanceKeys, [signature]);
     }
 
+    async getAttendancesForTheoryClass(classId: string): Promise<string[]> {
+	return await this.theoryClassAttendanceTable.getEntriesByFieldValue("class", [classId]);
+    }
+
     async getTheoryClassAttendancesForStudent(studentId: string): Promise<string[]> {
 	return await this.theoryClassAttendanceTable.getEntriesByFieldValue("student", [studentId]);
     }
@@ -149,4 +154,46 @@ export default class Model {
 	return await this.practicalClassTable.getEntriesByFieldValue("date", [date]);
     }
 
+    /*
+     * Deletion
+     */
+    async deleteStudentOrFail(studentId: string): Promise<void> {
+	const theoryClassAttendances: string[] = await this.getTheoryClassAttendancesForStudent(studentId);
+	if (theoryClassAttendances.length != 0) {
+	    throw DeletionErrors.StudentHasTheoryClasses;
+	}
+
+	const practicalClasses: string[] = await this.getPracticalClassesForStudent(studentId);
+	if (practicalClasses.length != 0) {
+	    throw DeletionErrors.StudentHasPracticalClasses;
+	}
+
+	const legalRequirements: string[] = await this.getLegalRequirementsForStudent(studentId);
+	for (const requirementId of legalRequirements) {
+	    this.deleteStudentLegalRequirement(requirementId);
+	}
+
+	return await this.studentTable.removeEntry(studentId);
+    }
+
+    async deleteStudentLegalRequirement(requirementId: string): Promise<void> {
+	return await this.studentLegalRequirementTable.removeEntry(requirementId);
+    }
+
+    async deleteTheoryClassOrFail(classId: string): Promise<void> {
+	const attendances: string[] = await this.getAttendancesForTheoryClass(classId);
+	if (attendances.length != 0) {
+	    throw DeletionErrors.TheoryClassHasAttendees;
+	}
+
+	return await this.theoryClassTable.removeEntry(classId);
+    }
+
+    async deleteTheoryClassAttendance(attendanceId: string): Promise<void> {
+	return await this.theoryClassAttendanceTable.removeEntry(attendanceId);
+    }
+
+    async deletePracticalClass(classId: string): Promise<void> {
+	return await this.practicalClassTable.removeEntry(classId);
+    }
 }
