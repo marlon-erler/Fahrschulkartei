@@ -24,37 +24,6 @@ export enum PricingChartKeys {
 }
 
 /*
- * Classes
- */
-export enum TheoryClassKeys {
-    "date",
-    "start-time",
-    "duration",
-    "type",
-    "unit",
-    "class",
-    "attendees",
-}
-
-export enum TheoryClassAttendeeKeys {
-    "student",
-    "class",
-    "signature",
-}
-
-export enum PracticalClassKeys {
-    "date",
-    "start-time",
-    "duration-main",
-    "duration-other",
-    "instructor",
-    "vehicle",
-    "class-type",
-    "student",
-    "signature",
-}
-
-/*
  * Students
  */
 export enum StudentKeys {
@@ -86,4 +55,35 @@ export enum StudentLegalRequirementKeys {
     "description",
     "issuer",
     "date",
+}
+
+/*
+ * Classes
+ */
+export enum TheoryClassKeys {
+    "date",
+    "start-time",
+    "duration",
+    "type",
+    "unit",
+    "class",
+    "attendees",
+}
+
+export enum TheoryClassAttendeeKeys {
+    "student",
+    "class",
+    "signature",
+}
+
+export enum PracticalClassKeys {
+    "date",
+    "start-time",
+    "duration-main",
+    "duration-other",
+    "instructor",
+    "vehicle",
+    "class-type",
+    "student",
+    "signature",
 }
