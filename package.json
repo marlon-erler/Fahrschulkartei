@@ -5,7 +5,7 @@
     "main": "Backend/Core/index.js",
     "scripts": {
         "start": "electron Backend/Core/index.js",
-	"headless": "bun Backend/Core/headless.ts",
+        "headless": "bun Backend/Core/headless.ts",
         "test": "bun test.ts",
         "compile": "cd Backend; tsc",
         "build": "electron-builder -mlw"
@@ -15,7 +15,8 @@
         "@types/ip": "^1.1.3",
         "express": "^4.21.1",
         "ip": "^2.0.1",
-        "pfsdb": "^1.0.0-beta1"
+        "pfsdb": "^1.0.0-beta1",
+        "uuid": "^11.0.3"
     },
     "devDependencies": {
         "dmg-license": "^1.0.11",
