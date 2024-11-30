@@ -2,7 +2,7 @@ import Os from "os";
 import Path from "path";
 
 import {Database, Table} from "pfsdb";
-import {PricingChartKeys, SchoolKeys, StudentKeys} from "./keys";
+import {PricingChartKeys, SchoolKeys, StudentKeys, StudentLegalRequirementKeys} from "./keys";
 
 const BASE_PATH = Path.join(Os.homedir(), "Fahrschulkartei");
 const SCHOOL_ENTRY_ID = "main";
@@ -84,5 +84,22 @@ export default class Model {
     async getStudentsForIndex(index: string): Promise<string[]> {
 	const key: keyof typeof StudentKeys = "index";
 	return await this.studentTable.getEntriesByFieldValue(key, [index]);
+    }
+
+    /*
+     * Legal Requirements
+     */
+    async setStudentLegalRequirementData(requirementId: string, key: keyof typeof StudentLegalRequirementKeys, value: string): Promise<void> {
+	return await this.studentLegalRequirementTable.setFieldValuesForEntry(requirementId, key, [value]);
+    }
+
+    async getStudentLegalRequirementData(requirementId: string, key: keyof typeof StudentLegalRequirementKeys): Promise<string|undefined> {
+	const values = await this.studentLegalRequirementTable.getValuesForField(requirementId, key);
+	return values[0] ?? undefined;
+    }
+
+    async getLegalRequirementsForStudent(studentId: string): Promise<string[]> {
+	const key: keyof typeof StudentLegalRequirementKeys = "student";
+	return await this.studentTable.getEntriesByFieldValue(key, [studentId]);
     }
 }
