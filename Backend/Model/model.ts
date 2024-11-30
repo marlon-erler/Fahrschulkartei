@@ -2,7 +2,7 @@ import Os from "os";
 import Path from "path";
 
 import {Database, Table} from "pfsdb";
-import {SchoolKeys} from "./keys";
+import {PricingChartKeys, SchoolKeys} from "./keys";
 
 const BASE_PATH = Path.join(Os.homedir(), "Fahrschulkartei");
 const SCHOOL_ENTRY_ID = "main";
@@ -33,7 +33,6 @@ export default class Model {
     /*
      * School Data
      */
-
     async setSchoolData(key: keyof SchoolKeys, value: string): Promise<void> {
 	return await this.schoolDataTable.setFieldValuesForEntry(SCHOOL_ENTRY_ID, key, [value]);
     }
@@ -41,5 +40,32 @@ export default class Model {
     async getSchoolData(key: keyof SchoolKeys): Promise<string|undefined> {
 	const values = await this.schoolDataTable.getValuesForField(SCHOOL_ENTRY_ID, key);
 	return values[0] ?? undefined;
+    }
+
+    /*
+     * Pricing Chart
+     */
+    async setPricingChartData(chartId: string, key: keyof PricingChartKeys, value: string): Promise<void> {
+	return await this.pricingTable.setFieldValuesForEntry(chartId, key, [value]);
+    }
+
+    async getPricingChartData(chartId: string, key: keyof PricingChartKeys): Promise<string|undefined> {
+	const values = await this.pricingTable.getValuesForField(chartId, key);
+	return values[0] ?? undefined;
+    }
+
+    async getPricingCharts(): Promise<string[]> {
+	return await this.pricingTable.getAllEntries();
+    }
+
+    async getPricingChart(chartId: string): Promise<string[][]> {
+	const entries: string[] = await this.pricingTable.getFieldsOfEntry(chartId);
+	const entriesWithValues: string[][] = [];
+	for (const key of entries) {
+	    const values = await this.pricingTable.getValuesForField(chartId, key);
+	    if (values.length == 0) continue;
+	    entriesWithValues.push([key, values[0]]);
+	};
+	return entriesWithValues;
     }
 }
