@@ -67,10 +67,9 @@ export enum TheoryClassKeys {
     "type",
     "unit",
     "class",
-    "attendees",
 }
 
-export enum TheoryClassAttendeeKeys {
+export enum TheoryClassAttendanceKeys {
     "student",
     "class",
     "signature",
