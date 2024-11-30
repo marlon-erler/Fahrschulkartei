@@ -1,4 +1,4 @@
-import UUID from "uuid";
+import * as UUID from "uuid";
 
 /*
  * General
@@ -11,7 +11,7 @@ export function uuid(): string {
  * Format
  */
 export function formatDate(date: Date): string {
-    return date.getUTCFullYear().toString() + date.getUTCMonth().toString() + date.getUTCDate().toString();
+    return date.getUTCFullYear().toString() + (date.getUTCMonth()+1).toString() + date.getUTCDate().toString();
 }
 
 export function formatTime(time: Date): string {
