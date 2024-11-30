@@ -39,7 +39,7 @@ export default class Model {
     }
 
     async getSchoolData(key: keyof typeof SchoolKeys): Promise<string|undefined> {
-	const values = await this.schoolDataTable.getValuesForField(SCHOOL_ENTRY_ID, key);
+	const values: string[] = await this.schoolDataTable.getValuesForField(SCHOOL_ENTRY_ID, key);
 	return values[0] ?? undefined;
     }
 
@@ -51,7 +51,7 @@ export default class Model {
     }
 
     async getPricingChartData(chartId: string, key: keyof typeof PricingChartKeys): Promise<string|undefined> {
-	const values = await this.pricingTable.getValuesForField(chartId, key);
+	const values: string[] = await this.pricingTable.getValuesForField(chartId, key);
 	return values[0] ?? undefined;
     }
 
@@ -63,7 +63,7 @@ export default class Model {
 	const entries: string[] = await this.pricingTable.getFieldsOfEntry(chartId);
 	const entriesWithValues: string[][] = [];
 	for (const key of entries) {
-	    const values = await this.pricingTable.getValuesForField(chartId, key);
+	    const values: string[] = await this.pricingTable.getValuesForField(chartId, key);
 	    if (values.length == 0) continue;
 	    entriesWithValues.push([key, values[0]]);
 	};
@@ -78,7 +78,7 @@ export default class Model {
     }
 
     async getStudentData(studentId: string, key: keyof typeof StudentKeys): Promise<string|undefined> {
-	const values = await this.studentTable.getValuesForField(studentId, key);
+	const values: string[] = await this.studentTable.getValuesForField(studentId, key);
 	return values[0] ?? undefined;
     }
 
@@ -95,7 +95,7 @@ export default class Model {
     }
 
     async getStudentLegalRequirementData(requirementId: string, key: keyof typeof StudentLegalRequirementKeys): Promise<string|undefined> {
-	const values = await this.studentLegalRequirementTable.getValuesForField(requirementId, key);
+	const values: string[] = await this.studentLegalRequirementTable.getValuesForField(requirementId, key);
 	return values[0] ?? undefined;
     }
 
@@ -112,7 +112,7 @@ export default class Model {
     }
 
     async getTheoryClassData(classId: string, key: keyof typeof TheoryClassKeys): Promise<string|undefined> {
-	const values = await this.theoryClassTable.getValuesForField(classId, key);
+	const values: string[] = await this.theoryClassTable.getValuesForField(classId, key);
 	return values[0] ?? undefined;
     }
 
@@ -139,7 +139,7 @@ export default class Model {
     }
 
     async getPracticalClassData(classId: string, key: keyof typeof TheoryClassKeys): Promise<string|undefined> {
-	const values = await this.practicalClassTable.getValuesForField(classId, key);
+	const values: string[] = await this.practicalClassTable.getValuesForField(classId, key);
 	return values[0] ?? undefined;
     }
 
