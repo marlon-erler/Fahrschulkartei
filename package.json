@@ -5,6 +5,7 @@
     "main": "Backend/Core/index.js",
     "scripts": {
         "start": "electron Backend/Core/index.js",
+	"headless": "bun Backend/Core/headless.ts",
         "test": "bun test.ts",
         "compile": "cd Backend; tsc",
         "build": "electron-builder -mlw"
