@@ -2,7 +2,7 @@ import Os from "os";
 import Path from "path";
 
 import {Database, Table} from "pfsdb";
-import {PricingChartKeys, SchoolKeys, StudentKeys, StudentLegalRequirementKeys, TheoryClassAttendanceKeys, TheoryClassKeys} from "./keys";
+import {PracticalClassKeys, PricingChartKeys, SchoolKeys, StudentKeys, StudentLegalRequirementKeys, TheoryClassAttendanceKeys, TheoryClassKeys} from "./keys";
 import {generateTheoryAttendanceId} from "../Core/utility";
 
 const BASE_PATH = Path.join(Os.homedir(), "Fahrschulkartei");
@@ -11,13 +11,13 @@ const SCHOOL_ENTRY_ID = "main";
 export default class Model {
     database: Database;
 
-    schoolDataTable: Table;
-    pricingTable: Table;
-    studentTable: Table;
-    studentLegalRequirementTable: Table;
-    theoryClassTable: Table;
-    theoryClassAttendanceTable: Table;
-    practicalClassTable: Table;
+    schoolDataTable: Table<keyof typeof SchoolKeys>;
+    pricingTable: Table<keyof typeof PricingChartKeys>;
+    studentTable: Table<keyof typeof StudentKeys>;
+    studentLegalRequirementTable: Table<keyof typeof StudentLegalRequirementKeys>;
+    theoryClassTable: Table<keyof typeof TheoryClassKeys>;
+    theoryClassAttendanceTable: Table<keyof typeof TheoryClassAttendanceKeys>;
+    practicalClassTable: Table<keyof typeof PracticalClassKeys>;
 
     constructor() {
 	this.database = new Database(BASE_PATH);
@@ -63,7 +63,7 @@ export default class Model {
 	const entries: string[] = await this.pricingTable.getFieldsOfEntry(chartId);
 	const entriesWithValues: string[][] = [];
 	for (const key of entries) {
-	    const values: string[] = await this.pricingTable.getValuesForField(chartId, key);
+	    const values: string[] = await this.pricingTable.getValuesForField(chartId, key as any);
 	    if (values.length == 0) continue;
 	    entriesWithValues.push([key, values[0]]);
 	};
@@ -83,8 +83,7 @@ export default class Model {
     }
 
     async getStudentsForIndex(index: string): Promise<string[]> {
-	const key: keyof typeof StudentKeys = "index";
-	return await this.studentTable.getEntriesByFieldValue(key, [index]);
+	return await this.studentTable.getEntriesByFieldValue("index", [index]);
     }
 
     /*
@@ -100,8 +99,7 @@ export default class Model {
     }
 
     async getLegalRequirementsForStudent(studentId: string): Promise<string[]> {
-	const key: keyof typeof StudentLegalRequirementKeys = "student";
-	return await this.studentTable.getEntriesByFieldValue(key, [studentId]);
+	return await this.studentLegalRequirementTable.getEntriesByFieldValue("student", [studentId]);
     }
 
     /*
@@ -128,17 +126,17 @@ export default class Model {
     }
 
     async getTheoryClassesForDay(date: string): Promise<string[]> {
-	return await this.theoryClassAttendanceTable.getEntriesByFieldValue("date", [date]);
+	return await this.theoryClassTable.getEntriesByFieldValue("date", [date]);
     }
 
     /*
      * Practical Classes
      */
-    async setPracticalClassData(classId: string, key: keyof typeof TheoryClassKeys, value: string): Promise<void> {
+    async setPracticalClassData(classId: string, key: keyof typeof PracticalClassKeys, value: string): Promise<void> {
 	return await this.practicalClassTable.setFieldValuesForEntry(classId, key, [value]);
     }
 
-    async getPracticalClassData(classId: string, key: keyof typeof TheoryClassKeys): Promise<string|undefined> {
+    async getPracticalClassData(classId: string, key: keyof typeof PracticalClassKeys): Promise<string|undefined> {
 	const values: string[] = await this.practicalClassTable.getValuesForField(classId, key);
 	return values[0] ?? undefined;
     }
