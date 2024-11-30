@@ -41,7 +41,6 @@ export enum StudentKeys {
     "list-number",
     "license-number",
     "end-probation",
-    "requirements",
     "prices",
     "classes-requested",
     "classes-owned",
@@ -52,6 +51,7 @@ export enum StudentKeys {
 }
 
 export enum StudentLegalRequirementKeys {
+    "student",
     "description",
     "issuer",
     "date",
