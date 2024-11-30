@@ -33,11 +33,11 @@ export default class Model {
     /*
      * School Data
      */
-    async setSchoolData(key: keyof SchoolKeys, value: string): Promise<void> {
+    async setSchoolData(key: keyof typeof SchoolKeys, value: string): Promise<void> {
 	return await this.schoolDataTable.setFieldValuesForEntry(SCHOOL_ENTRY_ID, key, [value]);
     }
 
-    async getSchoolData(key: keyof SchoolKeys): Promise<string|undefined> {
+    async getSchoolData(key: keyof typeof SchoolKeys): Promise<string|undefined> {
 	const values = await this.schoolDataTable.getValuesForField(SCHOOL_ENTRY_ID, key);
 	return values[0] ?? undefined;
     }
@@ -45,11 +45,11 @@ export default class Model {
     /*
      * Pricing Chart
      */
-    async setPricingChartData(chartId: string, key: keyof PricingChartKeys, value: string): Promise<void> {
+    async setPricingChartData(chartId: string, key: keyof typeof PricingChartKeys, value: string): Promise<void> {
 	return await this.pricingTable.setFieldValuesForEntry(chartId, key, [value]);
     }
 
-    async getPricingChartData(chartId: string, key: keyof PricingChartKeys): Promise<string|undefined> {
+    async getPricingChartData(chartId: string, key: keyof typeof PricingChartKeys): Promise<string|undefined> {
 	const values = await this.pricingTable.getValuesForField(chartId, key);
 	return values[0] ?? undefined;
     }
@@ -72,11 +72,11 @@ export default class Model {
     /*
      * Students
      */
-    async setStudentData(studentId: string, key: keyof StudentKeys, value: string): Promise<void> {
+    async setStudentData(studentId: string, key: keyof typeof StudentKeys, value: string): Promise<void> {
 	return await this.studentTable.setFieldValuesForEntry(studentId, key, [value]);
     }
 
-    async getStudentData(studentId: string, key: keyof StudentKeys): Promise<string|undefined> {
+    async getStudentData(studentId: string, key: keyof typeof StudentKeys): Promise<string|undefined> {
 	const values = await this.studentTable.getValuesForField(studentId, key);
 	return values[0] ?? undefined;
     }
