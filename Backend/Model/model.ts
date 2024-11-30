@@ -2,7 +2,7 @@ import Os from "os";
 import Path from "path";
 
 import {Database, Table} from "pfsdb";
-import {PricingChartKeys, SchoolKeys} from "./keys";
+import {PricingChartKeys, SchoolKeys, StudentKeys} from "./keys";
 
 const BASE_PATH = Path.join(Os.homedir(), "Fahrschulkartei");
 const SCHOOL_ENTRY_ID = "main";
@@ -67,5 +67,22 @@ export default class Model {
 	    entriesWithValues.push([key, values[0]]);
 	};
 	return entriesWithValues;
+    }
+
+    /*
+     * Students
+     */
+    async setStudentData(studentId: string, key: keyof StudentKeys, value: string): Promise<void> {
+	return await this.studentTable.setFieldValuesForEntry(studentId, key, [value]);
+    }
+
+    async getStudentData(studentId: string, key: keyof StudentKeys): Promise<string|undefined> {
+	const values = await this.studentTable.getValuesForField(studentId, key);
+	return values[0] ?? undefined;
+    }
+
+    async getStudentsForIndex(index: string): Promise<string[]> {
+	const key: keyof typeof StudentKeys = "index";
+	return await this.studentTable.getEntriesByFieldValue(key, [index]);
     }
 }
