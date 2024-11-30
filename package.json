@@ -15,7 +15,7 @@
         "@types/ip": "^1.1.3",
         "express": "^4.21.1",
         "ip": "^2.0.1",
-        "pfsdb": "^1.0.0-beta1",
+        "pfsdb": "^1.0.1",
         "uuid": "^11.0.3"
     },
     "devDependencies": {
