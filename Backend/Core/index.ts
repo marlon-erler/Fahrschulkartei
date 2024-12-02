@@ -1,6 +1,7 @@
 import {app, BrowserWindow} from "electron";
 import Ip from "ip";
 import startServer from "./server";
+import Model from "../Model/model";
 
 const PORT = 8000;
 const IP = Ip.address();
@@ -18,7 +19,8 @@ function createWindow(): void {
 }
 
 app.whenReady().then(async () => {
-    await startServer(PORT);
+    const model = new Model();
+    await startServer(PORT, model);
     createWindow();
 
     app.on('activate', () => {

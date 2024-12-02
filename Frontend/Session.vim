@@ -194,6 +194,7 @@ inoremap <silent> <expr>  coc#pum#visible() ? coc#pum#confirm() : "\"
 let &cpo=s:cpo_save
 unlet s:cpo_save
 set backspace=indent,eol,start
+set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,default,latin1
 set helplang=en
 set nomodeline
@@ -219,7 +220,7 @@ else
   set shortmess=aoO
 endif
 badd +10 src/Main/viewRoot.tsx
-badd +0 src/index.tsx
+badd +1 src/index.tsx
 argglobal
 %argdel
 edit src/index.tsx
@@ -242,13 +243,13 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 31 + 119) / 238)
-exe 'vert 2resize ' . ((&columns * 103 + 119) / 238)
-exe 'vert 3resize ' . ((&columns * 102 + 119) / 238)
+exe 'vert 1resize ' . ((&columns * 31 + 135) / 270)
+exe 'vert 2resize ' . ((&columns * 119 + 135) / 270)
+exe 'vert 3resize ' . ((&columns * 118 + 135) / 270)
 argglobal
 enew
-file NERD_tree_tab_1
-balt src/Main/viewRoot.tsx
+file NERD_tree_tab_2
+balt src/index.tsx
 let s:cpo_save=&cpo
 set cpo&vim
 nnoremap <buffer> <silent> <NL> :call nerdtree#ui_glue#invokeKeyMap("<C-j>")
@@ -271,14 +272,6 @@ nnoremap <buffer> <silent> R :call nerdtree#ui_glue#invokeKeyMap("R")
 nnoremap <buffer> <silent> T :call nerdtree#ui_glue#invokeKeyMap("T")
 nnoremap <buffer> <silent> U :call nerdtree#ui_glue#invokeKeyMap("U")
 nnoremap <buffer> <silent> X :call nerdtree#ui_glue#invokeKeyMap("X")
-nmap <buffer> [c <Plug>(GitGutterPrevHunk)
-nmap <buffer> \hp <Plug>(GitGutterPreviewHunk)
-nmap <buffer> \hu <Plug>(GitGutterUndoHunk)
-nmap <buffer> \hs <Plug>(GitGutterStageHunk)
-xmap <buffer> \hs <Plug>(GitGutterStageHunk)
-nmap <buffer> ]c <Plug>(GitGutterNextHunk)
-xmap <buffer> ac <Plug>(GitGutterTextObjectOuterVisual)
-omap <buffer> ac <Plug>(GitGutterTextObjectOuterPending)
 nnoremap <buffer> <silent> cd :call nerdtree#ui_glue#invokeKeyMap("cd")
 nnoremap <buffer> <silent> e :call nerdtree#ui_glue#invokeKeyMap("e")
 nnoremap <buffer> <silent> f :call nerdtree#ui_glue#invokeKeyMap("f")
@@ -286,8 +279,6 @@ nnoremap <buffer> <silent> go :call nerdtree#ui_glue#invokeKeyMap("go")
 nnoremap <buffer> <silent> gb :call nerdtree#ui_glue#invokeKeyMap("gb")
 nnoremap <buffer> <silent> gi :call nerdtree#ui_glue#invokeKeyMap("gi")
 nnoremap <buffer> <silent> gs :call nerdtree#ui_glue#invokeKeyMap("gs")
-xmap <buffer> ic <Plug>(GitGutterTextObjectInnerVisual)
-omap <buffer> ic <Plug>(GitGutterTextObjectInnerPending)
 nnoremap <buffer> <silent> i :call nerdtree#ui_glue#invokeKeyMap("i")
 nnoremap <buffer> <silent> m :call nerdtree#ui_glue#invokeKeyMap("m")
 nnoremap <buffer> <silent> o :call nerdtree#ui_glue#invokeKeyMap("o")
@@ -586,15 +577,16 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 10 - ((9 * winheight(0) + 30) / 60)
+let s:l = 13 - ((11 * winheight(0) + 27) / 54)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 10
-normal! 016|
+keepjumps 13
+normal! 027|
 wincmd w
 argglobal
 if bufexists(fnamemodify("src/Main/viewRoot.tsx", ":p")) | buffer src/Main/viewRoot.tsx | else | edit src/Main/viewRoot.tsx | endif
+balt src/index.tsx
 let s:cpo_save=&cpo
 set cpo&vim
 nmap <buffer> [c <Plug>(GitGutterPrevHunk)
@@ -742,7 +734,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 10 - ((9 * winheight(0) + 30) / 60)
+let s:l = 10 - ((8 * winheight(0) + 27) / 54)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -750,9 +742,9 @@ keepjumps 10
 normal! 0
 wincmd w
 2wincmd w
-exe 'vert 1resize ' . ((&columns * 31 + 119) / 238)
-exe 'vert 2resize ' . ((&columns * 103 + 119) / 238)
-exe 'vert 3resize ' . ((&columns * 102 + 119) / 238)
+exe 'vert 1resize ' . ((&columns * 31 + 135) / 270)
+exe 'vert 2resize ' . ((&columns * 119 + 135) / 270)
+exe 'vert 3resize ' . ((&columns * 118 + 135) / 270)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf

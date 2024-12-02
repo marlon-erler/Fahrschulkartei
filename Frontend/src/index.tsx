@@ -9,5 +9,16 @@ import ViewRoot from "./Main/viewRoot";
 document.title = "PWA Fundament";
 setTheme("standard");
 
+// websocket
+const ws = new WebSocket(`ws://${location.host}`);
+ws.addEventListener("open", () => {
+    console.log("socket opened");
+    ws.send("Hello!");
+})
+ws.addEventListener("message", (event: MessageEvent<any>) => {
+    const message: string = event.data;
+    console.log(message);
+})
+
 // build UI
 document.body.append(ViewRoot());
