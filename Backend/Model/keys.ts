@@ -1,4 +1,18 @@
 /*
+ * Tables
+ */
+
+export enum Tables {
+    "school-data",
+    "pricing",
+    "students",
+    "student-legal-requirements",
+    "theory-classes",
+    "theory-class-attendances",
+    "practical-classes",
+}
+
+/*
  * General
  */
 export enum SchoolKeys {

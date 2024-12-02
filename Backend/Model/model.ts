@@ -1,4 +1,4 @@
-import Os, {endianness} from "os";
+import Os from "os";
 import Path from "path";
 
 import {Database, Table} from "pfsdb";

@@ -43,8 +43,10 @@ inoremap <silent> <expr> <Down> coc#pum#visible() ? coc#pum#next(0) : "\<Down>"
 inoremap <silent> <expr> <C-P> coc#pum#visible() ? coc#pum#prev(1) : "\"
 inoremap <silent> <expr> <C-N> coc#pum#visible() ? coc#pum#next(1) : "\"
 nnoremap  :NERDTreeFind
+snoremap <silent>  c
 nnoremap  :call FixMinimap()
 nnoremap  :NERDTree
+snoremap  "_c
 nnoremap  :call SaveSession()
 nnoremap  :NERDTreeToggle
 vmap <silent> c <Plug>(emmet-code-pretty)
@@ -69,6 +71,10 @@ nmap <silent> , <Plug>(emmet-expand-abbr)
 nmap \rn <Plug>(coc-rename)
 xmap gx <Plug>NetrwBrowseXVis
 nmap gx <Plug>NetrwBrowseX
+snoremap <C-R> "_c
+snoremap <silent> <C-H> c
+snoremap <silent> <Del> c
+snoremap <silent> <BS> c
 nnoremap <C-M> :call FixMinimap()
 nnoremap <silent> <Plug>GitGutterPreviewHunk :call gitgutter#utility#warn('Please change your map <Plug>GitGutterPreviewHunk to <Plug>(GitGutterPreviewHunk)')
 nnoremap <silent> <Plug>(GitGutterPreviewHunk) :GitGutterPreviewHunk
@@ -226,7 +232,8 @@ endif
 badd +1 Backend/Core/index.ts
 badd +1 Backend/Core/server.ts
 badd +1 Backend/errors.ts
-badd +1 Backend/Model/model.ts
+badd +6 Backend/Model/model.ts
+badd +0 Backend/Model/keys.ts
 argglobal
 %argdel
 $argadd Backend/Core/index.ts
@@ -587,18 +594,22 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 38 - ((37 * winheight(0) + 26) / 53)
+let s:l = 30 - ((29 * winheight(0) + 27) / 54)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 38
-normal! 02|
+keepjumps 30
+normal! 07|
 wincmd w
 argglobal
 2argu
 balt Backend/Core/index.ts
 let s:cpo_save=&cpo
 set cpo&vim
+inoremap <buffer> <nowait> <silent> <C-K> =coc#snippet#jump(0, 0)
+inoremap <buffer> <nowait> <silent> <C-J> =coc#snippet#jump(1, 0)
+snoremap <buffer> <nowait> <silent> <NL> :call coc#snippet#jump(1, 0)
+snoremap <buffer> <nowait> <silent>  :call coc#snippet#jump(0, 0)
 nmap <buffer> [c <Plug>(GitGutterPrevHunk)
 nmap <buffer> \hp <Plug>(GitGutterPreviewHunk)
 nmap <buffer> \hu <Plug>(GitGutterUndoHunk)
@@ -609,6 +620,10 @@ xmap <buffer> ac <Plug>(GitGutterTextObjectOuterVisual)
 omap <buffer> ac <Plug>(GitGutterTextObjectOuterPending)
 xmap <buffer> ic <Plug>(GitGutterTextObjectInnerVisual)
 omap <buffer> ic <Plug>(GitGutterTextObjectInnerPending)
+snoremap <buffer> <nowait> <silent> <C-K> :call coc#snippet#jump(0, 0)
+snoremap <buffer> <nowait> <silent> <C-J> :call coc#snippet#jump(1, 0)
+inoremap <buffer> <nowait> <silent> <NL> =coc#snippet#jump(1, 0)
+inoremap <buffer> <nowait> <silent>  =coc#snippet#jump(0, 0)
 let &cpo=s:cpo_save
 unlet s:cpo_save
 setlocal keymap=
@@ -744,14 +759,13 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 22 - ((21 * winheight(0) + 26) / 53)
+let s:l = 13 - ((12 * winheight(0) + 27) / 54)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 22
-normal! 0
+keepjumps 13
+normal! 065|
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 31 + 135) / 270)
 exe 'vert 2resize ' . ((&columns * 119 + 135) / 270)
 exe 'vert 3resize ' . ((&columns * 118 + 135) / 270)
@@ -776,14 +790,12 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 1 + 135) / 270)
-exe 'vert 2resize ' . ((&columns * 266 + 135) / 270)
-exe 'vert 3resize ' . ((&columns * 1 + 135) / 270)
+exe 'vert 1resize ' . ((&columns * 31 + 135) / 270)
+exe 'vert 2resize ' . ((&columns * 118 + 135) / 270)
+exe 'vert 3resize ' . ((&columns * 119 + 135) / 270)
 argglobal
-1argu
 enew
-file NERD_tree_tab_2
-balt Backend/Model/model.ts
+file NERD_tree_tab_4
 let s:cpo_save=&cpo
 set cpo&vim
 nnoremap <buffer> <silent> <NL> :call nerdtree#ui_glue#invokeKeyMap("<C-j>")
@@ -821,9 +833,9 @@ nnoremap <buffer> <silent> go :call nerdtree#ui_glue#invokeKeyMap("go")
 nnoremap <buffer> <silent> gb :call nerdtree#ui_glue#invokeKeyMap("gb")
 nnoremap <buffer> <silent> gi :call nerdtree#ui_glue#invokeKeyMap("gi")
 nnoremap <buffer> <silent> gs :call nerdtree#ui_glue#invokeKeyMap("gs")
+nnoremap <buffer> <silent> i :call nerdtree#ui_glue#invokeKeyMap("i")
 xmap <buffer> ic <Plug>(GitGutterTextObjectInnerVisual)
 omap <buffer> ic <Plug>(GitGutterTextObjectInnerPending)
-nnoremap <buffer> <silent> i :call nerdtree#ui_glue#invokeKeyMap("i")
 nnoremap <buffer> <silent> m :call nerdtree#ui_glue#invokeKeyMap("m")
 nnoremap <buffer> <silent> o :call nerdtree#ui_glue#invokeKeyMap("o")
 nnoremap <buffer> <silent> p :call nerdtree#ui_glue#invokeKeyMap("p")
@@ -973,9 +985,7 @@ setlocal nowrap
 setlocal wrapmargin=0
 wincmd w
 argglobal
-1argu
 if bufexists(fnamemodify("Backend/Model/model.ts", ":p")) | buffer Backend/Model/model.ts | else | edit Backend/Model/model.ts | endif
-balt Backend/errors.ts
 let s:cpo_save=&cpo
 set cpo&vim
 nmap <buffer> [c <Plug>(GitGutterPrevHunk)
@@ -1123,17 +1133,15 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 40 - ((29 * winheight(0) + 26) / 53)
+let s:l = 11 - ((10 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 40
-normal! $
+keepjumps 11
+normal! 0
 wincmd w
 argglobal
-1argu
-enew
-file -MINIMAP-
+if bufexists(fnamemodify("Backend/Model/keys.ts", ":p")) | buffer Backend/Model/keys.ts | else | edit Backend/Model/keys.ts | endif
 balt Backend/Model/model.ts
 let s:cpo_save=&cpo
 set cpo&vim
@@ -1147,27 +1155,19 @@ xmap <buffer> ac <Plug>(GitGutterTextObjectOuterVisual)
 omap <buffer> ac <Plug>(GitGutterTextObjectOuterPending)
 xmap <buffer> ic <Plug>(GitGutterTextObjectInnerVisual)
 omap <buffer> ic <Plug>(GitGutterTextObjectInnerPending)
-noremap <buffer> <ScrollWheelUp> k
-noremap <buffer> <2-ScrollWheelUp> k
-noremap <buffer> <3-ScrollWheelUp> k
-noremap <buffer> <4-ScrollWheelUp> k
-noremap <buffer> <ScrollWheelDown> j
-noremap <buffer> <2-ScrollWheelDown> j
-noremap <buffer> <3-ScrollWheelDown> j
-noremap <buffer> <4-ScrollWheelDown> j
 let &cpo=s:cpo_save
 unlet s:cpo_save
 setlocal keymap=
 setlocal noarabic
-setlocal noautoindent
+setlocal autoindent
 setlocal backupcopy=
 setlocal balloonexpr=
 setlocal nobinary
 setlocal nobreakindent
 setlocal breakindentopt=
-setlocal bufhidden=wipe
-setlocal nobuflisted
-setlocal buftype=nofile
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
 setlocal nocindent
 setlocal cinkeys=0{,0},0),0],:,0#,!^F,o,O,e
 setlocal cinoptions=
@@ -1175,7 +1175,7 @@ setlocal cinscopedecls=public,protected,private
 setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
 setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
+setlocal commentstring=//\ %s
 setlocal complete=.,w,b,u,t,i
 setlocal concealcursor=
 setlocal conceallevel=0
@@ -1190,15 +1190,15 @@ setlocal define=
 setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
-setlocal errorformat=
+setlocal errorformat=%+A\ %#%f\ %#(%l\\,%c):\ %m,%C%m
 setlocal noexpandtab
-if &filetype != 'minimap'
-setlocal filetype=minimap
+if &filetype != 'typescript'
+setlocal filetype=typescript
 endif
 setlocal fillchars=
 setlocal fixendofline
 setlocal foldcolumn=0
-setlocal nofoldenable
+setlocal foldenable
 setlocal foldexpr=0
 setlocal foldignore=#
 setlocal foldlevel=0
@@ -1208,7 +1208,7 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=tcq
+setlocal formatoptions=croql
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal formatprg=
 setlocal grepprg=
@@ -1216,10 +1216,10 @@ setlocal iminsert=0
 setlocal imsearch=-1
 setlocal include=
 setlocal includeexpr=
-setlocal indentexpr=
-setlocal indentkeys=0{,0},0),0],:,0#,!^F,o,O,e
+setlocal indentexpr=GetTypescriptIndent()
+setlocal indentkeys=0{,0},0),0],:,0#,!^F,o,O,e,0],0)
 setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
+setlocal iskeyword=@,48-57,_,192-255,$
 setlocal keywordprg=
 setlocal nolinebreak
 setlocal nolisp
@@ -1228,13 +1228,13 @@ setlocal lispwords=
 setlocal nolist
 setlocal listchars=
 setlocal makeencoding=
-setlocal makeprg=
+setlocal makeprg=tsc\ \ $*\ %
 setlocal matchpairs=(:),{:},[:]
 setlocal nomodeline
-setlocal nomodifiable
+setlocal modifiable
 setlocal nrformats=bin,octal,hex
 set number
-setlocal nonumber
+setlocal number
 setlocal numberwidth=4
 setlocal omnifunc=
 setlocal path=
@@ -1250,9 +1250,9 @@ setlocal scrolloff=-1
 setlocal shiftwidth=4
 setlocal noshortname
 setlocal showbreak=
-setlocal sidescrolloff=0
+setlocal sidescrolloff=-1
 set signcolumn=yes
-setlocal signcolumn=no
+setlocal signcolumn=yes
 setlocal nosmartindent
 setlocal nosmoothscroll
 setlocal softtabstop=0
@@ -1262,11 +1262,11 @@ setlocal spellfile=
 setlocal spelllang=en
 setlocal spelloptions=
 setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
+setlocal suffixesadd=.ts,.tsx
+setlocal swapfile
 setlocal synmaxcol=3000
-if &syntax != 'minimap'
-setlocal syntax=minimap
+if &syntax != 'typescript'
+setlocal syntax=typescript
 endif
 setlocal tabstop=8
 setlocal tagcase=
@@ -1285,14 +1285,23 @@ setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
 setlocal nowinfixheight
-setlocal winfixwidth
-setlocal nowrap
+setlocal nowinfixwidth
+setlocal wrap
 setlocal wrapmargin=0
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 1 - ((0 * winheight(0) + 26) / 53)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 1
+normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 1 + 135) / 270)
-exe 'vert 2resize ' . ((&columns * 266 + 135) / 270)
-exe 'vert 3resize ' . ((&columns * 1 + 135) / 270)
-tabnext 1
+3wincmd w
+exe 'vert 1resize ' . ((&columns * 31 + 135) / 270)
+exe 'vert 2resize ' . ((&columns * 118 + 135) / 270)
+exe 'vert 3resize ' . ((&columns * 119 + 135) / 270)
+tabnext 2
 set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
