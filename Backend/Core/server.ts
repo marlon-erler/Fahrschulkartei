@@ -2,7 +2,6 @@ import Express from "express";
 import Ws from "express-ws";
 import Model from "../Model/model";
 import {WebSocket} from "ws";
-import {Tables} from "../Model/keys";
 
 export interface ClientInfo {
     loadedEntry: string;
