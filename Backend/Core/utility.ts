@@ -40,3 +40,23 @@ export function generateTheoryAttendanceId(classId: string, studentId: string): 
 export function generatePracticalClassId(date: string, time: string, studentId: string): string {
     return date + time + studentId;
 }
+
+/*
+ * Messaging
+ */
+export enum ResponseCodes {
+    Success = "S",
+    UnknownError = "E0",
+    MessageIncomplete = "E1",
+    TableNotFound = "E2",
+    MethodNotFound = "E3",
+    DataNotFound = "E4",
+}
+
+export function createResponse(messageId: string, code: ResponseCodes): string {
+    const object = {
+	messageId,
+	code,
+    }
+    return JSON.stringify(object);
+}
