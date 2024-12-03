@@ -63,7 +63,8 @@ export default class Server {
     }
 
     private handleParsedMessage(ws: WebSocket, message: ParsedMessage): void {
-
+	switch (message.methodName) {
+	}
     }
 
     // tracking

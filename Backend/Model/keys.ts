@@ -1,102 +1,101 @@
 /*
  * Tables
  */
-
 export enum Tables {
-    "school-data",
-    "pricing",
-    "students",
-    "student-legal-requirements",
-    "theory-classes",
-    "theory-class-attendances",
-    "practical-classes",
+    SchoolData = "school-data",
+    Pricing = "pricing",
+    Students = "students",
+    StudentLegalRequirements = "student-legal-requirements",
+    TheoryClasses = "theory-classes",
+    TheoryClassAttendances = "theory-class-attendances",
+    PracticalClasses = "practical-classes",
 }
 
 /*
  * General
  */
 export enum SchoolKeys {
-    "name",
-    "street",
-    "building-number",
-    "zip-code",
-    "city",
+    Name = "name",
+    Street = "street",
+    BuildingNumber = "building-number",
+    ZipCode = "zip-code",
+    City = "city",
 }
 
 export enum PricingChartKeys {
-    "fahrstunde-45min",
-    "ueberlandfahrt-45min",
-    "nachtfahrt-45min",
-    "praktische-unterweisung-45min",
-    "vorstellung-theoriepruefung",
-    "vorstellung-praktische-pruefung",
-    "vorstellung-teil-praktisch",
-    "vorstellung-teil-abfahrtkontrolle",
-    "vorstellung-teil-verbinden-trennen",
-    "lernmittel",
-    "mofa",
+    Fahrstunde45Min = "fahrstunde-45min",
+    Ueberlandfahrt45Min = "ueberlandfahrt-45min",
+    Nachtfahrt45Min = "nachtfahrt-45min",
+    PraktischeUnterweisung45Min = "praktische-unterweisung-45min",
+    VorstellungTheoriepruefung = "vorstellung-theoriepruefung",
+    VorstellungPraktischePruefung = "vorstellung-praktische-pruefung",
+    VorstellungTeilPraktisch = "vorstellung-teil-praktisch",
+    VorstellungTeilAbfahrtkontrolle = "vorstellung-teil-abfahrtkontrolle",
+    VorstellungTeilVerbindenTrennen = "vorstellung-teil-verbinden-trennen",
+    Lernmittel = "lernmittel",
+    Mofa = "mofa",
 }
 
 /*
  * Students
  */
 export enum StudentKeys {
-    "last-name",
-    "first-name",
-    "index",
-    "birthname",
-    "address",
-    "date-of-birth",
-    "place-of-birth",
-    "phone",
-    "e-mail",
-    "citizenship",
-    "employer",
-    "list-number",
-    "license-number",
-    "end-probation",
-    "prices",
-    "classes-requested",
-    "classes-owned",
-    "partner-school",
-    "privacy-accepted",
-    "signature-accepted 0, 1 (yes, sign everytime), or 2 (reuse signature)",
-    "date-of-registration",
+    LastName = "last-name",
+    FirstName = "first-name",
+    Index = "index",
+    Birthname = "birthname",
+    Address = "address",
+    DateOfBirth = "date-of-birth",
+    PlaceOfBirth = "place-of-birth",
+    Phone = "phone",
+    Email = "e-mail",
+    Citizenship = "citizenship",
+    Employer = "employer",
+    ListNumber = "list-number",
+    LicenseNumber = "license-number",
+    EndProbation = "end-probation",
+    Prices = "prices",
+    ClassesRequested = "classes-requested",
+    ClassesOwned = "classes-owned",
+    PartnerSchool = "partner-school",
+    PrivacyAccepted = "privacy-accepted",
+    SignatureAccepted = "signature-accepted", // 0, 1 (yes, sign every time), or 2 (reuse signature)
+    DateOfRegistration = "date-of-registration",
 }
 
 export enum StudentLegalRequirementKeys {
-    "student",
-    "description",
-    "issuer",
-    "date",
+    Student = "student",
+    Description = "description",
+    Issuer = "issuer",
+    Date = "date",
 }
 
 /*
  * Classes
  */
 export enum TheoryClassKeys {
-    "date",
-    "start-time",
-    "duration",
-    "type",
-    "unit",
-    "class",
+    Date = "date",
+    StartTime = "start-time",
+    Duration = "duration",
+    Type = "type",
+    Unit = "unit",
+    Class = "class",
 }
 
 export enum TheoryClassAttendanceKeys {
-    "student",
-    "class",
-    "signature",
+    Student = "student",
+    Class = "class",
+    Signature = "signature",
 }
 
 export enum PracticalClassKeys {
-    "date",
-    "start-time",
-    "duration-main",
-    "duration-other",
-    "instructor",
-    "vehicle",
-    "class-type",
-    "student",
-    "signature",
+    Date = "date",
+    StartTime = "start-time",
+    DurationMain = "duration-main",
+    DurationOther = "duration-other",
+    Instructor = "instructor",
+    Vehicle = "vehicle",
+    ClassType = "class-type",
+    Student = "student",
+    Signature = "signature",
 }
