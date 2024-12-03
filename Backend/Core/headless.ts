@@ -1,5 +1,6 @@
 import Model from "../Model/model";
-import startServer from "./server";
+import Server from "./server";
 
 const model = new Model();
-startServer(8000, model);
+const server = new Server(model);
+server.start(8000);
