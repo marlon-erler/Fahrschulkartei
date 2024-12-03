@@ -1,0 +1,114 @@
+import Express from "express";
+import Ws from "express-ws";
+import Model from "../Model/model";
+import {WebSocket} from "ws";
+import {confirmStrings, createResponse, ResponseCodes} from "./utility";
+import {Table} from "pfsdb";
+
+export interface ClientInfo {
+    loadedEntry: string;
+    loadedKeys: string[];
+}
+
+export interface ParsedMessage {
+    messageId: string;
+    table: string;
+    methodName: string;
+    arguments: string[];
+}
+
+export default class Server {
+    app: Ws.Application;
+    model: Model;
+
+    tracker = new Map<WebSocket, ClientInfo>();
+
+    constructor(model: Model) {
+	const wsInstance: Ws.Instance = Ws(Express());
+	this.app = wsInstance.app;
+
+	this.model = model;
+    }
+
+    start(port: number): Promise<void> {
+	return new Promise((resolve) => {
+	    this.app.ws("/", (ws: WebSocket) => {
+		ws.on("message", (messageBuffer: Buffer) => {
+		    const message: string = messageBuffer.toString();
+		    this.handleWebSocketMessage(ws, message);
+		});
+	    });
+
+	    this.app.use(Express.static("Frontend/dist"));
+
+	    this.app.listen(port, () => {
+		console.log(`### SERVER RUNNING ON PORT ${port} ###`);
+		resolve();
+	    });
+	});
+    }
+
+    // message handling
+    private handleWebSocketMessage(ws: WebSocket, message: string): void {
+	try {
+	    const parsedMessage: any = JSON.parse(message);
+	    const messageId: string|undefined = parsedMessage.messageId;
+	    if (typeof messageId != "string") return;
+
+	    // check if is complete
+	    const isComplete: boolean = confirmStrings(
+		parsedMessage.table,
+		parsedMessage.methodName
+	    );
+	    if (isComplete == false) {
+		const response: string = createResponse(messageId, ResponseCodes.MessageIncomplete);
+		return ws.send(response);
+	    }
+
+	    // check if table exists
+	    const table: Table<any>|null = this.model.getTableByKey(parsedMessage.table);
+	    if (table == null) {
+		const response: string = createResponse(messageId, ResponseCodes.TableNotFound);
+		return ws.send(response);
+	    }
+
+	    // check if method is valid
+	    const method: any = table[parsedMessage.methodName];
+	    if (typeof method != "function") {
+		const response: string = createResponse(messageId, ResponseCodes.TableNotFound);
+		return ws.send(response);
+	    }
+
+	    // check if argument count matches
+	    const arguments: any = parsedMessage.arguments;
+	    if (!Array.isArray(arguments) || checkArgumentCount(method, arguments)) {
+		const response: string = createResponse(messageId, ResponseCodes.MessageIncomplete);
+		return ws.send(response);
+	    }
+
+	    // handle message
+	    this.executeRequest(ws, table, parsedMessage);
+	} catch (e) {}
+    }
+
+    private async executeRequest(ws: WebSocket, table: Table<any>, method: Function, arguments: string[]): void {
+    }
+    const response = await 
+
+    // tracking
+    private updateTracking(ws: WebSocket, entry: string, keys: string[]): void {
+	const clientInfo = () => this.tracker.get(ws);
+
+	const currentInfo = clientInfo();
+	if (currentInfo == undefined || currentInfo.loadedEntry != entry) {
+	    const newInfo: ClientInfo = {
+		loadedEntry: entry,
+		loadedKeys: [],
+	    }
+	    this.tracker.set(ws, newInfo);
+	}
+
+	clientInfo()?.loadedKeys.push(...keys);
+    }
+}
+
