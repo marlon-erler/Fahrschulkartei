@@ -262,8 +262,8 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 exe 'vert 1resize ' . ((&columns * 31 + 135) / 270)
-exe 'vert 2resize ' . ((&columns * 119 + 135) / 270)
-exe 'vert 3resize ' . ((&columns * 118 + 135) / 270)
+exe 'vert 2resize ' . ((&columns * 118 + 135) / 270)
+exe 'vert 3resize ' . ((&columns * 119 + 135) / 270)
 argglobal
 2argu
 enew
@@ -594,7 +594,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 30 - ((29 * winheight(0) + 27) / 54)
+let s:l = 30 - ((29 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -759,16 +759,17 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 13 - ((12 * winheight(0) + 27) / 54)
+let s:l = 18 - ((17 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 13
-normal! 065|
+keepjumps 18
+normal! 0
 wincmd w
+3wincmd w
 exe 'vert 1resize ' . ((&columns * 31 + 135) / 270)
-exe 'vert 2resize ' . ((&columns * 119 + 135) / 270)
-exe 'vert 3resize ' . ((&columns * 118 + 135) / 270)
+exe 'vert 2resize ' . ((&columns * 118 + 135) / 270)
+exe 'vert 3resize ' . ((&columns * 119 + 135) / 270)
 tabnext
 edit Backend/Model/model.ts
 let s:save_splitbelow = &splitbelow
@@ -1133,11 +1134,11 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 11 - ((10 * winheight(0) + 26) / 53)
+let s:l = 1 - ((0 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 11
+keepjumps 1
 normal! 0
 wincmd w
 argglobal
@@ -1297,11 +1298,10 @@ normal! zt
 keepjumps 1
 normal! 0
 wincmd w
-3wincmd w
 exe 'vert 1resize ' . ((&columns * 31 + 135) / 270)
 exe 'vert 2resize ' . ((&columns * 118 + 135) / 270)
 exe 'vert 3resize ' . ((&columns * 119 + 135) / 270)
-tabnext 2
+tabnext 1
 set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
@@ -1316,7 +1316,6 @@ if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

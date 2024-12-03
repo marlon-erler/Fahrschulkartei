@@ -8,12 +8,9 @@ export default function startServer(port: number, model: Model): Promise<void> {
 	const app = wsInstance.app;
 
 	app.ws("/", (ws) => {
-	    console.log("websocket connected");
 	    ws.on("message", (messageBuffer: Buffer) => {
 		const message: string = messageBuffer.toString();
-		console.log("received message", message);
 	    });
-	    ws.send("welcome");
 	});
 
 	app.use(Express.static("Frontend/dist"));
