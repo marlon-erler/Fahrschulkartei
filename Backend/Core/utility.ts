@@ -61,13 +61,6 @@ export function createResponse(messageId: string, code: ResponseCodes): string {
     return JSON.stringify(object);
 }
 
-export function createEntryResponse(table: Tables, id: string, key: string, value: string): string {
-    const object = {
-	table, id, key, value
-    }
-    return JSON.stringify(object);
-}
-
 /*
  * Safety
  */
