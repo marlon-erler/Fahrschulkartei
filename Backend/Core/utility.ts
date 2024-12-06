@@ -1,4 +1,5 @@
 import * as UUID from "uuid";
+import {Tables} from "../Model/keys";
 
 /*
  * General
@@ -56,6 +57,13 @@ export function createResponse(messageId: string, code: ResponseCodes): string {
     const object = {
 	messageId,
 	code,
+    }
+    return JSON.stringify(object);
+}
+
+export function createEntryResponse(table: Tables, id: string, key: string, value: string): string {
+    const object = {
+	table, id, key, value
     }
     return JSON.stringify(object);
 }
