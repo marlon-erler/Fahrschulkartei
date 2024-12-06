@@ -2,6 +2,8 @@ import Express from "express";
 import Ws from "express-ws";
 import Model from "../Model/model";
 import {WebSocket} from "ws";
+import {confirmStringEntries, confirmStringInEnum, createResponse, ResponseCodes} from "./utility";
+import {SchoolKeys} from "../Model/keys";
 
 export interface ClientInfo {
     loadedEntry: string;
@@ -11,6 +13,7 @@ export interface ClientInfo {
 export interface ParsedMessage {
     messageId: string;
     methodName: string;
+    [key: string]: any;
 }
 
 export default class Server {
@@ -56,18 +59,71 @@ export default class Server {
 		throw "methodName not defined";
 	    } 
 
-	    this.handleParsedMessage(ws, parsedMessage);
+	    this.handleParsedMessage(this.model, ws, parsedMessage);
 	} catch (e) {
 	    console.error(`could not parse message "${message}"`, e);
 	}
     }
 
-    private handleParsedMessage(ws: WebSocket, message: ParsedMessage): void {
+    private async handleParsedMessage(model: Model, ws: WebSocket, message: ParsedMessage): Promise<void> {
+	function respond(code: ResponseCodes) {
+	    const response: string = createResponse(message.messageId, code);
+	    ws.send(response);
+	}
+	function respondIncomplete() {
+	    respond(ResponseCodes.MessageIncomplete);
+	}
+	async function assistMethodExecution(keys: string[], fn: () => Promise<void>, enumKey?: string, enumeration?: Object) {
+	    const isComplete: boolean = confirmStringEntries(message, keys);
+	    if (isComplete == false) {
+		return respondIncomplete();
+	    }
 
+	    if (enumKey && enumeration) {
+		const doesMatch: boolean = confirmStringInEnum(enumeration, enumKey);
+		if (doesMatch == false) return respondIncomplete();
+	    }
+
+	    await fn();
+
+	    respond(ResponseCodes.Success);
+	}
+
+	switch (message.methodName) {
+		// set requests
+	    case "setSchoolData":
+		return assistMethodExecution(["key", "value"], async () => {
+		    await model.setSchoolData(message.key, message.value);
+		}, message.key, SchoolKeys);
+	    case "setPricingChartData":
+		return assistMethodExecution(["chartId", "key", "value"], async () => {
+		    await model.setPricingChartData(message.chartId, message.key, message.value);
+		});
+	    case "setStudentData":
+		return assistMethodExecution(["studentId", "key", "value"], async () => {
+		    await model.setStudentData(message.studentId, message.key, message.value);
+		});
+	    case "setStudentLegalRequirementData":
+		return assistMethodExecution(["requirementId", "key", "value"], async () => {
+		    await model.setStudentLegalRequirementData(message.requirementId, message.key, message.value);
+		});
+	    case "setTheoryClassData":
+		return assistMethodExecution(["classId", "key", "value"], async () => {
+		    await model.setTheoryClassData(message.classId, message.key, message.value);
+		});
+	    case "setPracticalClassData":
+		return assistMethodExecution(["classId", "key", "value"], async () => {
+		    await model.setPracticalClassData(message.classId, message.key, message.value);
+		});
+
+		// default
+	    default:
+		return respond(ResponseCodes.MethodNotFound);
+	}
     }
 
     // tracking
-    private updateTracking(ws: WebSocket, entry: string, keys: string[]): void {
+    private updateTracking(ws: WebSocket, entry: string, newKeys: string[]): void {
 	const clientInfo = () => this.tracker.get(ws);
 
 	const currentInfo = clientInfo();
@@ -79,7 +135,7 @@ export default class Server {
 	    this.tracker.set(ws, newInfo);
 	}
 
-	clientInfo()?.loadedKeys.push(...keys);
+	clientInfo()?.loadedKeys.push(...newKeys);
     }
 }
 

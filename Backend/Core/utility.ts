@@ -47,10 +47,9 @@ export function generatePracticalClassId(date: string, time: string, studentId: 
 export enum ResponseCodes {
     Success = "S",
     UnknownError = "E0",
-    MessageIncomplete = "E1",
-    TableNotFound = "E2",
-    MethodNotFound = "E3",
-    DataNotFound = "E4",
+    MethodNotFound = "E1",
+    MessageIncomplete = "E2",
+    DataNotFound = "E3",
 }
 
 export function createResponse(messageId: string, code: ResponseCodes): string {
@@ -59,4 +58,21 @@ export function createResponse(messageId: string, code: ResponseCodes): string {
 	code,
     }
     return JSON.stringify(object);
+}
+
+/*
+ * Safety
+ */
+export function confirmStringEntries(object: Object, keys: string[]): boolean {
+    for (const key of keys) {
+	const value: any = object[key as keyof typeof object];
+	if (typeof value != "string") {
+	    return false;
+	}
+    }
+    return true;
+}
+
+export function confirmStringInEnum(enumeration: Object, string: string): boolean {
+    return string in Object.values(enumeration);
 }

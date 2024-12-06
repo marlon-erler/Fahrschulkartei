@@ -12,13 +12,13 @@ const SCHOOL_ENTRY_ID = "main";
 export default class Model {
     database: Database;
 
-    schoolDataTable: Table<keyof typeof SchoolKeys>;
-    pricingTable: Table<keyof typeof PricingChartKeys>;
-    studentTable: Table<keyof typeof StudentKeys>;
-    studentLegalRequirementTable: Table<keyof typeof StudentLegalRequirementKeys>;
-    theoryClassTable: Table<keyof typeof TheoryClassKeys>;
-    theoryClassAttendanceTable: Table<keyof typeof TheoryClassAttendanceKeys>;
-    practicalClassTable: Table<keyof typeof PracticalClassKeys>;
+    schoolDataTable: Table<SchoolKeys>;
+    pricingTable: Table<PricingChartKeys>;
+    studentTable: Table<StudentKeys>;
+    studentLegalRequirementTable: Table<StudentLegalRequirementKeys>;
+    theoryClassTable: Table<TheoryClassKeys>;
+    theoryClassAttendanceTable: Table<TheoryClassAttendanceKeys>;
+    practicalClassTable: Table<PracticalClassKeys>;
 
     constructor() {
 	this.database = new Database(BASE_PATH);
@@ -35,11 +35,11 @@ export default class Model {
     /*
      * School Data
      */
-    async setSchoolData(key: keyof typeof SchoolKeys, value: string): Promise<void> {
+    async setSchoolData(key: SchoolKeys, value: string): Promise<void> {
 	return await this.schoolDataTable.setFieldValuesForEntry(SCHOOL_ENTRY_ID, key, [value]);
     }
 
-    async getSchoolData(key: keyof typeof SchoolKeys): Promise<string|undefined> {
+    async getSchoolData(key: SchoolKeys): Promise<string|undefined> {
 	const values: string[] = await this.schoolDataTable.getValuesForField(SCHOOL_ENTRY_ID, key);
 	return values[0] ?? undefined;
     }
@@ -47,11 +47,11 @@ export default class Model {
     /*
      * Pricing Chart
      */
-    async setPricingChartData(chartId: string, key: keyof typeof PricingChartKeys, value: string): Promise<void> {
+    async setPricingChartData(chartId: string, key: PricingChartKeys, value: string): Promise<void> {
 	return await this.pricingTable.setFieldValuesForEntry(chartId, key, [value]);
     }
 
-    async getPricingChartData(chartId: string, key: keyof typeof PricingChartKeys): Promise<string|undefined> {
+    async getPricingChartData(chartId: string, key: PricingChartKeys): Promise<string|undefined> {
 	const values: string[] = await this.pricingTable.getValuesForField(chartId, key);
 	return values[0] ?? undefined;
     }
@@ -74,56 +74,56 @@ export default class Model {
     /*
      * Students
      */
-    async setStudentData(studentId: string, key: keyof typeof StudentKeys, value: string): Promise<void> {
+    async setStudentData(studentId: string, key: StudentKeys, value: string): Promise<void> {
 	return await this.studentTable.setFieldValuesForEntry(studentId, key, [value]);
     }
 
-    async getStudentData(studentId: string, key: keyof typeof StudentKeys): Promise<string|undefined> {
+    async getStudentData(studentId: string, key: StudentKeys): Promise<string|undefined> {
 	const values: string[] = await this.studentTable.getValuesForField(studentId, key);
 	return values[0] ?? undefined;
     }
 
     async getStudentsForIndex(index: string): Promise<string[]> {
-	return await this.studentTable.getEntriesByFieldValue("index", [index]);
+	return await this.studentTable.getEntriesByFieldValue(StudentKeys.Index, [index]);
     }
 
     /*
      * Legal Requirements
      */
-    async setStudentLegalRequirementData(requirementId: string, key: keyof typeof StudentLegalRequirementKeys, value: string): Promise<void> {
+    async setStudentLegalRequirementData(requirementId: string, key: StudentLegalRequirementKeys, value: string): Promise<void> {
 	return await this.studentLegalRequirementTable.setFieldValuesForEntry(requirementId, key, [value]);
     }
 
-    async getStudentLegalRequirementData(requirementId: string, key: keyof typeof StudentLegalRequirementKeys): Promise<string|undefined> {
+    async getStudentLegalRequirementData(requirementId: string, key: StudentLegalRequirementKeys): Promise<string|undefined> {
 	const values: string[] = await this.studentLegalRequirementTable.getValuesForField(requirementId, key);
 	return values[0] ?? undefined;
     }
 
     async getLegalRequirementsForStudent(studentId: string): Promise<string[]> {
-	return await this.studentLegalRequirementTable.getEntriesByFieldValue("student", [studentId]);
+	return await this.studentLegalRequirementTable.getEntriesByFieldValue(StudentLegalRequirementKeys.Student, [studentId]);
     }
 
     /*
      * Theory Classes
      */
-    async setTheoryClassData(classId: string, key: keyof typeof TheoryClassKeys, value: string): Promise<void> {
+    async setTheoryClassData(classId: string, key: TheoryClassKeys, value: string): Promise<void> {
 	return await this.theoryClassTable.setFieldValuesForEntry(classId, key, [value]);
     }
 
-    async getTheoryClassData(classId: string, key: keyof typeof TheoryClassKeys): Promise<string|undefined> {
+    async getTheoryClassData(classId: string, key: TheoryClassKeys): Promise<string|undefined> {
 	const values: string[] = await this.theoryClassTable.getValuesForField(classId, key);
 	return values[0] ?? undefined;
     }
 
     async addStudentToTheoryClass(classId: string, studentId: string, signature: string): Promise<void> {
 	const attendanceId: string = generateTheoryAttendanceId(classId, studentId);
-	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "student" as keyof typeof TheoryClassAttendanceKeys, [studentId]);
-	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "class" as keyof typeof TheoryClassAttendanceKeys, [classId]);
-	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "signature" as keyof typeof TheoryClassAttendanceKeys, [signature]);
+	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "student" as TheoryClassAttendanceKeys, [studentId]);
+	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "class" as TheoryClassAttendanceKeys, [classId]);
+	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "signature" as TheoryClassAttendanceKeys, [signature]);
     }
 
     async getAttendancesForTheoryClass(classId: string): Promise<string[]> {
-	return await this.theoryClassAttendanceTable.getEntriesByFieldValue("class", [classId]);
+	return await this.theoryClassAttendanceTable.getEntriesByFieldValue(TheoryClassAttendanceKeys.Class, [classId]);
     }
 
     async getTheoryClassAttendancesForStudent(studentId: string): Promise<string[]> {
@@ -137,21 +137,21 @@ export default class Model {
     /*
      * Practical Classes
      */
-    async setPracticalClassData(classId: string, key: keyof typeof PracticalClassKeys, value: string): Promise<void> {
+    async setPracticalClassData(classId: string, key: PracticalClassKeys, value: string): Promise<void> {
 	return await this.practicalClassTable.setFieldValuesForEntry(classId, key, [value]);
     }
 
-    async getPracticalClassData(classId: string, key: keyof typeof PracticalClassKeys): Promise<string|undefined> {
+    async getPracticalClassData(classId: string, key: PracticalClassKeys): Promise<string|undefined> {
 	const values: string[] = await this.practicalClassTable.getValuesForField(classId, key);
 	return values[0] ?? undefined;
     }
 
     async getPracticalClassesForStudent(studentId: string): Promise<string[]> {
-	return await this.practicalClassTable.getEntriesByFieldValue("student", [studentId]);
+	return await this.practicalClassTable.getEntriesByFieldValue(PracticalClassKeys.Student, [studentId]);
     }
 
     async getPracticalClassesForDay(date: string): Promise<string[]> {
-	return await this.practicalClassTable.getEntriesByFieldValue("date", [date]);
+	return await this.practicalClassTable.getEntriesByFieldValue(PracticalClassKeys.Date, [date]);
     }
 
     /*
