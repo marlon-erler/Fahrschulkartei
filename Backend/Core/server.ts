@@ -3,7 +3,7 @@ import Ws from "express-ws";
 import Model from "../Model/model";
 import {WebSocket} from "ws";
 import {confirmStringEntries, confirmStringInEnum, createResponse, ResponseCodes} from "./utility";
-import {SchoolKeys} from "../Model/keys";
+import {PracticalClassKeys, PricingChartKeys, SchoolKeys, StudentKeys, StudentLegalRequirementKeys, TheoryClassKeys} from "../Model/keys";
 
 export interface ClientInfo {
     loadedEntry: string;
@@ -73,14 +73,14 @@ export default class Server {
 	function respondIncomplete() {
 	    respond(ResponseCodes.MessageIncomplete);
 	}
-	async function assistMethodExecution(keys: string[], fn: () => Promise<void>, enumKey?: string, enumeration?: Object) {
+	async function assistMethodExecution(keys: string[], fn: () => Promise<void>, enumeration?: Object) {
 	    const isComplete: boolean = confirmStringEntries(message, keys);
 	    if (isComplete == false) {
 		return respondIncomplete();
 	    }
 
-	    if (enumKey && enumeration) {
-		const doesMatch: boolean = confirmStringInEnum(enumeration, enumKey);
+	    if (enumeration != undefined) {
+		const doesMatch: boolean = confirmStringInEnum(enumeration, message.key);
 		if (doesMatch == false) return respondIncomplete();
 	    }
 
@@ -94,27 +94,27 @@ export default class Server {
 	    case "setSchoolData":
 		return assistMethodExecution(["key", "value"], async () => {
 		    await model.setSchoolData(message.key, message.value);
-		}, message.key, SchoolKeys);
+		}, SchoolKeys);
 	    case "setPricingChartData":
 		return assistMethodExecution(["chartId", "key", "value"], async () => {
 		    await model.setPricingChartData(message.chartId, message.key, message.value);
-		});
+		}, PricingChartKeys);
 	    case "setStudentData":
 		return assistMethodExecution(["studentId", "key", "value"], async () => {
 		    await model.setStudentData(message.studentId, message.key, message.value);
-		});
+		}, StudentKeys);
 	    case "setStudentLegalRequirementData":
 		return assistMethodExecution(["requirementId", "key", "value"], async () => {
 		    await model.setStudentLegalRequirementData(message.requirementId, message.key, message.value);
-		});
+		}, StudentLegalRequirementKeys);
 	    case "setTheoryClassData":
 		return assistMethodExecution(["classId", "key", "value"], async () => {
 		    await model.setTheoryClassData(message.classId, message.key, message.value);
-		});
+		}, TheoryClassKeys);
 	    case "setPracticalClassData":
 		return assistMethodExecution(["classId", "key", "value"], async () => {
 		    await model.setPracticalClassData(message.classId, message.key, message.value);
-		});
+		}, PracticalClassKeys);
 
 		// default
 	    default:
