@@ -111,6 +111,10 @@ export default class Server {
 		return assistMethodExecution(["classId", "key", "value"], async () => {
 		    await model.setTheoryClassData(message.classId, message.key, message.value);
 		}, TheoryClassKeys);
+	    case "addStudentToTheoryClass":
+		return assistMethodExecution(["classId", "studentId", "signature"], async () => {
+		    await model.addStudentToTheoryClass(message.classId, message.studentId, message.signature);
+		});
 	    case "setPracticalClassData":
 		return assistMethodExecution(["classId", "key", "value"], async () => {
 		    await model.setPracticalClassData(message.classId, message.key, message.value);
