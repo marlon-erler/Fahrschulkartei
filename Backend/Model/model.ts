@@ -131,7 +131,7 @@ export default class Model {
     }
 
     async getTheoryClassesForDay(date: string): Promise<string[]> {
-	return await this.theoryClassTable.getEntriesByFieldValue(TheoryClassAttendanceKeys.Date, [date]);
+	return await this.theoryClassTable.getEntriesByFieldValue(TheoryClassKeys.Date, [date]);
     }
 
     /*
