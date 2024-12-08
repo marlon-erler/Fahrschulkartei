@@ -102,6 +102,15 @@ export default class Server {
 		ws.send(stringified);
 	    }, enumeration);
 	}
+	async function assistGenericGetMethodExecution(idKeyName: string, fn: () => Promise<string|undefined>, enumeration?: Object) {
+	    assistGetMethodExecution([idKeyName, "key"], async () => {
+		return {
+		    entryId: message[idKeyName],
+		    key: message.key,
+		    value: await fn() ?? undefined,
+		}
+	    }, enumeration)
+	}
 
 	switch (message.methodName) {
 		// set requests
@@ -143,13 +152,11 @@ export default class Server {
 		    }
 		}, SchoolKeys);
 	    case "getPricingChartData":
-		return assistGetMethodExecution(["chartId", "key", "value"], async () => {
-		    return {
-			entryId: message.chartId,
-			key: message.key,
-			value: await model.getPricingChartData(message.chartId, message.key) ?? "",
-		    }
-		}, PricingChartKeys);
+		return assistGenericGetMethodExecution(
+		    "chartId",
+		    async () => model.getPricingChartData(message.chartId, message.key),
+		    PricingChartKeys
+		);
 	    case "getPricingCharts":
 		return assistGetMethodExecution([], async () => {
 		    return {
