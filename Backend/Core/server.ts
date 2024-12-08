@@ -92,10 +92,14 @@ export default class Server {
 		respond(ResponseCodes.Success);
 	    }, enumeration);
 	}
-	async function assistGetMethodExecution(keys: string[], fn: () => Promise<string>, enumeration?: Object) {
+	async function assistGetMethodExecution(keys: string[], fn: () => Promise<Object>, enumeration?: Object) {
 	    assistMethodExecution(keys, async () => {
-		const response: string = await fn();
-		ws.send(response);
+		const response = {
+		    methodName: message.methodName,
+		    ...await fn(),
+		}
+		const stringified: string = JSON.stringify(response);
+		ws.send(stringified);
 	    }, enumeration);
 	}
 
@@ -133,11 +137,18 @@ export default class Server {
 		// get requests
 	    case "getSchoolData":
 		return assistGetMethodExecution(["key"], async () => {
-		    return await model.getSchoolData(message.key) ?? "";
+		    return {
+			key: message.key,
+			value: await model.getSchoolData(message.key) ?? "",
+		    }
 		}, SchoolKeys);
 	    case "getPricingChartData":
 		return assistGetMethodExecution(["chartId", "key", "value"], async () => {
-		    return await model.getPricingChartData(message.chartId, message.key) ?? "";
+		    return {
+			entryId: message.chartId,
+			key: message.key,
+			value: await model.getPricingChartData(message.chartId, message.key) ?? "",
+		    }
 		}, PricingChartKeys);
 
 		// default

@@ -89,8 +89,9 @@ class Server {
             function assistGetMethodExecution(keys, fn, enumeration) {
                 return __awaiter(this, void 0, void 0, function* () {
                     assistMethodExecution(keys, () => __awaiter(this, void 0, void 0, function* () {
-                        const response = yield fn();
-                        ws.send(response);
+                        const response = Object.assign({ methodName: message.methodName }, yield fn());
+                        const stringified = JSON.stringify(response);
+                        ws.send(stringified);
                     }), enumeration);
                 });
             }
@@ -128,9 +129,20 @@ class Server {
                 case "getSchoolData":
                     return assistGetMethodExecution(["key"], () => __awaiter(this, void 0, void 0, function* () {
                         var _a;
-                        return null;
-                        return (_a = yield model.getSchoolData(message.key)) !== null && _a !== void 0 ? _a : "";
+                        return {
+                            key: message.key,
+                            value: (_a = yield model.getSchoolData(message.key)) !== null && _a !== void 0 ? _a : "",
+                        };
                     }), keys_1.SchoolKeys);
+                case "getPricingChartData":
+                    return assistGetMethodExecution(["chartId", "key", "value"], () => __awaiter(this, void 0, void 0, function* () {
+                        var _a;
+                        return {
+                            entryId: message.chartId,
+                            key: message.key,
+                            value: (_a = yield model.getPricingChartData(message.chartId, message.key)) !== null && _a !== void 0 ? _a : "",
+                        };
+                    }), keys_1.PricingChartKeys);
                 // default
                 default:
                     return respond(utility_1.ResponseCodes.MethodNotFound);
