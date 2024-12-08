@@ -109,7 +109,15 @@ export default class Server {
 		    key: message.key,
 		    value: await fn() ?? undefined,
 		}
-	    }, enumeration)
+	    }, enumeration);
+	}
+	async function assistIndexedGetMethodExecution(indexKeyName: string, fn: () => Promise<string[]>, enumeration?: Object) {
+	    assistGetMethodExecution([indexKeyName], async () => {
+		return {
+		    index: message[indexKeyName],
+		    entryIds: await fn(),
+		}
+	    }, enumeration);
 	}
 
 	switch (message.methodName) {
@@ -117,7 +125,7 @@ export default class Server {
 	    case "setSchoolData":
 		return assistSetMethodExecution(["key", "value"], async () => {
 		    await model.setSchoolData(message.key, message.value);
-		}, SchoolKeys);
+}, SchoolKeys);
 	    case "setPricingChartData":
 		return assistSetMethodExecution(["chartId", "key", "value"], async () => {
 		    await model.setPricingChartData(message.chartId, message.key, message.value);
@@ -169,6 +177,65 @@ export default class Server {
 			entries: await model.getPricingChart(message.chartId),
 		    }
 		});
+	    case "getStudentData":
+		return assistGenericGetMethodExecution(
+		    "studentId",
+		    async () => model.getPricingChartData(message.studentId, message.key),
+		    StudentKeys 
+		);
+	    case "getStudentsForIndex":
+		return assistIndexedGetMethodExecution(
+		    "index",
+		    async () => model.getStudentsForIndex(message.index),
+		);
+	    case "getStudentLegalRequirementData":
+		return assistGenericGetMethodExecution(
+		    "requirementId",
+		    async () => model.getStudentLegalRequirementData(message.requirementId, message.key),
+		    StudentLegalRequirementKeys,
+		);
+	    case "getLegalRequirementsForStudent":
+		return assistIndexedGetMethodExecution(
+		    "studentId",
+		    async () => model.getLegalRequirementsForStudent(message.studentId),
+		);
+	    case "getTheoryClassData":
+		return assistGenericGetMethodExecution(
+		    "classId",
+		    async () => model.getTheoryClassData(message.classId, message.key),
+		    TheoryClassKeys,
+		);
+	    case "getAttendancesForTheoryClass":
+		return assistIndexedGetMethodExecution(
+		    "classId",
+		    async () => model.getAttendancesForTheoryClass(message.classId),
+		);
+	    case "getTheoryClassAttendancesForStudent":
+		return assistIndexedGetMethodExecution(
+		    "studentId",
+		    async () => model.getTheoryClassAttendancesForStudent(message.studentId),
+		);
+	    case "getTheoryClassesForDay":
+		return assistIndexedGetMethodExecution(
+		    "date",
+		    async () => model.getTheoryClassesForDay(message.date),
+		);
+	    case "getPracticalClassData":
+		return assistGenericGetMethodExecution(
+		    "classId",
+		    async () => model.getPracticalClassData(message.classId, message.key),
+		    PricingChartKeys,
+		);
+	    case "getPracticalClassesForStudent":
+		return assistIndexedGetMethodExecution(
+		    "studentId",
+		    async () => model.getPracticalClassesForStudent(message.studentId),
+		);
+	    case "getPracticalClassesForDay":
+		return assistIndexedGetMethodExecution(
+		    "date",
+		    async () => model.getPracticalClassesForDay(message.date),
+		);
 
 		// default
 	    default:
