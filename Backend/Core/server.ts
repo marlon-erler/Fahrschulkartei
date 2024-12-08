@@ -162,7 +162,7 @@ export default class Server {
 	    case "getPricingChartData":
 		return assistGenericGetMethodExecution(
 		    "chartId",
-		    async () => model.getPricingChartData(message.chartId, message.key),
+		    () => model.getPricingChartData(message.chartId, message.key),
 		    PricingChartKeys
 		);
 	    case "getPricingCharts":

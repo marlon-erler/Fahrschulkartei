@@ -95,6 +95,28 @@ class Server {
                     }), enumeration);
                 });
             }
+            function assistGenericGetMethodExecution(idKeyName, fn, enumeration) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    assistGetMethodExecution([idKeyName, "key"], () => __awaiter(this, void 0, void 0, function* () {
+                        var _a;
+                        return {
+                            entryId: message[idKeyName],
+                            key: message.key,
+                            value: (_a = yield fn()) !== null && _a !== void 0 ? _a : undefined,
+                        };
+                    }), enumeration);
+                });
+            }
+            function assistIndexedGetMethodExecution(indexKeyName, fn, enumeration) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    assistGetMethodExecution([indexKeyName], () => __awaiter(this, void 0, void 0, function* () {
+                        return {
+                            index: message[indexKeyName],
+                            entryIds: yield fn(),
+                        };
+                    }), enumeration);
+                });
+            }
             switch (message.methodName) {
                 // set requests
                 case "setSchoolData":
@@ -135,14 +157,41 @@ class Server {
                         };
                     }), keys_1.SchoolKeys);
                 case "getPricingChartData":
-                    return assistGetMethodExecution(["chartId", "key", "value"], () => __awaiter(this, void 0, void 0, function* () {
-                        var _a;
+                    return assistGenericGetMethodExecution("chartId", () => model.getPricingChartData(message.chartId, message.key), keys_1.PricingChartKeys);
+                case "getPricingCharts":
+                    return assistGetMethodExecution([], () => __awaiter(this, void 0, void 0, function* () {
                         return {
-                            entryId: message.chartId,
-                            key: message.key,
-                            value: (_a = yield model.getPricingChartData(message.chartId, message.key)) !== null && _a !== void 0 ? _a : "",
+                            entryIds: yield model.getPricingCharts(),
                         };
-                    }), keys_1.PricingChartKeys);
+                    }));
+                case "getPricingChart":
+                    return assistGetMethodExecution(["chartId"], () => __awaiter(this, void 0, void 0, function* () {
+                        return {
+                            entries: yield model.getPricingChart(message.chartId),
+                        };
+                    }));
+                case "getStudentData":
+                    return assistGenericGetMethodExecution("studentId", () => __awaiter(this, void 0, void 0, function* () { return model.getPricingChartData(message.studentId, message.key); }), keys_1.StudentKeys);
+                case "getStudentsForIndex":
+                    return assistIndexedGetMethodExecution("index", () => __awaiter(this, void 0, void 0, function* () { return model.getStudentsForIndex(message.index); }));
+                case "getStudentLegalRequirementData":
+                    return assistGenericGetMethodExecution("requirementId", () => __awaiter(this, void 0, void 0, function* () { return model.getStudentLegalRequirementData(message.requirementId, message.key); }), keys_1.StudentLegalRequirementKeys);
+                case "getLegalRequirementsForStudent":
+                    return assistIndexedGetMethodExecution("studentId", () => __awaiter(this, void 0, void 0, function* () { return model.getLegalRequirementsForStudent(message.studentId); }));
+                case "getTheoryClassData":
+                    return assistGenericGetMethodExecution("classId", () => __awaiter(this, void 0, void 0, function* () { return model.getTheoryClassData(message.classId, message.key); }), keys_1.TheoryClassKeys);
+                case "getAttendancesForTheoryClass":
+                    return assistIndexedGetMethodExecution("classId", () => __awaiter(this, void 0, void 0, function* () { return model.getAttendancesForTheoryClass(message.classId); }));
+                case "getTheoryClassAttendancesForStudent":
+                    return assistIndexedGetMethodExecution("studentId", () => __awaiter(this, void 0, void 0, function* () { return model.getTheoryClassAttendancesForStudent(message.studentId); }));
+                case "getTheoryClassesForDay":
+                    return assistIndexedGetMethodExecution("date", () => __awaiter(this, void 0, void 0, function* () { return model.getTheoryClassesForDay(message.date); }));
+                case "getPracticalClassData":
+                    return assistGenericGetMethodExecution("classId", () => __awaiter(this, void 0, void 0, function* () { return model.getPracticalClassData(message.classId, message.key); }), keys_1.PricingChartKeys);
+                case "getPracticalClassesForStudent":
+                    return assistIndexedGetMethodExecution("studentId", () => __awaiter(this, void 0, void 0, function* () { return model.getPracticalClassesForStudent(message.studentId); }));
+                case "getPracticalClassesForDay":
+                    return assistIndexedGetMethodExecution("date", () => __awaiter(this, void 0, void 0, function* () { return model.getPracticalClassesForDay(message.date); }));
                 // default
                 default:
                     return respond(utility_1.ResponseCodes.MethodNotFound);
