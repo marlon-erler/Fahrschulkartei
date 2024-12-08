@@ -2,7 +2,7 @@ import Express from "express";
 import Ws from "express-ws";
 import Model from "../Model/model";
 import {WebSocket} from "ws";
-import {confirmStringEntries, confirmStringInEnum, createEntryResponse, createEntryResponse, createResponse, ResponseCodes} from "./utility";
+import {confirmStringEntries, confirmStringInEnum, createResponse, ResponseCodes} from "./utility";
 import {PracticalClassKeys, PricingChartKeys, SchoolKeys, StudentKeys, StudentLegalRequirementKeys, TheoryClassKeys} from "../Model/keys";
 
 export interface ClientInfo {
@@ -129,6 +129,16 @@ export default class Server {
 		return assistSetMethodExecution(["classId", "key", "value"], async () => {
 		    await model.setPracticalClassData(message.classId, message.key, message.value);
 		}, PracticalClassKeys);
+
+		// get requests
+	    case "getSchoolData":
+		return assistGetMethodExecution(["key"], async () => {
+		    return await model.getSchoolData(message.key) ?? "";
+		}, SchoolKeys);
+	    case "getPricingChartData":
+		return assistGetMethodExecution(["chartId", "key", "value"], async () => {
+		    return await model.getPricingChartData(message.chartId, message.key) ?? "";
+		}, PricingChartKeys);
 
 		// default
 	    default:

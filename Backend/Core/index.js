@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const ip_1 = __importDefault(require("ip"));
+const model_1 = __importDefault(require("../Model/model"));
 const server_1 = __importDefault(require("./server"));
 const PORT = 8000;
 const IP = ip_1.default.address();
@@ -27,7 +28,9 @@ function createWindow() {
     window.loadURL(ADDRESS);
 }
 electron_1.app.whenReady().then(() => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, server_1.default)(PORT);
+    const model = new model_1.default();
+    const server = new server_1.default(model);
+    yield server.start(PORT);
     createWindow();
     electron_1.app.on('activate', () => {
         if (electron_1.BrowserWindow.getAllWindows().length === 0) {
