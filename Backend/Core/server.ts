@@ -150,6 +150,18 @@ export default class Server {
 			value: await model.getPricingChartData(message.chartId, message.key) ?? "",
 		    }
 		}, PricingChartKeys);
+	    case "getPricingCharts":
+		return assistGetMethodExecution([], async () => {
+		    return {
+			entryIds: await model.getPricingCharts(),
+		    }
+		});
+	    case "getPricingChart":
+		return assistGetMethodExecution(["chartId"], async () => {
+		    return {
+			entries: await model.getPricingChart(message.chartId),
+		    }
+		});
 
 		// default
 	    default:
