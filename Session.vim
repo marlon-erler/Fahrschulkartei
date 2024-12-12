@@ -2,6 +2,7 @@ let SessionLoad = 1
 if &cp | set nocp | endif
 let s:cpo_save=&cpo
 set cpo&vim
+inoremap <silent> <Plug>(table-mode-tableize) |:call tablemode#TableizeInsertMode()a
 imap <silent> <C-Y>m <Plug>(emmet-merge-lines)
 inoremap <Plug>(emmet-merge-lines) =emmet#util#closePopup()=emmet#mergeLines()
 imap <silent> <C-Y>A <Plug>(emmet-anchorize-summary)
@@ -67,13 +68,17 @@ nmap <silent> u <Plug>(emmet-update-tag)
 nmap <silent> ; <Plug>(emmet-expand-word)
 vmap <silent> , <Plug>(emmet-expand-abbr)
 nmap <silent> , <Plug>(emmet-expand-abbr)
+xmap \T <Plug>(table-mode-tableize-delimiter)
+xmap \tt <Plug>(table-mode-tableize)
+nmap \tt <Plug>(table-mode-tableize)
+nnoremap <silent> \tm :call tablemode#Toggle()
 nmap \rn <Plug>(coc-rename)
 xmap gx <Plug>NetrwBrowseXVis
 nmap gx <Plug>NetrwBrowseX
-snoremap <C-R> "_c
-snoremap <silent> <C-H> c
-snoremap <silent> <Del> c
 snoremap <silent> <BS> c
+snoremap <silent> <Del> c
+snoremap <silent> <C-H> c
+snoremap <C-R> "_c
 nnoremap <silent> <Plug>GitGutterPreviewHunk :call gitgutter#utility#warn('Please change your map <Plug>GitGutterPreviewHunk to <Plug>(GitGutterPreviewHunk)')
 nnoremap <silent> <Plug>(GitGutterPreviewHunk) :GitGutterPreviewHunk
 nnoremap <silent> <Plug>GitGutterUndoHunk :call gitgutter#utility#warn('Please change your map <Plug>GitGutterUndoHunk to <Plug>(GitGutterUndoHunk)')
@@ -92,6 +97,26 @@ onoremap <silent> <Plug>(GitGutterTextObjectOuterPending) :call gitgutter#hunk
 onoremap <silent> <Plug>(GitGutterTextObjectInnerPending) :call gitgutter#hunk#text_object(1)
 xnoremap <silent> <Plug>NetrwBrowseXVis :call netrw#BrowseXVis()
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(netrw#GX(),netrw#CheckIfRemote(netrw#GX()))
+nnoremap <silent> <Plug>(table-mode-sort) :call tablemode#spreadsheet#Sort('')
+nnoremap <silent> <Plug>(table-mode-echo-cell) :call tablemode#spreadsheet#EchoCell()
+nnoremap <silent> <Plug>(table-mode-eval-formula) :call tablemode#spreadsheet#formula#EvaluateFormulaLine()
+nnoremap <silent> <Plug>(table-mode-add-formula) :call tablemode#spreadsheet#formula#Add()
+nnoremap <silent> <Plug>(table-mode-insert-column-after) :call tablemode#spreadsheet#InsertColumn(1)
+nnoremap <silent> <Plug>(table-mode-insert-column-before) :call tablemode#spreadsheet#InsertColumn(0)
+nnoremap <silent> <Plug>(table-mode-delete-column) :call tablemode#spreadsheet#DeleteColumn()
+nnoremap <silent> <Plug>(table-mode-delete-row) :call tablemode#spreadsheet#DeleteRow()
+xnoremap <silent> <Plug>(table-mode-cell-text-object-i) :call tablemode#spreadsheet#cell#TextObject(1)
+xnoremap <silent> <Plug>(table-mode-cell-text-object-a) :call tablemode#spreadsheet#cell#TextObject(0)
+onoremap <silent> <Plug>(table-mode-cell-text-object-i) :call tablemode#spreadsheet#cell#TextObject(1)
+onoremap <silent> <Plug>(table-mode-cell-text-object-a) :call tablemode#spreadsheet#cell#TextObject(0)
+nnoremap <silent> <Plug>(table-mode-motion-right) :call tablemode#spreadsheet#cell#Motion('l')
+nnoremap <silent> <Plug>(table-mode-motion-left) :call tablemode#spreadsheet#cell#Motion('h')
+nnoremap <silent> <Plug>(table-mode-motion-down) :call tablemode#spreadsheet#cell#Motion('j')
+nnoremap <silent> <Plug>(table-mode-motion-up) :call tablemode#spreadsheet#cell#Motion('k')
+nnoremap <silent> <Plug>(table-mode-realign) :call tablemode#table#Realign('.')
+xnoremap <silent> <Plug>(table-mode-tableize-delimiter) :call tablemode#TableizeByDelimiter()
+xnoremap <silent> <Plug>(table-mode-tableize) :Tableize
+nnoremap <silent> <Plug>(table-mode-tableize) :Tableize
 vmap <silent> <C-Y>c <Plug>(emmet-code-pretty)
 vnoremap <Plug>(emmet-code-pretty) :call emmet#codePretty()
 nmap <silent> <C-Y>m <Plug>(emmet-merge-lines)
@@ -199,9 +224,8 @@ imap <silent> , <Plug>(emmet-expand-abbr)
 inoremap <silent> <expr>  coc#pum#visible() ? coc#pum#confirm() : "\"
 let &cpo=s:cpo_save
 unlet s:cpo_save
-set backspace=indent,eol,start
-set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,default,latin1
+set helplang=en
 set nomodeline
 set mouse=a
 set printoptions=paper:a4
@@ -227,8 +251,8 @@ else
   set shortmess=aoO
 endif
 badd +1 Backend/Core/utility.ts
-badd +46 Backend/Core/server.ts
-badd +134 Backend/Model/model.ts
+badd +22 Backend/Core/server.ts
+badd +40 Backend/Model/model.ts
 badd +1 Backend/Model/keys.ts
 badd +1 package.json
 argglobal
@@ -260,13 +284,12 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 31 + 135) / 271)
-exe 'vert 2resize ' . ((&columns * 119 + 135) / 271)
-exe 'vert 3resize ' . ((&columns * 119 + 135) / 271)
+exe 'vert 1resize ' . ((&columns * 27 + 118) / 237)
+exe 'vert 2resize ' . ((&columns * 104 + 118) / 237)
+exe 'vert 3resize ' . ((&columns * 104 + 118) / 237)
 argglobal
 enew
 file NERD_tree_tab_1
-balt Backend/Core/utility.ts
 let s:cpo_save=&cpo
 set cpo&vim
 nnoremap <buffer> <silent> <NL> :call nerdtree#ui_glue#invokeKeyMap("<C-j>")
@@ -341,11 +364,12 @@ setlocal cinscopedecls=public,protected,private
 setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
 setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
+setlocal commentstring=/*\ %s\ */
 setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
 setlocal concealcursor=nvic
 setlocal conceallevel=2
-setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
@@ -362,6 +386,7 @@ if &filetype != 'nerdtree'
 setlocal filetype=nerdtree
 endif
 setlocal fillchars=
+setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
 setlocal nofoldenable
@@ -374,8 +399,8 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=tcq
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
@@ -450,6 +475,7 @@ setlocal varsofttabstop=
 setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
+setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal winfixwidth
 setlocal nowrap
@@ -490,9 +516,10 @@ setlocal colorcolumn=
 setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
 setlocal commentstring=//\ %s
 setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
 setlocal concealcursor=
 setlocal conceallevel=0
-setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
@@ -509,6 +536,7 @@ if &filetype != 'typescript'
 setlocal filetype=typescript
 endif
 setlocal fillchars=
+setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
 setlocal foldenable
@@ -521,8 +549,8 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=croql
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=croql
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
@@ -597,13 +625,14 @@ setlocal varsofttabstop=
 setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
+setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 79 - ((24 * winheight(0) + 28) / 56)
+let s:l = 79 - ((21 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -647,9 +676,10 @@ setlocal colorcolumn=
 setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
 setlocal commentstring=//\ %s
 setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
 setlocal concealcursor=
 setlocal conceallevel=0
-setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
@@ -666,6 +696,7 @@ if &filetype != 'typescript'
 setlocal filetype=typescript
 endif
 setlocal fillchars=
+setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
 setlocal foldenable
@@ -678,8 +709,8 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=croql
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=croql
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
@@ -754,22 +785,23 @@ setlocal varsofttabstop=
 setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
+setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 99 - ((6 * winheight(0) + 28) / 56)
+let s:l = 99 - ((5 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 99
 normal! $
 wincmd w
-exe 'vert 1resize ' . ((&columns * 31 + 135) / 271)
-exe 'vert 2resize ' . ((&columns * 119 + 135) / 271)
-exe 'vert 3resize ' . ((&columns * 119 + 135) / 271)
+exe 'vert 1resize ' . ((&columns * 27 + 118) / 237)
+exe 'vert 2resize ' . ((&columns * 104 + 118) / 237)
+exe 'vert 3resize ' . ((&columns * 104 + 118) / 237)
 tabnext
 edit Backend/Model/model.ts
 let s:save_splitbelow = &splitbelow
@@ -791,9 +823,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 31 + 135) / 271)
-exe 'vert 2resize ' . ((&columns * 119 + 135) / 271)
-exe 'vert 3resize ' . ((&columns * 119 + 135) / 271)
+exe 'vert 1resize ' . ((&columns * 31 + 118) / 237)
+exe 'vert 2resize ' . ((&columns * 102 + 118) / 237)
+exe 'vert 3resize ' . ((&columns * 102 + 118) / 237)
 argglobal
 1argu
 enew
@@ -862,11 +894,12 @@ setlocal cinscopedecls=public,protected,private
 setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
 setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
+setlocal commentstring=/*\ %s\ */
 setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
 setlocal concealcursor=nvic
 setlocal conceallevel=2
-setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
@@ -883,6 +916,7 @@ if &filetype != 'nerdtree'
 setlocal filetype=nerdtree
 endif
 setlocal fillchars=
+setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
 setlocal nofoldenable
@@ -895,8 +929,8 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=tcq
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
@@ -971,6 +1005,7 @@ setlocal varsofttabstop=
 setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
+setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal winfixwidth
 setlocal nowrap
@@ -1014,9 +1049,10 @@ setlocal colorcolumn=
 setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
 setlocal commentstring=//\ %s
 setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
 setlocal concealcursor=
 setlocal conceallevel=0
-setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
@@ -1033,6 +1069,7 @@ if &filetype != 'typescript'
 setlocal filetype=typescript
 endif
 setlocal fillchars=
+setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
 setlocal foldenable
@@ -1045,8 +1082,8 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=croql
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=croql
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
@@ -1121,18 +1158,19 @@ setlocal varsofttabstop=
 setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
+setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 29 - ((0 * winheight(0) + 28) / 56)
+let s:l = 55 - ((26 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 29
-normal! $
+keepjumps 55
+normal! 032|
 wincmd w
 argglobal
 1argu
@@ -1172,9 +1210,10 @@ setlocal colorcolumn=
 setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
 setlocal commentstring=//\ %s
 setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
 setlocal concealcursor=
 setlocal conceallevel=0
-setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
@@ -1191,6 +1230,7 @@ if &filetype != 'typescript'
 setlocal filetype=typescript
 endif
 setlocal fillchars=
+setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
 setlocal foldenable
@@ -1203,8 +1243,8 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=croql
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=croql
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
@@ -1279,23 +1319,23 @@ setlocal varsofttabstop=
 setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
+setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 136 - ((28 * winheight(0) + 28) / 56)
+let s:l = 240 - ((36 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 136
-normal! 021|
+keepjumps 240
+normal! 017|
 wincmd w
-3wincmd w
-exe 'vert 1resize ' . ((&columns * 31 + 135) / 271)
-exe 'vert 2resize ' . ((&columns * 119 + 135) / 271)
-exe 'vert 3resize ' . ((&columns * 119 + 135) / 271)
+exe 'vert 1resize ' . ((&columns * 31 + 118) / 237)
+exe 'vert 2resize ' . ((&columns * 102 + 118) / 237)
+exe 'vert 3resize ' . ((&columns * 102 + 118) / 237)
 tabnext
 edit Backend/Model/keys.ts
 let s:save_splitbelow = &splitbelow
@@ -1317,9 +1357,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 43 + 135) / 271)
-exe 'vert 2resize ' . ((&columns * 61 + 135) / 271)
-exe 'vert 3resize ' . ((&columns * 165 + 135) / 271)
+exe 'vert 1resize ' . ((&columns * 38 + 118) / 237)
+exe 'vert 2resize ' . ((&columns * 99 + 118) / 237)
+exe 'vert 3resize ' . ((&columns * 98 + 118) / 237)
 argglobal
 enew
 file NERD_tree_tab_3
@@ -1397,11 +1437,12 @@ setlocal cinscopedecls=public,protected,private
 setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
 setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
+setlocal commentstring=/*\ %s\ */
 setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
 setlocal concealcursor=nvic
 setlocal conceallevel=2
-setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
@@ -1418,6 +1459,7 @@ if &filetype != 'nerdtree'
 setlocal filetype=nerdtree
 endif
 setlocal fillchars=
+setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
 setlocal nofoldenable
@@ -1430,8 +1472,8 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=tcq
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
@@ -1506,6 +1548,7 @@ setlocal varsofttabstop=
 setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
+setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal winfixwidth
 setlocal nowrap
@@ -1548,9 +1591,10 @@ setlocal colorcolumn=
 setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
 setlocal commentstring=//\ %s
 setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
 setlocal concealcursor=
 setlocal conceallevel=0
-setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
@@ -1567,6 +1611,7 @@ if &filetype != 'typescript'
 setlocal filetype=typescript
 endif
 setlocal fillchars=
+setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
 setlocal foldenable
@@ -1579,8 +1624,8 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=croql
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=croql
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
@@ -1655,18 +1700,19 @@ setlocal varsofttabstop=
 setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
+setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 62 - ((30 * winheight(0) + 28) / 56)
+let s:l = 54 - ((19 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 62
-normal! 028|
+keepjumps 54
+normal! 05|
 wincmd w
 argglobal
 if bufexists(fnamemodify("Backend/Model/model.ts", ":p")) | buffer Backend/Model/model.ts | else | edit Backend/Model/model.ts | endif
@@ -1705,9 +1751,10 @@ setlocal colorcolumn=
 setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
 setlocal commentstring=//\ %s
 setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
 setlocal concealcursor=
 setlocal conceallevel=0
-setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
@@ -1724,6 +1771,7 @@ if &filetype != 'typescript'
 setlocal filetype=typescript
 endif
 setlocal fillchars=
+setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
 setlocal foldenable
@@ -1736,8 +1784,8 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=croql
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=croql
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
@@ -1812,22 +1860,24 @@ setlocal varsofttabstop=
 setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
+setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 134 - ((22 * winheight(0) + 28) / 56)
+let s:l = 134 - ((20 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 134
 normal! 09|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 43 + 135) / 271)
-exe 'vert 2resize ' . ((&columns * 61 + 135) / 271)
-exe 'vert 3resize ' . ((&columns * 165 + 135) / 271)
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 38 + 118) / 237)
+exe 'vert 2resize ' . ((&columns * 99 + 118) / 237)
+exe 'vert 3resize ' . ((&columns * 98 + 118) / 237)
 tabnext
 edit package.json
 let s:save_splitbelow = &splitbelow
@@ -1846,8 +1896,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 43 + 135) / 271)
-exe 'vert 2resize ' . ((&columns * 227 + 135) / 271)
+exe 'vert 1resize ' . ((&columns * 37 + 118) / 237)
+exe 'vert 2resize ' . ((&columns * 199 + 118) / 237)
 argglobal
 enew
 file NERD_tree_tab_4
@@ -1925,11 +1975,12 @@ setlocal cinscopedecls=public,protected,private
 setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
 setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
+setlocal commentstring=/*\ %s\ */
 setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
 setlocal concealcursor=nvic
 setlocal conceallevel=2
-setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
@@ -1946,6 +1997,7 @@ if &filetype != 'nerdtree'
 setlocal filetype=nerdtree
 endif
 setlocal fillchars=
+setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
 setlocal nofoldenable
@@ -1958,8 +2010,8 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=tcq
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
@@ -2034,6 +2086,7 @@ setlocal varsofttabstop=
 setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
+setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal winfixwidth
 setlocal nowrap
@@ -2076,9 +2129,10 @@ setlocal colorcolumn=
 setlocal comments=
 setlocal commentstring=
 setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
 setlocal concealcursor=
 setlocal conceallevel=0
-setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
@@ -2095,6 +2149,7 @@ if &filetype != 'json'
 setlocal filetype=json
 endif
 setlocal fillchars=
+setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
 setlocal foldenable
@@ -2107,8 +2162,8 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=cq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=cq
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
@@ -2183,22 +2238,23 @@ setlocal varsofttabstop=
 setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
+setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 11 - ((10 * winheight(0) + 28) / 56)
+let s:l = 11 - ((9 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 11
 normal! $
 wincmd w
-exe 'vert 1resize ' . ((&columns * 43 + 135) / 271)
-exe 'vert 2resize ' . ((&columns * 227 + 135) / 271)
-tabnext 2
+exe 'vert 1resize ' . ((&columns * 37 + 118) / 237)
+exe 'vert 2resize ' . ((&columns * 199 + 118) / 237)
+tabnext 3
 set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf

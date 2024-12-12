@@ -117,6 +117,14 @@ class Server {
                     }), enumeration);
                 });
             }
+            function assistDeletionMethodExecution(fn) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    assistMethodExecution(["entryId"], () => __awaiter(this, void 0, void 0, function* () {
+                        yield fn(message.entryId);
+                        respond(utility_1.ResponseCodes.Success);
+                    }));
+                });
+            }
             switch (message.methodName) {
                 // set requests
                 case "setSchoolData":
@@ -192,6 +200,17 @@ class Server {
                     return assistIndexedGetMethodExecution("studentId", () => __awaiter(this, void 0, void 0, function* () { return model.getPracticalClassesForStudent(message.studentId); }));
                 case "getPracticalClassesForDay":
                     return assistIndexedGetMethodExecution("date", () => __awaiter(this, void 0, void 0, function* () { return model.getPracticalClassesForDay(message.date); }));
+                // deletion requests
+                case "deleteStudentOrFail":
+                    return assistDeletionMethodExecution((id) => __awaiter(this, void 0, void 0, function* () { return model.deleteStudentOrFail(id); }));
+                case "deleteStudentLegalRequirement":
+                    return assistDeletionMethodExecution((id) => __awaiter(this, void 0, void 0, function* () { return model.deleteStudentLegalRequirement(id); }));
+                case "deleteTheoryClassOrFail":
+                    return assistDeletionMethodExecution((id) => __awaiter(this, void 0, void 0, function* () { return model.deleteTheoryClassOrFail(id); }));
+                case "deleteTheoryClassAttendance":
+                    return assistDeletionMethodExecution((id) => __awaiter(this, void 0, void 0, function* () { return model.deleteTheoryClassAttendance(id); }));
+                case "deletePracticalClass":
+                    return assistDeletionMethodExecution((id) => __awaiter(this, void 0, void 0, function* () { return model.deletePracticalClass(id); }));
                 // default
                 default:
                     return respond(utility_1.ResponseCodes.MethodNotFound);

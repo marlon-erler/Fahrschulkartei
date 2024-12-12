@@ -119,6 +119,12 @@ export default class Server {
 		}
 	    }, enumeration);
 	}
+	async function assistDeletionMethodExecution(fn: (id: string) => Promise<void>) {
+	    assistMethodExecution(["entryId"], async () => {
+		await fn(message.entryId);
+		respond(ResponseCodes.Success);
+	    });
+	}
 
 	switch (message.methodName) {
 		// set requests
@@ -236,6 +242,28 @@ export default class Server {
 		    "date",
 		    async () => model.getPracticalClassesForDay(message.date),
 		);
+
+		// deletion requests
+	    case "deleteStudentOrFail":
+		return assistDeletionMethodExecution(async (id) => 
+		    model.deleteStudentOrFail(id)
+		)
+	    case "deleteStudentLegalRequirement":
+		return assistDeletionMethodExecution(async (id) => 
+		    model.deleteStudentLegalRequirement(id)
+		)
+	    case "deleteTheoryClassOrFail":
+		return assistDeletionMethodExecution(async (id) => 
+		    model.deleteTheoryClassOrFail(id)
+		)
+	    case "deleteTheoryClassAttendance":
+		return assistDeletionMethodExecution(async (id) => 
+		    model.deleteTheoryClassAttendance(id)
+		)
+	    case "deletePracticalClass":
+		return assistDeletionMethodExecution(async (id) => 
+		    model.deletePracticalClass(id)
+		)
 
 		// default
 	    default:
