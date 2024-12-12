@@ -84,7 +84,11 @@ export default class Server {
 		if (doesMatch == false) return respondIncomplete();
 	    }
 
-	    await fn();
+	    try {
+		await fn();
+	    } catch {
+		respond(ResponseCodes.UnknownError);
+	    }
 	}
 	async function assistSetMethodExecution(keys: string[], fn: () => Promise<void>, enumeration?: Object) {
 	    assistMethodExecution(keys, async () => {
@@ -131,7 +135,7 @@ export default class Server {
 	    case "setSchoolData":
 		return assistSetMethodExecution(["key", "value"], async () => {
 		    await model.setSchoolData(message.key, message.value);
-}, SchoolKeys);
+		}, SchoolKeys);
 	    case "setPricingChartData":
 		return assistSetMethodExecution(["chartId", "key", "value"], async () => {
 		    await model.setPricingChartData(message.chartId, message.key, message.value);
