@@ -16,6 +16,7 @@ export default class Server {
     start(port: number): Promise<void> {
 	return new Promise((resolve) => {
 	    this.configureRoutes();
+	    this.app.use("/static", Express.static("Frontend/static"));
 	    this.app.listen(port, () => {
 		console.log(`### SERVER RUNNING ON PORT ${port} ###`);
 		resolve();
