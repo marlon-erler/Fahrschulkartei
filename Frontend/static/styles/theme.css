@@ -1,4 +1,4 @@
-[theme="standard"] {
+:root {
     --primary-hue: 219;
 
     /* ANIMATION */
@@ -122,7 +122,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    [theme="standard"] {
+    :root {
         /* COLORS */
         /* background */
         --base-background: hsla(0, 0%, 0%, 100%);
@@ -154,21 +154,21 @@
 
 @font-face {
     font-family: IBM Plex Sans;
-    src: url("fonts/IBMPlexSans-Regular.ttf");
+    src: url("/static/styles/fonts/IBMPlexSans-Regular.ttf");
 }
 
 @font-face {
     font-family: IBM Plex Sans;
-    src: url("fonts/IBMPlexSans-Bold.ttf");
+    src: url("/static/styles/fonts/IBMPlexSans-Bold.ttf");
     font-weight: bold;
 }
 
 @font-face {
     font-family: IBM Plex Mono;
-    src: url("fonts/IBMPlexMono-Regular.ttf");
+    src: url("/static/styles/fonts/IBMPlexMono-Regular.ttf");
 }
 
 @font-face {
     font-family: IBM Plex Serif;
-    src: url("fonts/IBMPlexSerif-Regular.ttf");
+    src: url("/static/styles/fonts/IBMPlexSerif-Regular.ttf");
 }

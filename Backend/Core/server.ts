@@ -1,6 +1,7 @@
 import Express from "express";
 import BodyParser from "body-parser";
 import Model from "../Model/model";
+import UIBase from "../UI/base";
 
 export default class Server {
     app: Express.Application;
@@ -27,13 +28,15 @@ export default class Server {
     private configureRoutes() {
 	// School Data
 	this.app.get("/school-data", (req, res) => {
-	    res.send("school-data");
+	    res.send(
+		UIBase("School Data", "school-data")
+	    );
 	});
 	this.app.post("/school-data", (req, res) => {
 	    console.log(req.body);
 	    res.send("school-data");
 	});
-	
+
 	// Pricing Charts
 	this.app.get("/pricing-charts", (req, res) => {
 	    res.send("pricing charts")
