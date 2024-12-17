@@ -33,7 +33,6 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResponseCodes = void 0;
 exports.uuid = uuid;
 exports.formatDate = formatDate;
 exports.formatTime = formatTime;
@@ -42,9 +41,6 @@ exports.generateStudentId = generateStudentId;
 exports.generateTheoryClassId = generateTheoryClassId;
 exports.generateTheoryAttendanceId = generateTheoryAttendanceId;
 exports.generatePracticalClassId = generatePracticalClassId;
-exports.createResponse = createResponse;
-exports.confirmStringEntries = confirmStringEntries;
-exports.confirmStringInEnum = confirmStringInEnum;
 const UUID = __importStar(require("uuid"));
 /*
  * General
@@ -78,37 +74,4 @@ function generateTheoryAttendanceId(classId, studentId) {
 }
 function generatePracticalClassId(date, time, studentId) {
     return date + time + studentId;
-}
-/*
- * Messaging
- */
-var ResponseCodes;
-(function (ResponseCodes) {
-    ResponseCodes["Success"] = "S";
-    ResponseCodes["UnknownError"] = "E0";
-    ResponseCodes["MethodNotFound"] = "E1";
-    ResponseCodes["MessageIncomplete"] = "E2";
-    ResponseCodes["DataNotFound"] = "E3";
-})(ResponseCodes || (exports.ResponseCodes = ResponseCodes = {}));
-function createResponse(messageId, code) {
-    const object = {
-        messageId,
-        code,
-    };
-    return JSON.stringify(object);
-}
-/*
- * Safety
- */
-function confirmStringEntries(object, keys) {
-    for (const key of keys) {
-        const value = object[key];
-        if (typeof value != "string") {
-            return false;
-        }
-    }
-    return true;
-}
-function confirmStringInEnum(enumeration, string) {
-    return string in Object.values(enumeration);
 }
