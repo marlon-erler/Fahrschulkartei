@@ -27,7 +27,7 @@ export default class Server {
 
     private configureRoutes() {
 	// School Data
-	this.app.get("/school-data", (req, res) => {
+	this.app.get("/", (req, res) => {
 	    res.send(
 		UIBase("School Data", "school-data")
 	    );

@@ -1,0 +1,20 @@
+body {
+    display: flex;
+}
+
+.sidebar {
+    width: 100%;
+    max-width: 200px;
+
+    display: flex;
+    flex-direction: column;
+
+    border-right: var(--line-width) solid var(--hr-color);
+
+    padding: var(--content-padding);
+    gap: var(--gap-in-grid);
+}
+
+.sidebar .button {
+    width: 100%;
+}

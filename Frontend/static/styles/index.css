@@ -30,7 +30,7 @@ main {
     height: 100%;
 }
 
-button,
+.button,
 input,
 select,
 textarea {
@@ -57,27 +57,28 @@ body {
 a,
 a:visited {
     color: var(--text-link);
+    text-decoration: none;
 }
 
 /* CONTROLS */
 /* buttons etc */
-button.standard,
+.button.standard,
 select {
     background: var(--standard-button-background);
     color: var(--standard-button-foreground);
 }
 
-button.primary {
+.button.primary {
     background: var(--primary-button-background);
     color: var(--primary-button-foreground);
 }
 
-button.danger {
+.button.danger {
     background: var(--danger-button-background);
     color: var(--danger-button-foreground);
 }
 
-button[disabled] {
+.button[disabled] {
     background: var(--disabled-button-background);
     color: var(--text-normal);
     pointer-events: none;
@@ -85,34 +86,34 @@ button[disabled] {
 }
 
 @media (hover: hover) {
-    button.standard:hover,
+    .button.standard:hover,
     select:hover {
         background: var(--standard-button-hover);
     }
 
-    button.primary:hover {
+    .button.primary:hover {
         background: var(--primary-button-hover);
     }
 
-    button.danger:hover {
+    .button.danger:hover {
         background: var(--danger-button-hover);
     }
 }
 
-button.standard:active,
+.button.standard:active,
 select:active {
     background: var(--standard-button-active);
 }
 
-button.primary:active {
+.button.primary:active {
     background: var(--primary-button-active);
 }
 
-button.danger:active {
+.button.danger:active {
     background: var(--danger-button-active);
 }
 
-button span {
+.button span {
     color: inherit;
 }
 
@@ -203,7 +204,7 @@ header {
     align-items: center;
 }
 
-button,
+.button,
 .surface {
     display: flex;
     flex-direction: row;
@@ -214,13 +215,13 @@ button,
     gap: var(--gap-in-controls);
 }
 
-button.square {
+.button.square {
     padding: 0px;
     width: var(--control-height);
     justify-content: center;
 }
 
-button > div,
+.button > div,
 .surface > div {
     flex: 1;
 
@@ -249,7 +250,7 @@ button > div,
     DEPTH
 */
 
-button:not(.transparent),
+.button:not(.transparent),
 select {
     box-shadow: var(--button-shadow);
 }
@@ -277,7 +278,7 @@ textarea,
     MARGIN & PADDING
 */
 
-button,
+.button,
 input,
 select,
 textarea {
@@ -309,7 +310,7 @@ h5 {
     BORDER & OUTLINE
 */
 
-button:not(.transparent),
+.button:not(.transparent),
 select,
 [role="progressbar"],
 .slider-wrapper {
@@ -341,7 +342,7 @@ hr {
     CORNER RADIUS
 */
 
-button,
+.button,
 select {
     border-radius: var(--button-corner-radius);
 }
@@ -388,7 +389,7 @@ p {
 }
 
 input,
-button,
+.button,
 select {
     height: var(--control-height);
 }
@@ -547,7 +548,7 @@ select {
   FILTERS
 */
 
-button,
+.button,
 input,
 select,
 textarea,
@@ -701,7 +702,7 @@ ol {
         justify-content: stretch;
     }
 
-    .modal-window > .control-row button {
+    .modal-window > .control-row .button {
         flex: 1;
     }
 }
@@ -760,7 +761,7 @@ p {
     line-height: 1.4;
 }
 
-button,
+.button,
 input,
 select,
 textarea {
@@ -796,6 +797,6 @@ code {
     font-size: var(--icon-size);
 }
 
-button .icon {
+.button .icon {
     font-size: var(--button-icon-size);
 }
