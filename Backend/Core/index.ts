@@ -1,6 +1,5 @@
 import {app, BrowserWindow} from "electron";
 import Ip from "ip";
-import startServer from "./server";
 import Model from "../Model/model";
 import Server from "./server";
 

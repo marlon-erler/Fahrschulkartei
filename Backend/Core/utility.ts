@@ -1,5 +1,4 @@
 import * as UUID from "uuid";
-import {Tables} from "../Model/keys";
 
 /*
  * General
@@ -40,40 +39,4 @@ export function generateTheoryAttendanceId(classId: string, studentId: string): 
 
 export function generatePracticalClassId(date: string, time: string, studentId: string): string {
     return date + time + studentId;
-}
-
-/*
- * Messaging
- */
-export enum ResponseCodes {
-    Success = "S",
-    UnknownError = "E0",
-    MethodNotFound = "E1",
-    MessageIncomplete = "E2",
-    DataNotFound = "E3",
-}
-
-export function createResponse(messageId: string, code: ResponseCodes): string {
-    const object = {
-	messageId,
-	code,
-    }
-    return JSON.stringify(object);
-}
-
-/*
- * Safety
- */
-export function confirmStringEntries(object: Object, keys: string[]): boolean {
-    for (const key of keys) {
-	const value: any = object[key as keyof typeof object];
-	if (typeof value != "string") {
-	    return false;
-	}
-    }
-    return true;
-}
-
-export function confirmStringInEnum(enumeration: Object, string: string): boolean {
-    return string in Object.values(enumeration);
 }
