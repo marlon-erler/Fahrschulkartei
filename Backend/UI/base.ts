@@ -16,7 +16,9 @@ export default function UIBase(title: string, mainCode: string): string {
     </head>
     <body>
 	${UISidebar(Translations.SchoolData)}
-	${mainCode}
+	<main>
+	    ${mainCode}
+	</main>
     </body>
 </html>
 `

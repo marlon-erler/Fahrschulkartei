@@ -1,5 +1,11 @@
+/* General */
 body {
     display: flex;
+}
+
+main {
+    width: 100%;
+    max-width: var(--max-content-width);
 }
 
 .sidebar {
@@ -17,4 +23,28 @@ body {
 
 .sidebar .button {
     width: 100%;
+}
+
+/* Elements */
+input[type="submit"] {
+    max-width: unset;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--gap-in-grid);
+}
+
+label {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    align-items: center;
+    font-size: var(--control-font-size);
+}
+
+label input {
+    max-width: unset;
 }

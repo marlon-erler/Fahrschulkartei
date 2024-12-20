@@ -148,7 +148,7 @@
         /* text */
         --text-normal: white;
         --text-link: hsl(var(--primary-hue), 100%, 70%);
-        --text-placeholder: hsla(0, 0%, 0%, 30%);
+        --text-placeholder: hsla(0, 0%, 100%, 30%);
     }
 }
 
