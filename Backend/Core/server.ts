@@ -9,6 +9,7 @@ export default class Server {
 
     constructor(model: Model) {
 	this.app = Express();
+	this.app.use(BodyParser.urlencoded({ extended: false }));
 	this.app.use(BodyParser.json());
 
 	this.model = model;

@@ -1,5 +1,5 @@
-export default function UICheckbox(id: string, name: string): string {
+export default function UICheckbox(name: string): string {
     return `
-<input id="${id}" name="${name}" type="checkbox" />
+<input name="${name}" type="checkbox" />
 `
 }
