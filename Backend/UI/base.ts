@@ -13,6 +13,7 @@ export default function UIBase(title: string, mainCode: string): string {
 	<link rel="stylesheet" href="/static/styles/index.css" />
 	<link rel="stylesheet" href="/static/styles/layout.css" />
 	<link rel="stylesheet" href="/static/styles/theme.css" />
+	<link rel="stylesheet" href="/static/styles/icons.css" />
     </head>
     <body>
 	${UISidebar(Translations.SchoolData)}

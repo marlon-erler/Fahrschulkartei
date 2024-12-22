@@ -1,4 +1,6 @@
-/* General */
+/* 
+ * General 
+ */
 body {
     display: flex;
 }
@@ -25,7 +27,9 @@ main {
     width: 100%;
 }
 
-/* Elements */
+/* 
+ * Elements
+ */
 input[type="submit"] {
     max-width: unset;
 }
@@ -57,5 +61,13 @@ label input {
 }
 
 .item::after {
-    content: "arrow_right";
+    content: "arrow_forward";
 }
+
+/*
+ * Icons
+ */
+ .item::after,
+ input[type="checkbox"]::after {
+    font-family: icons; 
+ }
