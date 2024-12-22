@@ -48,3 +48,14 @@ label {
 label input {
     max-width: unset;
 }
+
+.item-grid {
+    display: grid;
+    gap: var(--gap-in-grid);
+
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))
+}
+
+.item::after {
+    content: "arrow_right";
+}
