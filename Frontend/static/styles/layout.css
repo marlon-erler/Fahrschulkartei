@@ -7,7 +7,6 @@ body {
 
 main {
     width: 100%;
-    max-width: var(--max-content-width);
 }
 
 .sidebar {
@@ -30,10 +29,6 @@ main {
 /* 
  * Elements
  */
-input[type="submit"] {
-    max-width: unset;
-}
-
 .group {
     display: flex;
     flex-direction: column;
@@ -43,9 +38,12 @@ input[type="submit"] {
 
 label {
     width: 100%;
+    max-width: var(--max-content-width);
+
     display: grid;
     grid-template-columns: 150px 1fr;
     align-items: center;
+
     font-size: var(--control-font-size);
 }
 
