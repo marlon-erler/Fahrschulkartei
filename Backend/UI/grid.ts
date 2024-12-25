@@ -1,6 +1,6 @@
-export default function UIGrid(...items: string[]): string {
+export default function UIGrid(columnWidth: number, ...items: string[]): string {
     return `
-<div class="item-grid">
+<div class="item-grid" style="--column-width: ${columnWidth}px;">
     ${items.join("\n")}
 </div>
 `

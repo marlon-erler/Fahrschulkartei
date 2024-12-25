@@ -13,7 +13,7 @@ export default function SchoolDataPage(): string {
     return UIBase(Translations.SchoolData,
 	UIForm("/student/123", "POST", 
 	    UIGroup("Title", 
-		UIGrid(
+		UIGrid(100,
 		    UIItem("A", "/"),
 		    UIItem("B", "/"),
 		    UIItem("C", "/"),
