@@ -1,5 +1,7 @@
 export default function UIButton(text: string, style: string): string {
     return `
-<input class="button ${style}" type="submit" value="${text}" />
+<div class="submit-wrapper">
+    <input class="button ${style}" type="submit" value="${text}" />
+</div>
 `
 }
