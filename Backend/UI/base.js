@@ -1,7 +1,12 @@
-import UISidebar from "./sidebar"
-import {Generic} from "./translations"
-
-export default function UIBase(title: string, mainCode: string): string {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = UIBase;
+const sidebar_1 = __importDefault(require("./sidebar"));
+const translations_1 = require("./translations");
+function UIBase(title, mainCode) {
     return `
 <!DOCTYPE HTML>
 <html lang="de">
@@ -16,11 +21,11 @@ export default function UIBase(title: string, mainCode: string): string {
 	<link rel="stylesheet" href="/static/styles/icons.css" />
     </head>
     <body>
-	${UISidebar(Generic.SchoolData)}
+	${(0, sidebar_1.default)(translations_1.Generic.SchoolData)}
 	<main>
 	    ${mainCode}
 	</main>
     </body>
 </html>
-`
+`;
 }

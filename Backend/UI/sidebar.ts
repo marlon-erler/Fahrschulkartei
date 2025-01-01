@@ -1,14 +1,14 @@
-import {Translations} from "./translations";
+import {Generic} from "./translations";
 
 export default function UISidebar(activeButton: string): string {
     return `
 <div class="sidebar">
     ${[
-	[Translations.SchoolData, "/"],
-	[Translations.PricingCharts, "/pricing-charts"],
-	[Translations.Students, "/students"],
-	[Translations.TheoryClasses, "/theory-classes"],
-	[Translations.PracticalClasses, "/practical-classes"],
+	[Generic.SchoolData, "/"],
+	[Generic.PricingCharts, "/pricing-charts"],
+	[Generic.Students, "/students"],
+	[Generic.TheoryClasses, "/theory-classes"],
+	[Generic.PracticalClasses, "/practical-classes"],
     ].map(x => UISidebarButton(x as [string, string], activeButton)).join("\n")}
 </div>
 `

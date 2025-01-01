@@ -1,30 +1,20 @@
 import UIBase from "../base";
 import UIButton from "../button";
-import UICheckbox from "../checkbox";
 import UIForm from "../form";
-import UIGrid from "../grid";
 import UIGroup from "../group";
 import UIInput from "../input";
-import UIItem from "../item";
 import UILabel from "../label";
-import {Translations} from "../translations";
+import * as T from "../translations";
 
 export default function SchoolDataPage(): string {
-    return UIBase(Translations.SchoolData,
-	UIForm("/student/123", "POST", 
-	    UIGroup("Title", 
-		UIGrid(100,
-		    UIItem("A", "/"),
-		    UIItem("B", "/"),
-		    UIItem("C", "/"),
-		    UIItem("D", "/"),
+    return UIBase(T.Generic.SchoolData,
+	UIForm("/school-data", "POST", 
+	    UIGroup(T.Generic.SchoolData, 
+		...Object.entries(T.SchoolTranslations).map(entry => 
+		    UILabel(entry[1], UIInput("", entry[0])),
 		),
-		`<hr>`,
-		UILabel("Text Input", UIInput("Type here", "input")),
-		UILabel("Checkbox", UICheckbox("checkbox")),
-		`<hr>`,
-		UIButton("Submit", "primary"),
-	    )
+		UIButton(T.Generic.Save, "primary"),
+	    ),
 	)
     );
 }
