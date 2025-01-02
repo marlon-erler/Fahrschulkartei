@@ -2,7 +2,6 @@ import Express from "express";
 import BodyParser from "body-parser";
 import Model from "../Model/model";
 import SchoolDataPage from "../UI/Pages/schoolData";
-import {SchoolKeys} from "../Model/keys";
 
 export default class Server {
     app: Express.Application;

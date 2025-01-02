@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = UIButton;
 function UIButton(text, style) {
     return `
-<input class="button ${style}" type="submit" value="${text}" />
+<div class="submit-wrapper">
+    <input class="button ${style}" type="submit" value="${text}" />
+</div>
 `;
 }

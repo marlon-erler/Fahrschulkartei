@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = UIInput;
-function UIInput(placeholder, name) {
+function UIInput(value, name) {
     return `
-<input name="${name}" placeholder="${placeholder}" />
+<input name="${name}" value="${value}" />
 `;
 }

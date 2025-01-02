@@ -8,6 +8,7 @@ var Generic;
     Generic["Students"] = "Sch\u00FCler";
     Generic["TheoryClasses"] = "Theoriestunden";
     Generic["PracticalClasses"] = "Fahrstunden";
+    Generic["Save"] = "Speichern";
 })(Generic || (exports.Generic = Generic = {}));
 exports.SchoolTranslations = {
     Name: "Name der Schule",
