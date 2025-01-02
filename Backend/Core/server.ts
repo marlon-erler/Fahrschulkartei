@@ -2,6 +2,7 @@ import Express from "express";
 import BodyParser from "body-parser";
 import Model from "../Model/model";
 import SchoolDataPage from "../UI/Pages/schoolData";
+import {SchoolKeys} from "../Model/keys";
 
 export default class Server {
     app: Express.Application;
@@ -28,8 +29,8 @@ export default class Server {
 
     private configureRoutes() {
 	// School Data
-	this.app.get("/", (req, res) => {
-	    res.send(SchoolDataPage());
+	this.app.get("/", async (req, res) => {
+	    res.send(await SchoolDataPage(this.model));
 	});
 	this.app.post("/school-data", (req, res) => {
 	    console.log(req.body);

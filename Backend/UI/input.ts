@@ -1,5 +1,5 @@
-export default function UIInput(placeholder: string, name: string): string {
+export default function UIInput(value: string, name: string): string {
     return `
-<input name="${name}" placeholder="${placeholder}" />
+<input name="${name}" value="${value}" />
 `
 }
