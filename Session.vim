@@ -232,7 +232,7 @@ set shiftwidth=4
 set smarttab
 set suffixes=.bak,~,.o,.h,.info,.swp,.obj,.snap
 set updatetime=500
-set window=61
+set window=51
 set winminheight=0
 set winminwidth=0
 let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-1 siso=-1
@@ -250,7 +250,7 @@ else
 endif
 badd +1 Backend/Core/index.ts
 badd +1 Backend/Core/headless.ts
-badd +1 Backend/Model/model.ts
+badd +30 Backend/Model/model.ts
 badd +1 Backend/Model/keys.ts
 badd +1 Backend/Core/utility.ts
 badd +19 Backend/Core/server.ts
@@ -294,11 +294,11 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 46 + 31) / 62)
+exe '1resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 1resize ' . ((&columns * 29 + 136) / 272)
-exe '2resize ' . ((&lines * 46 + 31) / 62)
+exe '2resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 2resize ' . ((&columns * 119 + 136) / 272)
-exe '3resize ' . ((&lines * 46 + 31) / 62)
+exe '3resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 3resize ' . ((&columns * 119 + 136) / 272)
 argglobal
 enew
@@ -812,11 +812,11 @@ normal! zt
 keepjumps 1
 normal! 0
 wincmd w
-exe '1resize ' . ((&lines * 46 + 31) / 62)
+exe '1resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 1resize ' . ((&columns * 29 + 136) / 272)
-exe '2resize ' . ((&lines * 46 + 31) / 62)
+exe '2resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 2resize ' . ((&columns * 119 + 136) / 272)
-exe '3resize ' . ((&lines * 46 + 31) / 62)
+exe '3resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 3resize ' . ((&columns * 119 + 136) / 272)
 tabnext
 edit Backend/Core/server.ts
@@ -830,6 +830,10 @@ vsplit
 2wincmd h
 wincmd w
 wincmd w
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
 wincmd t
@@ -840,8 +844,11 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 exe 'vert 1resize ' . ((&columns * 29 + 136) / 272)
-exe 'vert 2resize ' . ((&columns * 120 + 136) / 272)
-exe 'vert 3resize ' . ((&columns * 121 + 136) / 272)
+exe 'vert 2resize ' . ((&columns * 121 + 136) / 272)
+exe '3resize ' . ((&lines * 24 + 26) / 52)
+exe 'vert 3resize ' . ((&columns * 120 + 136) / 272)
+exe '4resize ' . ((&lines * 24 + 26) / 52)
+exe 'vert 4resize ' . ((&columns * 120 + 136) / 272)
 argglobal
 enew
 file NERD_tree_tab_2
@@ -1188,12 +1195,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 35 - ((32 * winheight(0) + 29) / 59)
+let s:l = 37 - ((28 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 35
-normal! 034|
+keepjumps 37
+normal! 071|
 wincmd w
 argglobal
 if bufexists(fnamemodify("Backend/Model/model.ts", ":p")) | buffer Backend/Model/model.ts | else | edit Backend/Model/model.ts | endif
@@ -1348,16 +1355,180 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 29) / 59)
+let s:l = 35 - ((14 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 0
+keepjumps 35
+normal! 06|
 wincmd w
+argglobal
+if bufexists(fnamemodify("Backend/Core/utility.ts", ":p")) | buffer Backend/Core/utility.ts | else | edit Backend/Core/utility.ts | endif
+balt Backend/Model/model.ts
+let s:cpo_save=&cpo
+set cpo&vim
+nmap <buffer> [c <Plug>(GitGutterPrevHunk)
+nmap <buffer> \hp <Plug>(GitGutterPreviewHunk)
+nmap <buffer> \hu <Plug>(GitGutterUndoHunk)
+nmap <buffer> \hs <Plug>(GitGutterStageHunk)
+xmap <buffer> \hs <Plug>(GitGutterStageHunk)
+nmap <buffer> ]c <Plug>(GitGutterNextHunk)
+xmap <buffer> ac <Plug>(GitGutterTextObjectOuterVisual)
+omap <buffer> ac <Plug>(GitGutterTextObjectOuterPending)
+xmap <buffer> ic <Plug>(GitGutterTextObjectInnerVisual)
+omap <buffer> ic <Plug>(GitGutterTextObjectInnerPending)
+let &cpo=s:cpo_save
+unlet s:cpo_save
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal backupcopy=
+setlocal balloonexpr=
+setlocal nobinary
+setlocal nobreakindent
+setlocal breakindentopt=
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),0],:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinscopedecls=public,protected,private
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=//\ %s
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal completeopt=
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal cursorlineopt=both
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=%+A\ %#%f\ %#(%l\\,%c):\ %m,%C%m
+setlocal noexpandtab
+if &filetype != 'typescript'
+setlocal filetype=typescript
+endif
+setlocal fillchars=
+setlocal findfunc=
+setlocal fixendofline
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal formatoptions=croql
+setlocal formatprg=
+setlocal grepprg=
+setlocal iminsert=0
+setlocal imsearch=-1
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=GetTypescriptIndent()
+setlocal indentkeys=0{,0},0),0],:,0#,!^F,o,O,e,0],0)
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255,$
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal lispoptions=
+setlocal lispwords=
+setlocal nolist
+setlocal listchars=
+setlocal makeencoding=
+setlocal makeprg=tsc\ \ $*\ %
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=bin,octal,hex
+set number
+setlocal number
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal scrolloff=-1
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal showbreak=
+setlocal sidescrolloff=-1
+set signcolumn=yes
+setlocal signcolumn=yes
+setlocal nosmartindent
+setlocal nosmoothscroll
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal spelloptions=
+setlocal statusline=
+setlocal suffixesadd=.ts,.tsx
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'typescript'
+setlocal syntax=typescript
+endif
+setlocal tabstop=8
+setlocal tagcase=
+setlocal tagfunc=
+setlocal tags=
+setlocal termwinkey=
+setlocal termwinscroll=10000
+setlocal termwinsize=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal thesaurusfunc=
+setlocal noundofile
+setlocal undolevels=-123456
+setlocal varsofttabstop=
+setlocal vartabstop=
+setlocal virtualedit=
+setlocal wincolor=
+setlocal nowinfixbuf
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 15 - ((11 * winheight(0) + 12) / 24)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 15
+normal! 030|
+wincmd w
+2wincmd w
 exe 'vert 1resize ' . ((&columns * 29 + 136) / 272)
-exe 'vert 2resize ' . ((&columns * 120 + 136) / 272)
-exe 'vert 3resize ' . ((&columns * 121 + 136) / 272)
+exe 'vert 2resize ' . ((&columns * 121 + 136) / 272)
+exe '3resize ' . ((&lines * 24 + 26) / 52)
+exe 'vert 3resize ' . ((&columns * 120 + 136) / 272)
+exe '4resize ' . ((&lines * 24 + 26) / 52)
+exe 'vert 4resize ' . ((&columns * 120 + 136) / 272)
 tabnext
 edit Backend/UI/Pages/schoolData.ts
 let s:save_splitbelow = &splitbelow
@@ -1388,13 +1559,13 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 exe 'vert 1resize ' . ((&columns * 31 + 136) / 272)
-exe '2resize ' . ((&lines * 29 + 31) / 62)
+exe '2resize ' . ((&lines * 24 + 26) / 52)
 exe 'vert 2resize ' . ((&columns * 120 + 136) / 272)
-exe '3resize ' . ((&lines * 29 + 31) / 62)
+exe '3resize ' . ((&lines * 24 + 26) / 52)
 exe 'vert 3resize ' . ((&columns * 120 + 136) / 272)
-exe '4resize ' . ((&lines * 29 + 31) / 62)
+exe '4resize ' . ((&lines * 24 + 26) / 52)
 exe 'vert 4resize ' . ((&columns * 119 + 136) / 272)
-exe '5resize ' . ((&lines * 29 + 31) / 62)
+exe '5resize ' . ((&lines * 24 + 26) / 52)
 exe 'vert 5resize ' . ((&columns * 119 + 136) / 272)
 argglobal
 enew
@@ -1742,12 +1913,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 25 - ((24 * winheight(0) + 14) / 29)
+let s:l = 15 - ((11 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 25
-normal! 0
+keepjumps 15
+normal! 06|
 wincmd w
 argglobal
 if bufexists(fnamemodify("Backend/UI/modelEntryLabel.ts", ":p")) | buffer Backend/UI/modelEntryLabel.ts | else | edit Backend/UI/modelEntryLabel.ts | endif
@@ -1902,12 +2073,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 10 - ((9 * winheight(0) + 14) / 29)
+let s:l = 10 - ((9 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 10
-normal! 022|
+normal! 013|
 wincmd w
 argglobal
 if bufexists(fnamemodify("Backend/UI/translations.ts", ":p")) | buffer Backend/UI/translations.ts | else | edit Backend/UI/translations.ts | endif
@@ -2062,7 +2233,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 14) / 29)
+let s:l = 1 - ((0 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -2222,22 +2393,21 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 7 - ((5 * winheight(0) + 14) / 29)
+let s:l = 26 - ((20 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 7
-normal! 023|
+keepjumps 26
+normal! 0
 wincmd w
-3wincmd w
 exe 'vert 1resize ' . ((&columns * 31 + 136) / 272)
-exe '2resize ' . ((&lines * 29 + 31) / 62)
+exe '2resize ' . ((&lines * 24 + 26) / 52)
 exe 'vert 2resize ' . ((&columns * 120 + 136) / 272)
-exe '3resize ' . ((&lines * 29 + 31) / 62)
+exe '3resize ' . ((&lines * 24 + 26) / 52)
 exe 'vert 3resize ' . ((&columns * 120 + 136) / 272)
-exe '4resize ' . ((&lines * 29 + 31) / 62)
+exe '4resize ' . ((&lines * 24 + 26) / 52)
 exe 'vert 4resize ' . ((&columns * 119 + 136) / 272)
-exe '5resize ' . ((&lines * 29 + 31) / 62)
+exe '5resize ' . ((&lines * 24 + 26) / 52)
 exe 'vert 5resize ' . ((&columns * 119 + 136) / 272)
 tabnext
 edit Frontend/static/styles/layout.css
@@ -3173,9 +3343,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 46 + 31) / 62)
+exe '1resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 1resize ' . ((&columns * 29 + 136) / 272)
-exe '2resize ' . ((&lines * 46 + 31) / 62)
+exe '2resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 2resize ' . ((&columns * 239 + 136) / 272)
 argglobal
 enew
@@ -3523,16 +3693,16 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 18 - ((17 * winheight(0) + 23) / 46)
+let s:l = 27 - ((26 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 18
+keepjumps 27
 normal! 047|
 wincmd w
-exe '1resize ' . ((&lines * 46 + 31) / 62)
+exe '1resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 1resize ' . ((&columns * 29 + 136) / 272)
-exe '2resize ' . ((&lines * 46 + 31) / 62)
+exe '2resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 2resize ' . ((&columns * 239 + 136) / 272)
 tabnext
 edit Backend/Model/keys.ts
@@ -3555,11 +3725,11 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 46 + 31) / 62)
+exe '1resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 1resize ' . ((&columns * 35 + 136) / 272)
-exe '2resize ' . ((&lines * 46 + 31) / 62)
+exe '2resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 2resize ' . ((&columns * 116 + 136) / 272)
-exe '3resize ' . ((&lines * 46 + 31) / 62)
+exe '3resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 3resize ' . ((&columns * 116 + 136) / 272)
 argglobal
 enew
@@ -4074,13 +4244,13 @@ normal! zt
 keepjumps 26
 normal! 018|
 wincmd w
-exe '1resize ' . ((&lines * 46 + 31) / 62)
+exe '1resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 1resize ' . ((&columns * 35 + 136) / 272)
-exe '2resize ' . ((&lines * 46 + 31) / 62)
+exe '2resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 2resize ' . ((&columns * 116 + 136) / 272)
-exe '3resize ' . ((&lines * 46 + 31) / 62)
+exe '3resize ' . ((&lines * 46 + 26) / 52)
 exe 'vert 3resize ' . ((&columns * 116 + 136) / 272)
-tabnext 3
+tabnext 2
 set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf

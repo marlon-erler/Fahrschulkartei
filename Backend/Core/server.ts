@@ -2,6 +2,8 @@ import Express from "express";
 import BodyParser from "body-parser";
 import Model from "../Model/model";
 import SchoolDataPage from "../UI/Pages/schoolData";
+import {handleRequestFormData} from "./utility";
+import {SchoolKeys} from "../Model/keys";
 
 export default class Server {
     app: Express.Application;
@@ -32,7 +34,11 @@ export default class Server {
 	    res.send(await SchoolDataPage(this.model));
 	});
 	this.app.post("/school-data", (req, res) => {
-	    console.log(req.body);
+	    handleRequestFormData<typeof SchoolKeys>(
+		(key, value) => this.model.setSchoolData(SchoolKeys[key], value),
+		SchoolKeys, 
+		Object.entries(req.body)
+	    );
 	    res.redirect("/");
 	});
 
