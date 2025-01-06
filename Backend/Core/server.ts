@@ -33,7 +33,7 @@ export default class Server {
 	});
 	this.app.post("/school-data", (req, res) => {
 	    console.log(req.body);
-	    res.send("school-data");
+	    res.redirect("/");
 	});
 
 	// Pricing Charts

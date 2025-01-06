@@ -1,4 +1,3 @@
-import Model from "../Model/model";
 import UIInput from "./input";
 import UILabel from "./label";
 
