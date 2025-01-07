@@ -75,10 +75,10 @@ nnoremap <silent> \tm :call tablemode#Toggle()
 nmap \rn <Plug>(coc-rename)
 xmap gx <Plug>NetrwBrowseXVis
 nmap gx <Plug>NetrwBrowseX
-snoremap <silent> <BS> c
-snoremap <silent> <Del> c
-snoremap <silent> <C-H> c
 snoremap <C-R> "_c
+snoremap <silent> <C-H> c
+snoremap <silent> <Del> c
+snoremap <silent> <BS> c
 nnoremap <silent> <Plug>GitGutterPreviewHunk :call gitgutter#utility#warn('Please change your map <Plug>GitGutterPreviewHunk to <Plug>(GitGutterPreviewHunk)')
 nnoremap <silent> <Plug>(GitGutterPreviewHunk) :GitGutterPreviewHunk
 nnoremap <silent> <Plug>GitGutterUndoHunk :call gitgutter#utility#warn('Please change your map <Plug>GitGutterUndoHunk to <Plug>(GitGutterUndoHunk)')
@@ -254,7 +254,7 @@ badd +1 Backend/Core/headless.ts
 badd +30 Backend/Model/model.ts
 badd +1 Backend/Model/keys.ts
 badd +1 Backend/Core/utility.ts
-badd +9 Backend/Core/server.ts
+badd +26 Backend/Core/server.ts
 badd +21 Backend/UI/base.ts
 badd +5 Backend/UI/item.ts
 badd +1 Backend/UI/Pages/schoolData.ts
@@ -295,12 +295,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 1resize ' . ((&columns * 28 + 115) / 230)
-exe '2resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 2resize ' . ((&columns * 118 + 115) / 230)
-exe '3resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 3resize ' . ((&columns * 115 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 28 + 112) / 225)
+exe 'vert 2resize ' . ((&columns * 85 + 112) / 225)
+exe 'vert 3resize ' . ((&columns * 115 + 112) / 225)
 argglobal
 enew
 file NERD_tree_tab_1
@@ -646,7 +643,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 9 - ((0 * winheight(0) + 28) / 57)
+let s:l = 9 - ((0 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -806,19 +803,16 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 28) / 57)
+let s:l = 1 - ((0 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 1
 normal! 0
 wincmd w
-exe '1resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 1resize ' . ((&columns * 28 + 115) / 230)
-exe '2resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 2resize ' . ((&columns * 118 + 115) / 230)
-exe '3resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 3resize ' . ((&columns * 115 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 28 + 112) / 225)
+exe 'vert 2resize ' . ((&columns * 85 + 112) / 225)
+exe 'vert 3resize ' . ((&columns * 115 + 112) / 225)
 tabnext
 edit Backend/Core/server.ts
 let s:save_splitbelow = &splitbelow
@@ -844,12 +838,12 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 31 + 115) / 230)
-exe 'vert 2resize ' . ((&columns * 99 + 115) / 230)
-exe '3resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 3resize ' . ((&columns * 98 + 115) / 230)
-exe '4resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 4resize ' . ((&columns * 98 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 31 + 112) / 225)
+exe 'vert 2resize ' . ((&columns * 96 + 112) / 225)
+exe '3resize ' . ((&lines * 22 + 23) / 47)
+exe 'vert 3resize ' . ((&columns * 96 + 112) / 225)
+exe '4resize ' . ((&lines * 21 + 23) / 47)
+exe 'vert 4resize ' . ((&columns * 96 + 112) / 225)
 argglobal
 enew
 file NERD_tree_tab_8
@@ -1186,12 +1180,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 37 - ((35 * winheight(0) + 30) / 61)
+let s:l = 43 - ((33 * winheight(0) + 22) / 44)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 37
-normal! 053|
+keepjumps 43
+normal! 011|
 wincmd w
 argglobal
 if bufexists(fnamemodify("Backend/Model/model.ts", ":p")) | buffer Backend/Model/model.ts | else | edit Backend/Model/model.ts | endif
@@ -1346,7 +1340,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 35 - ((0 * winheight(0) + 15) / 30)
+let s:l = 35 - ((0 * winheight(0) + 11) / 22)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -1506,7 +1500,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 36 - ((6 * winheight(0) + 15) / 30)
+let s:l = 36 - ((0 * winheight(0) + 10) / 21)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -1514,12 +1508,12 @@ keepjumps 36
 normal! 02|
 wincmd w
 2wincmd w
-exe 'vert 1resize ' . ((&columns * 31 + 115) / 230)
-exe 'vert 2resize ' . ((&columns * 99 + 115) / 230)
-exe '3resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 3resize ' . ((&columns * 98 + 115) / 230)
-exe '4resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 4resize ' . ((&columns * 98 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 31 + 112) / 225)
+exe 'vert 2resize ' . ((&columns * 96 + 112) / 225)
+exe '3resize ' . ((&lines * 22 + 23) / 47)
+exe 'vert 3resize ' . ((&columns * 96 + 112) / 225)
+exe '4resize ' . ((&lines * 21 + 23) / 47)
+exe 'vert 4resize ' . ((&columns * 96 + 112) / 225)
 tabnext
 edit Backend/UI/Pages/schoolData.ts
 let s:save_splitbelow = &splitbelow
@@ -1549,19 +1543,18 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 30 + 115) / 230)
-exe '2resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 2resize ' . ((&columns * 116 + 115) / 230)
-exe '3resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 3resize ' . ((&columns * 116 + 115) / 230)
-exe '4resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 4resize ' . ((&columns * 115 + 115) / 230)
-exe '5resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 5resize ' . ((&columns * 115 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 30 + 112) / 225)
+exe '2resize ' . ((&lines * 33 + 23) / 47)
+exe 'vert 2resize ' . ((&columns * 83 + 112) / 225)
+exe '3resize ' . ((&lines * 32 + 23) / 47)
+exe 'vert 3resize ' . ((&columns * 83 + 112) / 225)
+exe '4resize ' . ((&lines * 33 + 23) / 47)
+exe 'vert 4resize ' . ((&columns * 115 + 112) / 225)
+exe '5resize ' . ((&lines * 32 + 23) / 47)
+exe 'vert 5resize ' . ((&columns * 115 + 112) / 225)
 argglobal
 enew
 file NERD_tree_tab_3
-balt Backend/UI/Pages/schoolData.ts
 let s:cpo_save=&cpo
 set cpo&vim
 nnoremap <buffer> <silent> <NL> :call nerdtree#ui_glue#invokeKeyMap("<C-j>")
@@ -1905,7 +1898,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 15 - ((14 * winheight(0) + 15) / 30)
+let s:l = 15 - ((14 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -2065,7 +2058,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 10 - ((9 * winheight(0) + 15) / 30)
+let s:l = 10 - ((9 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -2225,7 +2218,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 15) / 30)
+let s:l = 1 - ((0 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -2385,22 +2378,22 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 26 - ((25 * winheight(0) + 15) / 30)
+let s:l = 26 - ((0 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 26
 normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 30 + 115) / 230)
-exe '2resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 2resize ' . ((&columns * 116 + 115) / 230)
-exe '3resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 3resize ' . ((&columns * 116 + 115) / 230)
-exe '4resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 4resize ' . ((&columns * 115 + 115) / 230)
-exe '5resize ' . ((&lines * 30 + 32) / 64)
-exe 'vert 5resize ' . ((&columns * 115 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 30 + 112) / 225)
+exe '2resize ' . ((&lines * 33 + 23) / 47)
+exe 'vert 2resize ' . ((&columns * 83 + 112) / 225)
+exe '3resize ' . ((&lines * 32 + 23) / 47)
+exe 'vert 3resize ' . ((&columns * 83 + 112) / 225)
+exe '4resize ' . ((&lines * 33 + 23) / 47)
+exe 'vert 4resize ' . ((&columns * 115 + 112) / 225)
+exe '5resize ' . ((&lines * 32 + 23) / 47)
+exe 'vert 5resize ' . ((&columns * 115 + 112) / 225)
 tabnext
 edit Frontend/static/styles/layout.css
 let s:save_splitbelow = &splitbelow
@@ -2419,8 +2412,7 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 35 + 115) / 230)
-exe 'vert 2resize ' . ((&columns * 227 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 2 + 112) / 225)
 argglobal
 enew
 file NERD_tree_tab_4
@@ -2767,15 +2759,14 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 10 - ((8 * winheight(0) + 30) / 61)
+let s:l = 10 - ((9 * winheight(0) + 33) / 66)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 10
 normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 35 + 115) / 230)
-exe 'vert 2resize ' . ((&columns * 227 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 2 + 112) / 225)
 tabnext
 edit Backend/Model/model.ts
 let s:save_splitbelow = &splitbelow
@@ -2797,9 +2788,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 34 + 115) / 230)
-exe 'vert 2resize ' . ((&columns * 112 + 115) / 230)
-exe 'vert 3resize ' . ((&columns * 115 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 34 + 112) / 225)
+exe 'vert 2resize ' . ((&columns * 79 + 112) / 225)
+exe 'vert 3resize ' . ((&columns * 115 + 112) / 225)
 argglobal
 enew
 file NERD_tree_tab_5
@@ -3146,7 +3137,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 33 - ((32 * winheight(0) + 30) / 61)
+let s:l = 33 - ((32 * winheight(0) + 33) / 66)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -3306,16 +3297,16 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 20 - ((19 * winheight(0) + 30) / 61)
+let s:l = 20 - ((19 * winheight(0) + 33) / 66)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 20
 normal! 039|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 34 + 115) / 230)
-exe 'vert 2resize ' . ((&columns * 112 + 115) / 230)
-exe 'vert 3resize ' . ((&columns * 115 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 34 + 112) / 225)
+exe 'vert 2resize ' . ((&columns * 79 + 112) / 225)
+exe 'vert 3resize ' . ((&columns * 115 + 112) / 225)
 tabnext
 edit Backend/Core/utility.ts
 let s:save_splitbelow = &splitbelow
@@ -3334,9 +3325,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 1resize ' . ((&columns * 31 + 115) / 230)
-exe '2resize ' . ((&lines * 57 + 32) / 64)
+exe 'vert 1resize ' . ((&columns * 31 + 112) / 225)
+exe 'vert 2resize ' . ((&columns * 198 + 112) / 225)
 argglobal
 enew
 file NERD_tree_tab_6
@@ -3683,16 +3673,15 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 27 - ((26 * winheight(0) + 28) / 57)
+let s:l = 27 - ((26 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 27
-normal! 01|
+normal! 0
 wincmd w
-exe '1resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 1resize ' . ((&columns * 31 + 115) / 230)
-exe '2resize ' . ((&lines * 57 + 32) / 64)
+exe 'vert 1resize ' . ((&columns * 31 + 112) / 225)
+exe 'vert 2resize ' . ((&columns * 198 + 112) / 225)
 tabnext
 edit Backend/Model/keys.ts
 let s:save_splitbelow = &splitbelow
@@ -3714,12 +3703,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 1resize ' . ((&columns * 34 + 115) / 230)
-exe '2resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 2resize ' . ((&columns * 115 + 115) / 230)
-exe '3resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 3resize ' . ((&columns * 112 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 34 + 112) / 225)
+exe 'vert 2resize ' . ((&columns * 82 + 112) / 225)
+exe 'vert 3resize ' . ((&columns * 112 + 112) / 225)
 argglobal
 enew
 file NERD_tree_tab_7
@@ -4066,7 +4052,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 60 - ((56 * winheight(0) + 28) / 57)
+let s:l = 60 - ((59 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -4226,19 +4212,16 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 26 - ((25 * winheight(0) + 28) / 57)
+let s:l = 26 - ((25 * winheight(0) + 30) / 61)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 26
 normal! 018|
 wincmd w
-exe '1resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 1resize ' . ((&columns * 34 + 115) / 230)
-exe '2resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 2resize ' . ((&columns * 115 + 115) / 230)
-exe '3resize ' . ((&lines * 57 + 32) / 64)
-exe 'vert 3resize ' . ((&columns * 112 + 115) / 230)
+exe 'vert 1resize ' . ((&columns * 34 + 112) / 225)
+exe 'vert 2resize ' . ((&columns * 82 + 112) / 225)
+exe 'vert 3resize ' . ((&columns * 112 + 112) / 225)
 tabnext 2
 set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0

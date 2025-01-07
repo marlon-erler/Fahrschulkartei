@@ -33,8 +33,8 @@ export default class Server {
 	this.app.get("/", async (req, res) => {
 	    res.send(await SchoolDataPage(this.model));
 	});
-	this.app.post("/school-data", (req, res) => {
-	    handleRequestFormData<typeof SchoolKeys>(
+	this.app.post("/school-data", async (req, res) => {
+	    await handleRequestFormData<typeof SchoolKeys>(
 		(key, value) => this.model.setSchoolData(SchoolKeys[key], value),
 		SchoolKeys, 
 		Object.entries(req.body)

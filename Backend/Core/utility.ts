@@ -12,13 +12,13 @@ export type Enum<T> = {[key: string]: T};
 /*
  * Processing
  */
-export function handleRequestFormData<T>(setData: (key: keyof T, value: string) => Promise<void>, keyMap: Enum<string>, entries: [string, any][]) {
+export async function handleRequestFormData<T>(setData: (key: keyof T, value: string) => Promise<void>, keyMap: Enum<string>, entries: [string, any][]): Promise<void> {
     const keys: string[] = Object.keys(keyMap);
     for (const entry of entries) {
 	const [key, value] = entry;
 	if (keys.indexOf(key) == -1) return;
 	if (typeof value != "string") return;
-	setData(key as keyof T, value);
+	await setData(key as keyof T, value);
     }
 }
 
