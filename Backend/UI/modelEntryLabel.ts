@@ -1,8 +1,7 @@
-import {Enum} from "../Core/utility";
 import UIInput from "./input";
 import UILabel from "./label";
 
-export default async function UIModelEntryLabels<T>(getData: (key: keyof T) => Promise<string|undefined>, keyMap: T, translations: Record<any, string>): Promise<string[]> {
+export default async function UIModelEntryLabels<T>(getData: (key: keyof T) => Promise<string|undefined>, translations: Record<any, string>): Promise<string[]> {
     return Promise.all(
 	Object.entries(translations).map(async entry => {
 	    const key = entry[0] as keyof T;

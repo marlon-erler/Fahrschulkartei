@@ -4,6 +4,7 @@ import Model from "../Model/model";
 import SchoolDataPage from "../UI/Pages/schoolData";
 import {handleRequestFormData} from "./utility";
 import {SchoolKeys} from "../Model/keys";
+import PricingChartsPage from "../UI/Pages/pricingCharts";
 
 export default class Server {
     app: Express.Application;
@@ -43,8 +44,8 @@ export default class Server {
 	});
 
 	// Pricing Charts
-	this.app.get("/pricing-charts", (req, res) => {
-	    res.send("pricing charts")
+	this.app.get("/pricing-charts", async (req, res) => {
+	    res.send(await PricingChartsPage(this.model));
 	});
 	this.app.get("/pricing-chart/:id", (req, res) => {
 	    res.send(req.params.id);

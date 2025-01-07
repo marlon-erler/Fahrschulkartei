@@ -4,13 +4,12 @@ import UIBase from "../base";
 import UIButton from "../button";
 import UIForm from "../form";
 import UIGroup from "../group";
-import UIModelEntryLabels from "../modelEntryLabel";
+import UIModelEntryLabel from "../modelEntryLabel";
 import * as T from "../translations";
 
 export default async function SchoolDataPage(model: Model): Promise<string> {
-    const inputs = await UIModelEntryLabels<typeof SchoolKeys>(
+    const inputs = await UIModelEntryLabel<typeof SchoolKeys>(
 	(key) => model.getSchoolData(SchoolKeys[key]),
-	SchoolKeys, 
 	T.SchoolTranslations
     );
 

@@ -1,5 +1,4 @@
 import UISidebar from "./sidebar"
-import {Generic} from "./translations"
 
 export default function UIBase(title: string, mainCode: string): string {
     return `
@@ -16,7 +15,7 @@ export default function UIBase(title: string, mainCode: string): string {
 	<link rel="stylesheet" href="/static/styles/icons.css" />
     </head>
     <body>
-	${UISidebar(Generic.SchoolData)}
+	${UISidebar(title)}
 	<main>
 	    ${mainCode}
 	</main>
