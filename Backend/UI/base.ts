@@ -1,6 +1,6 @@
-import UISidebar from "./sidebar"
+import UISidebar, {UISidebarOption} from "./sidebar"
 
-export default function UIBase(title: string, mainCode: string): string {
+export default function UIBase(title: string, options: UISidebarOption[], mainCode: string): string {
     return `
 <!DOCTYPE HTML>
 <html lang="de">
@@ -15,7 +15,7 @@ export default function UIBase(title: string, mainCode: string): string {
 	<link rel="stylesheet" href="/static/styles/icons.css" />
     </head>
     <body>
-	${UISidebar(title)}
+	${UISidebar(title, ...options)}
 	<main>
 	    ${mainCode}
 	</main>

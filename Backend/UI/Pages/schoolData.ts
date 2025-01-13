@@ -13,7 +13,7 @@ export default async function SchoolDataPage(model: Model): Promise<string> {
 	T.SchoolTranslations
     );
 
-    return UIBase(T.Generic.SchoolData,
+    return UIBase(T.Generic.SchoolData, [],
 	UIForm("/school-data", "POST", 
 	    UIGroup(T.Generic.SchoolData,
 		...inputs,

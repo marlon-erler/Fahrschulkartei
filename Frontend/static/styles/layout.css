@@ -15,6 +15,7 @@ main {
 
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 
     padding: var(--content-padding);
     gap: var(--gap-in-grid);
@@ -79,7 +80,8 @@ label input {
 /*
  * Icons
  */
- .item::after,
- input[type="checkbox"]::after {
-    font-family: icons; 
- }
+.icon,
+.item::after,
+input[type="checkbox"]::after {
+    font-family: icons;
+}

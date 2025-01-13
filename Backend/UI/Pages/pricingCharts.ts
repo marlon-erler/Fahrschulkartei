@@ -2,6 +2,7 @@ import Model from "../../Model/model";
 import UIBase from "../base";
 import UIGrid from "../grid";
 import UIGroup from "../group";
+import UIItem from "../item";
 import UIModelItems from "../modelItem";
 import * as T from "../translations";
 
@@ -11,10 +12,11 @@ export default async function PricingChartsPage(model: Model): Promise<string> {
 	return keys.map(key => [key, `/pricing-chart/${key}`]);
     });
 
-    return UIBase(T.Generic.PricingCharts, 
+    return UIBase(T.Generic.PricingCharts, [],
 	UIGroup(T.Generic.PricingCharts,
 	    UIGrid(200,
-		...items
+		...items,
+		UIItem("A", "/"),
 	    )
 	),
     )
