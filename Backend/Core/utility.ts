@@ -36,8 +36,8 @@ export function formatTime(time: Date): string {
 /*
  * IDs
  */
-export function generatePricingChartId(date: string, time: string): string {
-    return date + time;
+export function generatePricingChartId(): string {
+    return new Date().toISOString();
 }
 
 export function generateStudentId(firstName: string, lastName: string, dateOfBirth: string): string {

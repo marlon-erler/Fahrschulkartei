@@ -2,8 +2,8 @@ import Express from "express";
 import BodyParser from "body-parser";
 import Model from "../Model/model";
 import SchoolDataPage from "../UI/Pages/schoolData";
-import {handleRequestFormData} from "./utility";
-import {SchoolKeys} from "../Model/keys";
+import {generatePricingChartId, handleRequestFormData} from "./utility";
+import {PricingChartKeys, SchoolKeys} from "../Model/keys";
 import PricingChartsPage from "../UI/Pages/pricingCharts";
 
 export default class Server {
@@ -51,7 +51,9 @@ export default class Server {
 	    res.send(req.params.id);
 	});
 	this.app.get("/new-pricing-chart", async (req, res) => {
-	    res.send(await PricingChartsPage(this.model));
+	    const chartId: string = generatePricingChartId();
+	    await this.model.setPricingChartData(chartId, PricingChartKeys.Fahrstunde45Min, "");
+	    res.redirect("/pricing-charts");
 	});
 	this.app.post("/pricing-chart/:id", (req, res) => {
 	    console.log(req.body);

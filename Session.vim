@@ -257,16 +257,18 @@ badd +1 Backend/Core/utility.ts
 badd +1 Backend/Core/server.ts
 badd +1 Backend/UI/base.ts
 badd +5 Backend/UI/item.ts
-badd +1 Backend/UI/Pages/schoolData.ts
+badd +15 Backend/UI/Pages/schoolData.ts
 badd +1 Backend/UI/grid.ts
-badd +30 Frontend/static/styles/index.css
-badd +1 Frontend/static/styles/layout.css
+badd +1 Frontend/static/styles/index.css
+badd +79 Frontend/static/styles/layout.css
 badd +26 Backend/UI/translations.ts
 badd +10 Backend/UI/modelEntryLabel.js
 badd +8 Backend/UI/modelEntryLabel.ts
-badd +14 Backend/UI/Pages/pricingCharts.ts
+badd +13 Backend/UI/Pages/pricingCharts.ts
 badd +5 Backend/UI/modelItem.ts
 badd +1 Backend/UI/sidebar.ts
+badd +1 Frontend/static/styles/fonts/IBMPlexMono-Bold.ttf
+badd +4 Frontend/static/styles/icons.css
 argglobal
 %argdel
 $argadd Backend/UI/Pages/schoolData.ts
@@ -843,11 +845,11 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 exe 'vert 1resize ' . ((&columns * 31 + 136) / 273)
-exe 'vert 2resize ' . ((&columns * 121 + 136) / 273)
-exe '3resize ' . ((&lines * 25 + 26) / 53)
-exe 'vert 3resize ' . ((&columns * 119 + 136) / 273)
-exe '4resize ' . ((&lines * 24 + 26) / 53)
-exe 'vert 4resize ' . ((&columns * 119 + 136) / 273)
+exe 'vert 2resize ' . ((&columns * 120 + 136) / 273)
+exe '3resize ' . ((&lines * 24 + 26) / 53)
+exe 'vert 3resize ' . ((&columns * 120 + 136) / 273)
+exe '4resize ' . ((&lines * 25 + 26) / 53)
+exe 'vert 4resize ' . ((&columns * 120 + 136) / 273)
 argglobal
 enew
 file NERD_tree_tab_2
@@ -1194,12 +1196,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 55 - ((42 * winheight(0) + 25) / 50)
+let s:l = 54 - ((24 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 55
-normal! 036|
+keepjumps 54
+normal! 058|
 wincmd w
 argglobal
 if bufexists(fnamemodify("Backend/Model/model.ts", ":p")) | buffer Backend/Model/model.ts | else | edit Backend/Model/model.ts | endif
@@ -1354,7 +1356,7 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 56 - ((20 * winheight(0) + 12) / 25)
+let s:l = 56 - ((0 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -1514,21 +1516,22 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 16 - ((14 * winheight(0) + 12) / 24)
+let s:l = 39 - ((5 * winheight(0) + 12) / 25)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 16
-normal! 031|
+keepjumps 39
+normal! 017|
 wincmd w
+4wincmd w
 exe 'vert 1resize ' . ((&columns * 31 + 136) / 273)
-exe 'vert 2resize ' . ((&columns * 121 + 136) / 273)
-exe '3resize ' . ((&lines * 25 + 26) / 53)
-exe 'vert 3resize ' . ((&columns * 119 + 136) / 273)
-exe '4resize ' . ((&lines * 24 + 26) / 53)
-exe 'vert 4resize ' . ((&columns * 119 + 136) / 273)
+exe 'vert 2resize ' . ((&columns * 120 + 136) / 273)
+exe '3resize ' . ((&lines * 24 + 26) / 53)
+exe 'vert 3resize ' . ((&columns * 120 + 136) / 273)
+exe '4resize ' . ((&lines * 25 + 26) / 53)
+exe 'vert 4resize ' . ((&columns * 120 + 136) / 273)
 tabnext
-edit Backend/UI/Pages/schoolData.ts
+edit Backend/UI/Pages/pricingCharts.ts
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -1760,29 +1763,13 @@ setlocal nowrap
 setlocal wrapmargin=0
 wincmd w
 argglobal
-balt Backend/UI/Pages/pricingCharts.ts
+balt Backend/UI/Pages/schoolData.ts
 let s:cpo_save=&cpo
 set cpo&vim
-nnoremap <buffer> <silent> <NL> :call nerdtree#ui_glue#invokeKeyMap("<C-j>")
-nnoremap <buffer> <silent>  :call nerdtree#ui_glue#invokeKeyMap("<C-k>")
-nnoremap <buffer> <silent>  :call nerdtree#ui_glue#invokeKeyMap("<CR>")
-nnoremap <buffer> <silent> ? :call nerdtree#ui_glue#invokeKeyMap("?")
-nnoremap <buffer> <silent> A :call nerdtree#ui_glue#invokeKeyMap("A")
-nnoremap <buffer> <silent> B :call nerdtree#ui_glue#invokeKeyMap("B")
-nnoremap <buffer> <silent> C :call nerdtree#ui_glue#invokeKeyMap("C")
-nnoremap <buffer> <silent> CD :call nerdtree#ui_glue#invokeKeyMap("CD")
-nnoremap <buffer> <silent> D :call nerdtree#ui_glue#invokeKeyMap("D")
-nnoremap <buffer> <silent> FL :call nerdtree#ui_glue#invokeKeyMap("FL")
-nnoremap <buffer> <silent> F :call nerdtree#ui_glue#invokeKeyMap("F")
-nnoremap <buffer> <silent> I :call nerdtree#ui_glue#invokeKeyMap("I")
-nnoremap <buffer> <silent> J :call nerdtree#ui_glue#invokeKeyMap("J")
-nnoremap <buffer> <silent> K :call nerdtree#ui_glue#invokeKeyMap("K")
-nnoremap <buffer> <silent> O :call nerdtree#ui_glue#invokeKeyMap("O")
-nnoremap <buffer> <silent> P :call nerdtree#ui_glue#invokeKeyMap("P")
-nnoremap <buffer> <silent> R :call nerdtree#ui_glue#invokeKeyMap("R")
-nnoremap <buffer> <silent> T :call nerdtree#ui_glue#invokeKeyMap("T")
-nnoremap <buffer> <silent> U :call nerdtree#ui_glue#invokeKeyMap("U")
-nnoremap <buffer> <silent> X :call nerdtree#ui_glue#invokeKeyMap("X")
+inoremap <buffer> <nowait> <silent> <C-K> =coc#snippet#jump(0, 0)
+inoremap <buffer> <nowait> <silent> <C-J> =coc#snippet#jump(1, 0)
+snoremap <buffer> <nowait> <silent> <NL> :call coc#snippet#jump(1, 0)
+snoremap <buffer> <nowait> <silent>  :call coc#snippet#jump(0, 0)
 nmap <buffer> [c <Plug>(GitGutterPrevHunk)
 nmap <buffer> \hp <Plug>(GitGutterPreviewHunk)
 nmap <buffer> \hu <Plug>(GitGutterUndoHunk)
@@ -1791,30 +1778,12 @@ xmap <buffer> \hs <Plug>(GitGutterStageHunk)
 nmap <buffer> ]c <Plug>(GitGutterNextHunk)
 xmap <buffer> ac <Plug>(GitGutterTextObjectOuterVisual)
 omap <buffer> ac <Plug>(GitGutterTextObjectOuterPending)
-nnoremap <buffer> <silent> cd :call nerdtree#ui_glue#invokeKeyMap("cd")
-nnoremap <buffer> <silent> e :call nerdtree#ui_glue#invokeKeyMap("e")
-nnoremap <buffer> <silent> f :call nerdtree#ui_glue#invokeKeyMap("f")
-nnoremap <buffer> <silent> go :call nerdtree#ui_glue#invokeKeyMap("go")
-nnoremap <buffer> <silent> gb :call nerdtree#ui_glue#invokeKeyMap("gb")
-nnoremap <buffer> <silent> gi :call nerdtree#ui_glue#invokeKeyMap("gi")
-nnoremap <buffer> <silent> gs :call nerdtree#ui_glue#invokeKeyMap("gs")
-nnoremap <buffer> <silent> i :call nerdtree#ui_glue#invokeKeyMap("i")
 xmap <buffer> ic <Plug>(GitGutterTextObjectInnerVisual)
 omap <buffer> ic <Plug>(GitGutterTextObjectInnerPending)
-nnoremap <buffer> <silent> m :call nerdtree#ui_glue#invokeKeyMap("m")
-nnoremap <buffer> <silent> o :call nerdtree#ui_glue#invokeKeyMap("o")
-nnoremap <buffer> <silent> p :call nerdtree#ui_glue#invokeKeyMap("p")
-nnoremap <buffer> <silent> q :call nerdtree#ui_glue#invokeKeyMap("q")
-nnoremap <buffer> <silent> r :call nerdtree#ui_glue#invokeKeyMap("r")
-nnoremap <buffer> <silent> s :call nerdtree#ui_glue#invokeKeyMap("s")
-nnoremap <buffer> <silent> t :call nerdtree#ui_glue#invokeKeyMap("t")
-nnoremap <buffer> <silent> u :call nerdtree#ui_glue#invokeKeyMap("u")
-nnoremap <buffer> <silent> x :call nerdtree#ui_glue#invokeKeyMap("x")
-nnoremap <buffer> <silent> <MiddleMouse> :call nerdtree#ui_glue#invokeKeyMap("<MiddleMouse>")
-nnoremap <buffer> <silent> <2-LeftMouse> :call nerdtree#ui_glue#invokeKeyMap("<2-LeftMouse>")
-nnoremap <buffer> <silent> <C-K> :call nerdtree#ui_glue#invokeKeyMap("<C-k>")
-nnoremap <buffer> <silent> <C-J> :call nerdtree#ui_glue#invokeKeyMap("<C-j>")
-nnoremap <buffer> <silent> <LeftRelease> <LeftRelease>:call nerdtree#ui_glue#invokeKeyMap("<LeftRelease>")
+snoremap <buffer> <nowait> <silent> <C-K> :call coc#snippet#jump(0, 0)
+snoremap <buffer> <nowait> <silent> <C-J> :call coc#snippet#jump(1, 0)
+inoremap <buffer> <nowait> <silent> <NL> =coc#snippet#jump(1, 0)
+inoremap <buffer> <nowait> <silent>  =coc#snippet#jump(0, 0)
 let &cpo=s:cpo_save
 unlet s:cpo_save
 setlocal keymap=
@@ -1839,13 +1808,13 @@ setlocal commentstring=//\ %s
 setlocal complete=.,w,b,u,t,i
 setlocal completefunc=
 setlocal completeopt=
-setlocal concealcursor=nvic
-setlocal conceallevel=2
+setlocal concealcursor=
+setlocal conceallevel=0
 setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
 setlocal nocursorcolumn
-setlocal cursorline
+setlocal nocursorline
 setlocal cursorlineopt=both
 setlocal define=
 setlocal dictionary=
@@ -1860,7 +1829,7 @@ setlocal fillchars=
 setlocal findfunc=
 setlocal fixendofline
 setlocal foldcolumn=0
-setlocal nofoldenable
+setlocal foldenable
 setlocal foldexpr=0
 setlocal foldignore=#
 setlocal foldlevel=0
@@ -1896,7 +1865,7 @@ setlocal modeline
 setlocal modifiable
 setlocal nrformats=bin,octal,hex
 set number
-setlocal nonumber
+setlocal number
 setlocal numberwidth=4
 setlocal omnifunc=
 setlocal path=
@@ -1923,7 +1892,7 @@ setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
 setlocal spellfile=
 setlocal spelllang=en
 setlocal spelloptions=
-setlocal statusline=%{exists('b:NERDTree')?b:NERDTree.root.path.str():''}
+setlocal statusline=
 setlocal suffixesadd=.ts,.tsx
 setlocal swapfile
 setlocal synmaxcol=3000
@@ -1949,16 +1918,16 @@ setlocal wincolor=
 setlocal nowinfixbuf
 setlocal nowinfixheight
 setlocal nowinfixwidth
-setlocal nowrap
+setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 18 - ((17 * winheight(0) + 12) / 25)
+let s:l = 5 - ((4 * winheight(0) + 12) / 25)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 18
-normal! 013|
+keepjumps 5
+normal! 0
 wincmd w
 argglobal
 if bufexists(fnamemodify("Backend/UI/modelItem.ts", ":p")) | buffer Backend/UI/modelItem.ts | else | edit Backend/UI/modelItem.ts | endif
@@ -2273,12 +2242,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 12) / 25)
+let s:l = 11 - ((10 * winheight(0) + 12) / 25)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 0
+keepjumps 11
+normal! 028|
 wincmd w
 argglobal
 if bufexists(fnamemodify("Backend/UI/modelEntryLabel.ts", ":p")) | buffer Backend/UI/modelEntryLabel.ts | else | edit Backend/UI/modelEntryLabel.ts | endif
@@ -2433,14 +2402,13 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 5 - ((4 * winheight(0) + 12) / 24)
+let s:l = 6 - ((5 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 5
-normal! 023|
+keepjumps 6
+normal! 035|
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 31 + 136) / 273)
 exe '2resize ' . ((&lines * 25 + 26) / 53)
 exe 'vert 2resize ' . ((&columns * 120 + 136) / 273)
@@ -2819,12 +2787,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 15 - ((14 * winheight(0) + 25) / 50)
+let s:l = 17 - ((16 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 15
-normal! 037|
+keepjumps 17
+normal! 04|
 wincmd w
 argglobal
 if bufexists(fnamemodify("Backend/UI/sidebar.ts", ":p")) | buffer Backend/UI/sidebar.ts | else | edit Backend/UI/sidebar.ts | endif
@@ -2979,12 +2947,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 15 - ((14 * winheight(0) + 25) / 50)
+let s:l = 32 - ((31 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 15
-normal! 038|
+keepjumps 32
+normal! 09|
 wincmd w
 exe 'vert 1resize ' . ((&columns * 31 + 136) / 273)
 exe 'vert 2resize ' . ((&columns * 120 + 136) / 273)
@@ -3205,6 +3173,7 @@ setlocal nowrap
 setlocal wrapmargin=0
 wincmd w
 argglobal
+balt Frontend/static/styles/icons.css
 let s:cpo_save=&cpo
 set cpo&vim
 nmap <buffer> [c <Plug>(GitGutterPrevHunk)
@@ -3355,11 +3324,11 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 87 - ((49 * winheight(0) + 25) / 50)
+let s:l = 83 - ((36 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 87
+keepjumps 83
 normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 31 + 136) / 273)
@@ -4809,17 +4778,17 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 26 - ((20 * winheight(0) + 25) / 50)
+let s:l = 27 - ((21 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 26
+keepjumps 27
 normal! 018|
 wincmd w
 exe 'vert 1resize ' . ((&columns * 41 + 136) / 273)
 exe 'vert 2resize ' . ((&columns * 116 + 136) / 273)
 exe 'vert 3resize ' . ((&columns * 114 + 136) / 273)
-tabnext 3
+tabnext 2
 set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
