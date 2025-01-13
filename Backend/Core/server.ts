@@ -50,6 +50,9 @@ export default class Server {
 	this.app.get("/pricing-chart/:id", (req, res) => {
 	    res.send(req.params.id);
 	});
+	this.app.get("/new-pricing-chart", async (req, res) => {
+	    res.send(await PricingChartsPage(this.model));
+	});
 	this.app.post("/pricing-chart/:id", (req, res) => {
 	    console.log(req.body);
 	    res.send(req.params.id);

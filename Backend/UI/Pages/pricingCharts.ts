@@ -12,11 +12,12 @@ export default async function PricingChartsPage(model: Model): Promise<string> {
 	return keys.map(key => [key, `/pricing-chart/${key}`]);
     });
 
-    return UIBase(T.Generic.PricingCharts, [],
+    return UIBase(T.Generic.PricingCharts, [
+	    [T.Generic.CreateNew, "add", "/new-pricing-chart"],
+	],
 	UIGroup(T.Generic.PricingCharts,
 	    UIGrid(200,
 		...items,
-		UIItem("A", "/"),
 	    )
 	),
     )
