@@ -25,19 +25,28 @@ export async function handleRequestFormData<T>(setData: (key: keyof T, value: st
 /*
  * Format
  */
-export function formatDate(date: Date): string {
-    return date.getUTCFullYear().toString() + (date.getUTCMonth()+1).toString() + date.getUTCDate().toString();
+export function padZero(input: number, size: number): string {
+    return input.toString().padStart(size, "0");
 }
 
-export function formatTime(time: Date): string {
-    return time.getUTCHours().toString() + time.getUTCMinutes().toString();
+export function stringifyDate(date: Date) {
+    const parts: string[] = [
+	padZero(date.getFullYear(), 4),
+	...[date.getMonth()+1, date.getDate(), date.getHours(), date.getMinutes()].map(x => padZero(x, 2)),
+    ];
+    return parts.join("-");
+}
+
+export function formatStringifiedDate(input: string): string {
+    const [year, month, date, hours, minutes] = input.split("-");
+    return `${year}-${month}-${date} ${hours}:${minutes}`;
 }
 
 /*
  * IDs
  */
 export function generatePricingChartId(): string {
-    return new Date().toISOString();
+    return stringifyDate(new Date());
 }
 
 export function generateStudentId(firstName: string, lastName: string, dateOfBirth: string): string {

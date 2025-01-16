@@ -5,6 +5,7 @@ import SchoolDataPage from "../UI/Pages/schoolData";
 import {generatePricingChartId, handleRequestFormData} from "./utility";
 import {PricingChartKeys, SchoolKeys} from "../Model/keys";
 import PricingChartsPage from "../UI/Pages/pricingCharts";
+import PricingChartPage from "../UI/Pages/pricingChart";
 
 export default class Server {
     app: Express.Application;
@@ -47,8 +48,8 @@ export default class Server {
 	this.app.get("/pricing-charts", async (req, res) => {
 	    res.send(await PricingChartsPage(this.model));
 	});
-	this.app.get("/pricing-chart/:id", (req, res) => {
-	    res.send(req.params.id);
+	this.app.get("/pricing-chart/:id", async (req, res) => {
+	    res.send(await PricingChartPage(this.model, req.params.id));
 	});
 	this.app.get("/new-pricing-chart", async (req, res) => {
 	    const chartId: string = generatePricingChartId();
