@@ -1,16 +1,25 @@
 import {formatStringifiedDate} from "../../Core/utility";
+import {PricingChartKeys} from "../../Model/keys";
 import Model from "../../Model/model";
 import UIBase from "../base";
-import UIGrid from "../grid";
+import UIButton from "../button";
+import UIForm from "../form";
 import UIGroup from "../group";
+import UIModelEntryLabels from "../modelEntryLabel";
 import * as T from "../translations";
 
 export default async function PricingChartPage(model: Model, chartId: string): Promise<string> {
-    return UIBase(T.Generic.PricingCharts, [
-	],
-	UIGroup(formatStringifiedDate(chartId),
-	    UIGrid(300,
-	    )
-	),
-    )
+    const inputs = await UIModelEntryLabels<typeof PricingChartKeys>(
+	(key) => model.getPricingChartData(chartId, PricingChartKeys[key]),
+	T.PricingChartTranslations
+    );
+
+    return UIBase(T.Generic.PricingCharts, [],
+	UIForm(`/pricing-chart/${chartId}`, "POST", 
+	    UIGroup(formatStringifiedDate(chartId),
+		...inputs,
+		UIButton(T.Generic.Save, "primary"),
+	    ),
+	)
+    );
 }

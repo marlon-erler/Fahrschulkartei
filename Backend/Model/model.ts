@@ -36,6 +36,7 @@ export default class Model {
      * School Data
      */
     async setSchoolData(key: SchoolKeys, value: string): Promise<void> {
+	console.log(key, value);
 	return await this.schoolDataTable.setFieldValuesForEntry(SCHOOL_ENTRY_ID, key, [value]);
     }
 

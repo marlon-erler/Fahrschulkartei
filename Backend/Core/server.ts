@@ -56,9 +56,15 @@ export default class Server {
 	    await this.model.setPricingChartData(chartId, PricingChartKeys.Fahrstunde45Min, "");
 	    res.redirect("/pricing-charts");
 	});
-	this.app.post("/pricing-chart/:id", (req, res) => {
+	this.app.post("/pricing-chart/:id", async (req, res) => {
 	    console.log(req.body);
-	    res.send(req.params.id);
+	    const id = req.params.id;
+	    await handleRequestFormData<typeof PricingChartKeys>(
+		(key, value) => this.model.setPricingChartData(id, PricingChartKeys[key], value),
+		PricingChartKeys, 
+		Object.entries(req.body)
+	    );
+	    res.redirect(`/pricing-chart/${id}`);
 	});
 
 	// Students
