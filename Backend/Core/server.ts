@@ -54,7 +54,7 @@ export default class Server {
 	this.app.get("/new-pricing-chart", async (req, res) => {
 	    const chartId: string = generatePricingChartId();
 	    await this.model.setPricingChartData(chartId, PricingChartKeys.Fahrstunde45Min, "");
-	    res.redirect("/pricing-charts");
+	    res.redirect(`/pricing-chart/${chartId}`);
 	});
 	this.app.post("/pricing-chart/:id", async (req, res) => {
 	    console.log(req.body);

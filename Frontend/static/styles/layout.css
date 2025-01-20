@@ -3,13 +3,19 @@
  */
 body {
     display: flex;
+    justify-content: center;
 }
 
 main {
     width: 100%;
+
+    overflow-y: auto;
 }
 
 .sidebar {
+    position: sticky;
+    top: 0px;
+
     width: 100%;
     max-width: 200px;
 
@@ -35,6 +41,8 @@ main {
     flex-direction: column;
 
     gap: var(--gap-in-grid);
+    
+    max-width: var(--max-content-width);
 }
 
 label {
