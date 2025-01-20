@@ -18,7 +18,7 @@ export default async function PricingChartsPage(model: Model): Promise<string> {
     return UIBase(T.Generic.PricingCharts, [
 	    [ButtonStyles.Primary, T.Generic.CreateNew, "add", "/new-pricing-chart"],
 	],
-	UIGroup(T.Generic.PricingCharts,
+	UIGroup(T.Generic.PricingCharts, "",
 	    UIGrid(300,
 		...items,
 	    )

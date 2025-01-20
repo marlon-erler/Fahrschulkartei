@@ -15,7 +15,7 @@ export default async function SchoolDataPage(model: Model): Promise<string> {
 
     return UIBase(T.Generic.SchoolData, [],
 	UIForm("/school-data", "POST", 
-	    UIGroup(T.Generic.SchoolData,
+	    UIGroup(T.Generic.SchoolData, "",
 		...inputs,
 		UIButton(T.Generic.Save, "primary"),
 	    ),

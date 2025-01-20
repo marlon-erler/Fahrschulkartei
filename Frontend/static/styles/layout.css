@@ -48,6 +48,10 @@ label {
     font-size: var(--control-font-size);
 }
 
+.group.pricing-chart label {
+    grid-template-columns: 1fr 150px;
+}
+
 label input {
     max-width: unset;
 }

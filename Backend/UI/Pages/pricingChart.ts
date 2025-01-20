@@ -16,7 +16,7 @@ export default async function PricingChartPage(model: Model, chartId: string): P
 
     return UIBase(T.Generic.PricingCharts, [],
 	UIForm(`/pricing-chart/${chartId}`, "POST", 
-	    UIGroup(formatStringifiedDate(chartId),
+	    UIGroup(formatStringifiedDate(chartId), "pricing-chart",
 		...inputs,
 		UIButton(T.Generic.Save, "primary"),
 	    ),
