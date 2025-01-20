@@ -1,6 +1,6 @@
 import {Generic} from "./translations";
 
-export type UISidebarOption = [string, string, string]
+export type UISidebarOption = [ButtonStyles, string, string, string]
 
 export default function UISidebar(activeButton: string, ...options: UISidebarOption[]): string {
     return `
@@ -13,7 +13,7 @@ export default function UISidebar(activeButton: string, ...options: UISidebarOpt
 	[Generic.PracticalClasses, "/practical-classes"],
     ].map(x => UISidebarNavigationButton(x as [string, string], activeButton)).join("\n")}
     ${options.length > 0 ? "<hr>" : ""}
-    ${options.map((x, i) => UISidebarOptionButton(i, ...x)).join("\n")}
+    ${options.map((x) => UISidebarOptionButton(...x)).join("\n")}
 </div>
 `
 }
@@ -25,9 +25,9 @@ function UISidebarNavigationButton(data: [string, string], activeButton: string)
 `
 }
 
-function UISidebarOptionButton(i: number, label: string, icon: string, href: string): string {
+function UISidebarOptionButton(style: string, label: string, icon: string, href: string): string {
     return `
-    <a class="button ${i == i ? "primary" : "standard"}" href="${href}">
+    <a class="button ${style}" href="${href}">
 	${label}
 	<span class="icon">${icon}</span>
     </a>
