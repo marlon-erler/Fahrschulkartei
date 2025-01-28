@@ -4,5 +4,6 @@ exports.default = UILabel;
 function UILabel(text, element) {
     return `
 <label>${text}${element}</label>
+<hr>
 `;
 }

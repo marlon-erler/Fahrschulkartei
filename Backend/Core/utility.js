@@ -32,15 +32,23 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uuid = uuid;
-exports.formatDate = formatDate;
-exports.formatTime = formatTime;
+exports.handleRequestFormData = handleRequestFormData;
+exports.padZero = padZero;
+exports.stringifyDate = stringifyDate;
+exports.formatStringifiedDate = formatStringifiedDate;
+exports.formatName = formatName;
 exports.generatePricingChartId = generatePricingChartId;
-exports.generateStudentId = generateStudentId;
-exports.generateTheoryClassId = generateTheoryClassId;
-exports.generateTheoryAttendanceId = generateTheoryAttendanceId;
-exports.generatePracticalClassId = generatePracticalClassId;
 const UUID = __importStar(require("uuid"));
 /*
  * General
@@ -49,29 +57,47 @@ function uuid() {
     return UUID.v4();
 }
 /*
+ * Processing
+ */
+function handleRequestFormData(setData, keyMap, entries) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const keys = Object.keys(keyMap);
+        console.log(entries);
+        for (const entry of entries) {
+            const [key, value] = entry;
+            if (keys.indexOf(key) == -1)
+                return;
+            if (typeof value != "string")
+                return;
+            yield setData(key, value);
+        }
+    });
+}
+/*
  * Format
  */
-function formatDate(date) {
-    return date.getUTCFullYear().toString() + (date.getUTCMonth() + 1).toString() + date.getUTCDate().toString();
+function padZero(input, size) {
+    return input.toString().padStart(size, "0");
 }
-function formatTime(time) {
-    return time.getUTCHours().toString() + time.getUTCMinutes().toString();
+function stringifyDate(date) {
+    const parts = [
+        padZero(date.getFullYear(), 4),
+        ...[date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes()].map(x => padZero(x, 2)),
+    ];
+    return parts.join("-");
+}
+function formatStringifiedDate(input) {
+    const [year, month, date, hours, minutes] = input.split("-");
+    return `${year}-${month}-${date} ${hours}:${minutes}`;
+}
+function formatName(lastName, firstName) {
+    if (lastName == "" || firstName == "")
+        return false;
+    return `${lastName}, ${firstName}`;
 }
 /*
  * IDs
  */
-function generatePricingChartId(date, time) {
-    return date + time;
-}
-function generateStudentId(firstName, lastName, dateOfBirth) {
-    return lastName + firstName + dateOfBirth;
-}
-function generateTheoryClassId(date, time) {
-    return date + time;
-}
-function generateTheoryAttendanceId(classId, studentId) {
-    return classId + studentId;
-}
-function generatePracticalClassId(date, time, studentId) {
-    return date + time + studentId;
+function generatePricingChartId() {
+    return stringifyDate(new Date());
 }

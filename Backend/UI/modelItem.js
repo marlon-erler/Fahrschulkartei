@@ -12,17 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = UIModelEntryLabels;
-const input_1 = __importDefault(require("./input"));
-const label_1 = __importDefault(require("./label"));
-function UIModelEntryLabels(getData, translations) {
+exports.default = UIModelItems;
+const item_1 = __importDefault(require("./item"));
+function UIModelItems(getData) {
     return __awaiter(this, void 0, void 0, function* () {
-        return Promise.all(Object.entries(translations).map((entry) => __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            const key = entry[0];
-            const translation = entry[1];
-            const data = (_a = yield getData(key)) !== null && _a !== void 0 ? _a : "";
-            return (0, label_1.default)(translation, (0, input_1.default)(data, key));
-        })));
+        const items = yield getData();
+        return items.map(item => {
+            const [text, href] = item;
+            return (0, item_1.default)(text, href);
+        });
     });
 }

@@ -46,7 +46,6 @@ var StudentKeys;
 (function (StudentKeys) {
     StudentKeys["LastName"] = "last-name";
     StudentKeys["FirstName"] = "first-name";
-    StudentKeys["Index"] = "index";
     StudentKeys["Birthname"] = "birthname";
     StudentKeys["Address"] = "address";
     StudentKeys["DateOfBirth"] = "date-of-birth";

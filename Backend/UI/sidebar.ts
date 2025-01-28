@@ -1,3 +1,4 @@
+import {ButtonStyles} from "../Core/types";
 import {Generic} from "./translations";
 
 export type UISidebarOption = [ButtonStyles, string, string, string]

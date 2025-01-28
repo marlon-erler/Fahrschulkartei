@@ -16,8 +16,8 @@ const os_1 = __importDefault(require("os"));
 const path_1 = __importDefault(require("path"));
 const pfsdb_1 = require("pfsdb");
 const keys_1 = require("./keys");
-const utility_1 = require("../Core/utility");
 const errors_1 = require("../errors");
+const utility_1 = require("../Core/utility");
 const BASE_PATH = path_1.default.join(os_1.default.homedir(), "Fahrschulkartei");
 const SCHOOL_ENTRY_ID = "main";
 class Model {
@@ -36,6 +36,7 @@ class Model {
      */
     setSchoolData(key, value) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(key, value);
             return yield this.schoolDataTable.setFieldValuesForEntry(SCHOOL_ENTRY_ID, key, [value]);
         });
     }
@@ -95,9 +96,9 @@ class Model {
             return (_a = values[0]) !== null && _a !== void 0 ? _a : undefined;
         });
     }
-    getStudentsForIndex(index) {
+    getStudents() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.studentTable.getEntriesByFieldValue(keys_1.StudentKeys.Index, [index]);
+            return yield this.studentTable.getAllEntries();
         });
     }
     /*
@@ -137,7 +138,7 @@ class Model {
     }
     addStudentToTheoryClass(classId, studentId, signature) {
         return __awaiter(this, void 0, void 0, function* () {
-            const attendanceId = (0, utility_1.generateTheoryAttendanceId)(classId, studentId);
+            const attendanceId = (0, utility_1.uuid)();
             yield this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "student", [studentId]);
             yield this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "class", [classId]);
             yield this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "signature", [signature]);

@@ -45,17 +45,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = SchoolDataPage;
-const keys_1 = require("../../Model/keys");
+exports.default = StudentsPage;
+const types_1 = require("../../Core/types");
 const base_1 = __importDefault(require("../base"));
-const button_1 = __importDefault(require("../button"));
-const form_1 = __importDefault(require("../form"));
+const grid_1 = __importDefault(require("../grid"));
 const group_1 = __importDefault(require("../group"));
-const modelEntryLabel_1 = __importDefault(require("../modelEntryLabel"));
+const modelItem_1 = __importDefault(require("../modelItem"));
 const T = __importStar(require("../translations"));
-function SchoolDataPage(model) {
+function StudentsPage(model) {
     return __awaiter(this, void 0, void 0, function* () {
-        const inputs = yield (0, modelEntryLabel_1.default)((key) => model.getSchoolData(keys_1.SchoolKeys[key]), T.SchoolTranslations);
-        return (0, base_1.default)(T.Generic.SchoolData, [], (0, form_1.default)("/school-data", "POST", (0, group_1.default)(T.Generic.SchoolData, "", ...inputs, (0, button_1.default)(T.Generic.Save, "primary"))));
+        const items = yield (0, modelItem_1.default)(() => __awaiter(this, void 0, void 0, function* () {
+            const keys = yield model.getStudents();
+            console.log(keys);
+            return keys
+                .map(key => [key, `/student/${key}`])
+                .sort((a, b) => b[0].localeCompare(a[0]));
+        }));
+        return (0, base_1.default)(T.Generic.Students, [
+            [types_1.ButtonStyles.Primary, T.Generic.RegisterStudent, "add", "/new-student"],
+        ], (0, group_1.default)(T.Generic.Students, "", (0, grid_1.default)(190, ...items)));
     });
 }

@@ -1,4 +1,7 @@
 import * as UUID from "uuid";
+import Model from "../Model/model";
+import {StudentKeys} from "../Model/keys";
+import * as T from "../UI/translations";
 
 /*
  * General
@@ -38,9 +41,27 @@ export function stringifyDate(date: Date) {
     return parts.join("-");
 }
 
-export function formatStringifiedDate(input: string): string {
+export function formatStringifiedDateAndTime(input: string): string {
     const [year, month, date, hours, minutes] = input.split("-");
     return `${year}-${month}-${date} ${hours}:${minutes}`;
+}
+
+export function formatStringifiedDate(input: string): string {
+    const [year, month, date] = input.split("-");
+    return `${year}-${month}-${date}`;
+}
+
+export function formatName(lastName: string, firstName: string): string|false {
+    if (lastName == "" || firstName == "")
+	return false;
+
+    return `${lastName}, ${firstName}`;
+}
+
+export async function getFormattedName(model: Model, studentId: string): Promise<string> {
+    const lastName: string = await model.getStudentData(studentId, StudentKeys.LastName) ?? "";
+    const firstName: string = await model.getStudentData(studentId, StudentKeys.FirstName) ?? "";
+    return formatName(lastName, firstName) || T.Generic.StudentNameUnknown;
 }
 
 /*
@@ -48,20 +69,4 @@ export function formatStringifiedDate(input: string): string {
  */
 export function generatePricingChartId(): string {
     return stringifyDate(new Date());
-}
-
-export function generateStudentId(firstName: string, lastName: string, dateOfBirth: string): string {
-    return lastName + firstName + dateOfBirth;
-}
-
-export function generateTheoryClassId(date: string, time: string): string {
-    return date + time;
-}
-
-export function generateTheoryAttendanceId(classId: string, studentId: string): string {
-    return classId + studentId;
-}
-
-export function generatePracticalClassId(date: string, time: string, studentId: string): string {
-    return date + time + studentId;
 }

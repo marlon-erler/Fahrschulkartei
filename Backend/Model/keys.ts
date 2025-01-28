@@ -42,7 +42,6 @@ export enum PricingChartKeys {
 export enum StudentKeys {
     LastName = "last-name",
     FirstName = "first-name",
-    Index = "index",
     Birthname = "birthname",
     Address = "address",
     DateOfBirth = "date-of-birth",
@@ -59,7 +58,7 @@ export enum StudentKeys {
     ClassesOwned = "classes-owned",
     PartnerSchool = "partner-school",
     PrivacyAccepted = "privacy-accepted",
-    SignatureAccepted = "signature-accepted", // 0, 1 (yes, sign every time), or 2 (reuse signature)
+    SignatureAccepted = "signature-accepted", // 0, 1
     DateOfRegistration = "date-of-registration",
 }
 

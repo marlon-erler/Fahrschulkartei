@@ -45,7 +45,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = SchoolDataPage;
+exports.default = PricingChartPage;
+const utility_1 = require("../../Core/utility");
 const keys_1 = require("../../Model/keys");
 const base_1 = __importDefault(require("../base"));
 const button_1 = __importDefault(require("../button"));
@@ -53,9 +54,9 @@ const form_1 = __importDefault(require("../form"));
 const group_1 = __importDefault(require("../group"));
 const modelEntryLabel_1 = __importDefault(require("../modelEntryLabel"));
 const T = __importStar(require("../translations"));
-function SchoolDataPage(model) {
+function PricingChartPage(model, chartId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const inputs = yield (0, modelEntryLabel_1.default)((key) => model.getSchoolData(keys_1.SchoolKeys[key]), T.SchoolTranslations);
-        return (0, base_1.default)(T.Generic.SchoolData, [], (0, form_1.default)("/school-data", "POST", (0, group_1.default)(T.Generic.SchoolData, "", ...inputs, (0, button_1.default)(T.Generic.Save, "primary"))));
+        const inputs = yield (0, modelEntryLabel_1.default)((key) => model.getPricingChartData(chartId, keys_1.PricingChartKeys[key]), T.PricingChartTranslations);
+        return (0, base_1.default)(T.Generic.PricingCharts, [], (0, form_1.default)(`/pricing-chart/${chartId}`, "POST", (0, group_1.default)((0, utility_1.formatStringifiedDate)(chartId), "pricing-chart", ...inputs, (0, button_1.default)(T.Generic.Save, "primary"))));
     });
 }

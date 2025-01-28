@@ -59,6 +59,9 @@ label {
 .group.pricing-chart label {
     grid-template-columns: 1fr 150px;
 }
+.group.student label {
+    grid-template-columns: 1fr 200px;
+}
 
 label input {
     max-width: unset;

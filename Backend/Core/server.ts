@@ -2,11 +2,12 @@ import Express from "express";
 import BodyParser from "body-parser";
 import Model from "../Model/model";
 import SchoolDataPage from "../UI/Pages/schoolData";
-import {generatePricingChartId, handleRequestFormData} from "./utility";
-import {PricingChartKeys, SchoolKeys} from "../Model/keys";
+import {generatePricingChartId, handleRequestFormData, stringifyDate, uuid} from "./utility";
+import {PricingChartKeys, SchoolKeys, StudentKeys} from "../Model/keys";
 import PricingChartsPage from "../UI/Pages/pricingCharts";
 import PricingChartPage from "../UI/Pages/pricingChart";
 import StudentsPage from "../UI/Pages/students";
+import StudentPage from "../UI/Pages/student";
 
 export default class Server {
     app: Express.Application;
@@ -58,7 +59,6 @@ export default class Server {
 	    res.redirect(`/pricing-chart/${chartId}`);
 	});
 	this.app.post("/pricing-chart/:id", async (req, res) => {
-	    console.log(req.body);
 	    const id = req.params.id;
 	    await handleRequestFormData<typeof PricingChartKeys>(
 		(key, value) => this.model.setPricingChartData(id, PricingChartKeys[key], value),
@@ -72,22 +72,25 @@ export default class Server {
 	this.app.get("/students", async (req, res) => {
 	    res.send(await StudentsPage(this.model));
 	});
-	this.app.get("/student/:id", (req, res) => {
-	    res.send(req.params.id);
+	this.app.get("/student/:id", async (req, res) => {
+	    res.send(await StudentPage(this.model, req.params.id));
 	});
-	this.app.get("/new-student", (req, res) => {
-	    res.send("");
+	this.app.get("/new-student", async (req, res) => {
+	    const newId: string = uuid();
+	    await this.model.setStudentData(newId, StudentKeys.DateOfRegistration, stringifyDate(new Date()));
+	    res.redirect(`/student/${newId}`);
 	});
 	this.app.get("/student-requirements/student/:id", (req, res) => {
 	    res.send(req.params.id);
 	});
-	this.app.post("/student/:id", (req, res) => {
-	    console.log(req.body);
-	    res.send(req.params.id);
-	});
-	this.app.post("/new-student", (req, res) => {
-	    console.log(req.body);
-	    res.send("");
+	this.app.post("/student/:id", async (req, res) => {
+	    const id = req.params.id;
+	    await handleRequestFormData<typeof StudentKeys>(
+		(key, value) => this.model.setStudentData(id, StudentKeys[key], value),
+		StudentKeys, 
+		Object.entries(req.body)
+	    );
+	    res.redirect(`/student/${id}`);
 	});
 	this.app.post("/student-requirement/:id", (req, res) => {
 	    console.log(req.body);
@@ -135,19 +138,19 @@ export default class Server {
 	});
 
 	// Deletion
-	this.app.post("/delete/student/:id", (req, res) => {
+	this.app.get("/delete/student/:id", (req, res) => {
 	    res.send(req.params.id);
 	});
-	this.app.post("/delete/student-requirement/:id", (req, res) => {
+	this.app.get("/delete/student-requirement/:id", (req, res) => {
 	    res.send(req.params.id);
 	});
-	this.app.post("/delete/theory-class/:id", (req, res) => {
+	this.app.get("/delete/theory-class/:id", (req, res) => {
 	    res.send(req.params.id);
 	});
-	this.app.post("/delete/theory-class-attendance/:id", (req, res) => {
+	this.app.get("/delete/theory-class-attendance/:id", (req, res) => {
 	    res.send(req.params.id);
 	});
-	this.app.post("/delete/practical-class/:id", (req, res) => {
+	this.app.get("/delete/practical-class/:id", (req, res) => {
 	    res.send(req.params.id);
 	});
     }

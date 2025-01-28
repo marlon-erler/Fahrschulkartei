@@ -45,7 +45,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = SchoolDataPage;
+exports.default = StudentPage;
+const types_1 = require("../../Core/types");
+const utility_1 = require("../../Core/utility");
 const keys_1 = require("../../Model/keys");
 const base_1 = __importDefault(require("../base"));
 const button_1 = __importDefault(require("../button"));
@@ -53,9 +55,15 @@ const form_1 = __importDefault(require("../form"));
 const group_1 = __importDefault(require("../group"));
 const modelEntryLabel_1 = __importDefault(require("../modelEntryLabel"));
 const T = __importStar(require("../translations"));
-function SchoolDataPage(model) {
+function StudentPage(model, studentId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const inputs = yield (0, modelEntryLabel_1.default)((key) => model.getSchoolData(keys_1.SchoolKeys[key]), T.SchoolTranslations);
-        return (0, base_1.default)(T.Generic.SchoolData, [], (0, form_1.default)("/school-data", "POST", (0, group_1.default)(T.Generic.SchoolData, "", ...inputs, (0, button_1.default)(T.Generic.Save, "primary"))));
+        var _a, _b;
+        const inputs = yield (0, modelEntryLabel_1.default)((key) => model.getStudentData(studentId, keys_1.StudentKeys[key]), T.StudentTranslations);
+        const lastName = (_a = yield model.getStudentData(studentId, keys_1.StudentKeys.LastName)) !== null && _a !== void 0 ? _a : "";
+        const firstName = (_b = yield model.getStudentData(studentId, keys_1.StudentKeys.FirstName)) !== null && _b !== void 0 ? _b : "";
+        const title = (0, utility_1.formatName)(lastName, firstName) || T.Generic.StudentNameUnknown;
+        return (0, base_1.default)(T.Generic.PricingCharts, [
+            [types_1.ButtonStyles.Destructive, T.Generic.Delete, "delete", "/"],
+        ], (0, form_1.default)(`/student/${studentId}`, "POST", (0, group_1.default)(title, "pricing-chart", ...inputs, (0, button_1.default)(T.Generic.Save, "primary"))));
     });
 }

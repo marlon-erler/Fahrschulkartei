@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PricingChartTranslations = exports.SchoolTranslations = exports.Generic = void 0;
+exports.StudentTranslations = exports.PricingChartTranslations = exports.SchoolTranslations = exports.Generic = void 0;
 var Generic;
 (function (Generic) {
     Generic["SchoolData"] = "Schuldaten";
@@ -9,6 +9,10 @@ var Generic;
     Generic["TheoryClasses"] = "Theoriestunden";
     Generic["PracticalClasses"] = "Fahrstunden";
     Generic["Save"] = "Speichern";
+    Generic["Delete"] = "L\u00F6schen";
+    Generic["CreateNew"] = "Erstellen";
+    Generic["RegisterStudent"] = "Registrieren";
+    Generic["StudentNameUnknown"] = "Name Unbekannt";
 })(Generic || (exports.Generic = Generic = {}));
 exports.SchoolTranslations = {
     Name: "Name der Schule",
@@ -29,4 +33,26 @@ exports.PricingChartTranslations = {
     VorstellungTeilVerbindenTrennen: "Vorstellungsentgelt zur Teilpr. (nur Verb. und Trennen)",
     Lernmittel: "Lernmittel",
     Mofa: "Mofa-Ausbildungskurs",
+};
+exports.StudentTranslations = {
+    LastName: "last-name",
+    FirstName: "first-name",
+    Birthname: "birthname",
+    Address: "address",
+    DateOfBirth: "date-of-birth",
+    PlaceOfBirth: "place-of-birth",
+    Phone: "phone",
+    Email: "e-mail",
+    Citizenship: "citizenship",
+    Employer: "employer",
+    ListNumber: "list-number",
+    LicenseNumber: "license-number",
+    EndProbation: "end-probation",
+    Prices: "prices",
+    ClassesRequested: "classes-requested",
+    ClassesOwned: "classes-owned",
+    PartnerSchool: "partner-school",
+    PrivacyAccepted: "privacy-accepted",
+    SignatureAccepted: "signature-accepted", // 0, 1 (yes, sign every time), or 2 (reuse signature)
+    DateOfRegistration: "date-of-registration",
 };

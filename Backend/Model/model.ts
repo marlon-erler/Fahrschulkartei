@@ -3,8 +3,8 @@ import Path from "path";
 
 import {Database, Table} from "pfsdb";
 import {PracticalClassKeys, PricingChartKeys, SchoolKeys, StudentKeys, StudentLegalRequirementKeys, TheoryClassAttendanceKeys, TheoryClassKeys} from "./keys";
-import {generateTheoryAttendanceId} from "../Core/utility";
 import {DeletionErrors} from "../errors";
+import {uuid} from "../Core/utility";
 
 const BASE_PATH = Path.join(Os.homedir(), "Fahrschulkartei");
 const SCHOOL_ENTRY_ID = "main";
@@ -117,7 +117,7 @@ export default class Model {
     }
 
     async addStudentToTheoryClass(classId: string, studentId: string, signature: string): Promise<void> {
-	const attendanceId: string = generateTheoryAttendanceId(classId, studentId);
+	const attendanceId: string = uuid();
 	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "student" as TheoryClassAttendanceKeys, [studentId]);
 	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "class" as TheoryClassAttendanceKeys, [classId]);
 	await this.theoryClassAttendanceTable.setFieldValuesForEntry(attendanceId, "signature" as TheoryClassAttendanceKeys, [signature]);
