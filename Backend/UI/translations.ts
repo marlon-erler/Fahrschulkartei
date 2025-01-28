@@ -9,6 +9,7 @@ export enum Generic {
 
     Save = "Speichern",
     CreateNew = "Erstellen",
+    RegisterStudent = "Registrieren",
 }
 
 export const SchoolTranslations: Record<keyof typeof SchoolKeys, string> = {

@@ -6,6 +6,7 @@ import {generatePricingChartId, handleRequestFormData} from "./utility";
 import {PricingChartKeys, SchoolKeys} from "../Model/keys";
 import PricingChartsPage from "../UI/Pages/pricingCharts";
 import PricingChartPage from "../UI/Pages/pricingChart";
+import StudentsPage from "../UI/Pages/students";
 
 export default class Server {
     app: Express.Application;
@@ -68,14 +69,14 @@ export default class Server {
 	});
 
 	// Students
-	this.app.get("/students", (req, res) => {
-	    res.send("students");
-	});
-	this.app.get("/students/index/:index", (req, res) => {
-	    res.send(req.params.index);
+	this.app.get("/students", async (req, res) => {
+	    res.send(await StudentsPage(this.model));
 	});
 	this.app.get("/student/:id", (req, res) => {
 	    res.send(req.params.id);
+	});
+	this.app.get("/new-student", (req, res) => {
+	    res.send("");
 	});
 	this.app.get("/student-requirements/student/:id", (req, res) => {
 	    res.send(req.params.id);
@@ -83,6 +84,10 @@ export default class Server {
 	this.app.post("/student/:id", (req, res) => {
 	    console.log(req.body);
 	    res.send(req.params.id);
+	});
+	this.app.post("/new-student", (req, res) => {
+	    console.log(req.body);
+	    res.send("");
 	});
 	this.app.post("/student-requirement/:id", (req, res) => {
 	    console.log(req.body);

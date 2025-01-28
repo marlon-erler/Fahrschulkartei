@@ -84,8 +84,8 @@ export default class Model {
 	return values[0] ?? undefined;
     }
 
-    async getStudentsForIndex(index: string): Promise<string[]> {
-	return await this.studentTable.getEntriesByFieldValue(StudentKeys.Index, [index]);
+    async getStudents(): Promise<string[]> {
+	return await this.studentTable.getAllEntries();
     }
 
     /*
