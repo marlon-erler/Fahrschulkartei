@@ -15,6 +15,8 @@ export enum Generic {
 
     RegisterStudent = "Registrieren",
     StudentNameUnknown = "(Name unbekannt)",
+    
+    ShowStudentPrices = "Preistabelle",
 }
 
 export const SchoolTranslations: TranslationDataMap<keyof typeof SchoolKeys> = {

@@ -4,7 +4,6 @@ import Model from "../Model/model";
 import UIInput from "./input";
 import UILabel from "./label";
 import UISelect from "./select";
-import * as T from "./translations";
 
 export default async function UIModelEntryLabels<T>(model: Model, getData: (key: keyof T) => Promise<string|undefined>, dataMap: TranslationDataMap<string>): Promise<string[]> {
     const allEntries: (string|undefined)[] = await Promise.all(
@@ -22,7 +21,9 @@ export default async function UIModelEntryLabels<T>(model: Model, getData: (key:
 		switch (translationData.selectType) {
 		    case SelectTypes.PricingCharts: {
 			const optionIds: string[] = await model.getPricingCharts();
-			options = optionIds.map(x => [x, formatStringifiedDateAndTime(x)]);
+			options = optionIds
+			    .reverse()
+			    .map(x => [x, formatStringifiedDateAndTime(x)]);
 		    }
 		}
 

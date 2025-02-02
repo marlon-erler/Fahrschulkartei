@@ -7,6 +7,7 @@ import UIButton from "../button";
 import UIForm from "../form";
 import UIGroup from "../group";
 import UIModelEntryLabels from "../modelEntryLabel";
+import {UISidebarOption} from "../sidebar";
 import * as T from "../translations";
 
 export default async function StudentPage(model: Model, studentId: string): Promise<string> {
@@ -17,10 +18,18 @@ export default async function StudentPage(model: Model, studentId: string): Prom
     );
 
     const title: string = await getFormattedName(model, studentId);
+    const pricingChartId: string|undefined = await model.getStudentData(studentId, StudentKeys.Prices);
 
-    return UIBase(T.Generic.Students, [
+    const buttons: UISidebarOption[] = [
 	[ButtonStyles.Destructive, T.Generic.Delete, "delete", "/"],
-    ],
+    ]
+    if (pricingChartId != undefined) {
+	buttons.push(
+	    [ButtonStyles.Standard, T.Generic.ShowStudentPrices, "arrow_forward", `/pricing-chart/${pricingChartId}`],
+	);
+    }
+
+    return UIBase(T.Generic.Students, buttons,
 	UIForm(`/student/${studentId}`, "POST", 
 	    UIGroup(title, "student",
 		...inputs,
