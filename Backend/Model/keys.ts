@@ -57,8 +57,6 @@ export enum StudentKeys {
     ClassesRequested = "classes-requested",
     ClassesOwned = "classes-owned",
     PartnerSchool = "partner-school",
-    PrivacyAccepted = "privacy-accepted",
-    SignatureAccepted = "signature-accepted", // 0, 1
     DateOfRegistration = "date-of-registration",
 }
 
