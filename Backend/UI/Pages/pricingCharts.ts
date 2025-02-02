@@ -1,5 +1,5 @@
 import {ButtonStyles} from "../../Core/types";
-import {formatStringifiedDate} from "../../Core/utility";
+import {formatStringifiedDateAndTime} from "../../Core/utility";
 import Model from "../../Model/model";
 import UIBase from "../base";
 import UIGrid from "../grid";
@@ -11,7 +11,7 @@ export default async function PricingChartsPage(model: Model): Promise<string> {
     const items = await UIModelItems(async () => {
 	const keys: string[] = await model.getPricingCharts();
 	return keys
-	    .map(key => [formatStringifiedDate(key), `/pricing-chart/${key}`])
+	    .map(key => [formatStringifiedDateAndTime(key), `/pricing-chart/${key}`])
 	    .sort((a, b) => b[0].localeCompare(a[0])) as [string, string][];
     });
 

@@ -17,11 +17,11 @@ export type Enum<T> = {[key: string]: T};
  */
 export async function handleRequestFormData<T>(setData: (key: keyof T, value: string) => Promise<void>, keyMap: Enum<string>, entries: [string, any][]): Promise<void> {
     const keys: string[] = Object.keys(keyMap);
-    console.log(entries);
     for (const entry of entries) {
 	const [key, value] = entry;
 	if (keys.indexOf(key) == -1) return;
 	if (typeof value != "string") return;
+	console.log("dev", key, value);
 	await setData(key as keyof T, value);
     }
 }

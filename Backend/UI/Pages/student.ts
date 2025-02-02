@@ -11,6 +11,7 @@ import * as T from "../translations";
 
 export default async function StudentPage(model: Model, studentId: string): Promise<string> {
     const inputs = await UIModelEntryLabels<typeof StudentKeys>(
+	model,
 	(key) => model.getStudentData(studentId, StudentKeys[key]),
 	T.StudentTranslations
     );

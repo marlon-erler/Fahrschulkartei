@@ -9,6 +9,7 @@ import * as T from "../translations";
 
 export default async function SchoolDataPage(model: Model): Promise<string> {
     const inputs = await UIModelEntryLabels<typeof SchoolKeys>(
+	model,
 	(key) => model.getSchoolData(SchoolKeys[key]),
 	T.SchoolTranslations
     );

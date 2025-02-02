@@ -4,4 +4,15 @@ export enum ButtonStyles {
     Destructive = "danger",
 }
 
-export type EntryDataMap<T extends string> = Record<T, [string, string, (data: string) => string, boolean?]>;
+export enum SelectTypes {
+    PricingCharts
+}
+export interface TranslationData {
+    translation: string;
+    converter: (data: string) => string;
+    isDisabled?: boolean;
+
+    inputType?: string;
+    selectType?: SelectTypes;
+}
+export type TranslationDataMap<T extends string> = Record<T, TranslationData>;
