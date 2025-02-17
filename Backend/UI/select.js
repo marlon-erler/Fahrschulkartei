@@ -1,4 +1,7 @@
-export default function UISelect(value: string, name: string, ...options: [string, string][]): string {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = UISelect;
+function UISelect(value, name, ...options) {
     return `
 <div class="select-wrapper">
     <select name="${name}">
@@ -6,5 +9,5 @@ export default function UISelect(value: string, name: string, ...options: [strin
     </select>
     <span class="icon">arrow_drop_down</span>
 </div>
-`
+`;
 }
