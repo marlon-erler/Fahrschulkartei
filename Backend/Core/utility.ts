@@ -65,8 +65,12 @@ export async function getFormattedName(model: Model, studentId: string): Promise
 }
 
 /*
- * IDs
+ * Generate
  */
-export function generatePricingChartId(): string {
+export function generateDateBasedId(): string {
     return stringifyDate(new Date());
+}
+
+export function generateDateString(): string {
+    return formatStringifiedDate(stringifyDate(new Date()));
 }

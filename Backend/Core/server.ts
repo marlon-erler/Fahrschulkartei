@@ -2,12 +2,13 @@ import Express from "express";
 import BodyParser from "body-parser";
 import Model from "../Model/model";
 import SchoolDataPage from "../UI/Pages/schoolData";
-import {generatePricingChartId, handleRequestFormData, stringifyDate, uuid} from "./utility";
-import {PricingChartKeys, SchoolKeys, StudentKeys} from "../Model/keys";
+import {generateDateBasedId, generateDateString, handleRequestFormData, stringifyDate, uuid} from "./utility";
+import {PricingChartKeys, SchoolKeys, StudentKeys, TheoryClassKeys} from "../Model/keys";
 import PricingChartsPage from "../UI/Pages/pricingCharts";
 import PricingChartPage from "../UI/Pages/pricingChart";
 import StudentsPage from "../UI/Pages/students";
 import StudentPage from "../UI/Pages/student";
+import theoryClassesPage from "../UI/Pages/theoryClasses";
 
 export default class Server {
     app: Express.Application;
@@ -54,7 +55,7 @@ export default class Server {
 	    res.send(await PricingChartPage(this.model, req.params.id));
 	});
 	this.app.get("/new-pricing-chart", async (req, res) => {
-	    const chartId: string = generatePricingChartId();
+	    const chartId: string = generateDateBasedId();
 	    await this.model.setPricingChartData(chartId, PricingChartKeys.Fahrstunde45Min, "");
 	    res.redirect(`/pricing-chart/${chartId}`);
 	});
@@ -98,14 +99,19 @@ export default class Server {
 	});
 
 	// Theory Classes
-	this.app.get("/theory-classes", (req, res) => {
-	    res.send("theory-classes");
-	});
-	this.app.get("/theory-classes/date/:date", (req, res) => {
-	    res.send(req.params.date);
+	this.app.get("/theory-classes", async (req, res) => {
+	    const queryDate = req.query.date;
+	    const date: string = typeof queryDate == "string" ? req.query.date as string : generateDateString();
+	    res.send(await theoryClassesPage(this.model, date));
 	});
 	this.app.get("/theory-classes/student/:id", (req, res) => {
 	    res.send(req.params.id);
+	});
+	this.app.get("/new-theory-class/:date", async (req, res) => {
+	    const date: string = req.params.date;
+	    const newId: string = uuid();
+	    await this.model.setTheoryClassData(newId, TheoryClassKeys.Date, date)
+	    res.redirect(`/theory-class/${newId}`);
 	});
 	this.app.get("/theory-class/:id", (req, res) => {
 	    res.send(req.params.id);

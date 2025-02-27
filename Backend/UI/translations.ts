@@ -13,6 +13,8 @@ export enum Generic {
     Delete = "Löschen",
     CreateNew = "Erstellen",
 
+    ClassDate = "Datum",
+
     RegisterStudent = "Registrieren",
     StudentNameUnknown = "(Name unbekannt)",
     

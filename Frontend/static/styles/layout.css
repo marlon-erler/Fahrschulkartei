@@ -36,6 +36,16 @@ main {
 /* 
  * Elements
  */
+form.inline {
+    display: flex;
+    gap: var(--gap-in-grid);
+
+    max-width: var(--max-input-width);
+}
+form.inline > input[type="submit"] {
+    flex: 0;
+}
+
 .group {
     display: flex;
     flex-direction: column;
@@ -97,6 +107,7 @@ label input {
  */
 .icon,
 .item::after,
-input[type="checkbox"]::after {
+input[type="checkbox"]::after,
+form.inline input[type="submit"] {
     font-family: icons;
 }
