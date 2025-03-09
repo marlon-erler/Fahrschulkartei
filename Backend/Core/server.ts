@@ -9,6 +9,7 @@ import PricingChartPage from "../UI/Pages/pricingChart";
 import StudentsPage from "../UI/Pages/students";
 import StudentPage from "../UI/Pages/student";
 import theoryClassesPage from "../UI/Pages/theoryClasses";
+import TheoryClassPage from "../UI/Pages/theoryClass";
 
 export default class Server {
     app: Express.Application;
@@ -113,12 +114,17 @@ export default class Server {
 	    await this.model.setTheoryClassData(newId, TheoryClassKeys.Date, date)
 	    res.redirect(`/theory-class/${newId}`);
 	});
-	this.app.get("/theory-class/:id", (req, res) => {
-	    res.send(req.params.id);
+	this.app.get("/theory-class/:id", async (req, res) => {
+	    res.send(await TheoryClassPage(this.model, req.params.id));
 	});
-	this.app.post("/theory-class/:id", (req, res) => {
-	    console.log(req.body);
-	    res.send(req.params.id);
+	this.app.post("/theory-class/:id", async (req, res) => {
+	    const id = req.params.id;
+	    await handleRequestFormData<typeof TheoryClassKeys>(
+		(key, value) => this.model.setTheoryClassData(id, TheoryClassKeys[key], value),
+		TheoryClassKeys, 
+		Object.entries(req.body)
+	    );
+	    res.redirect(`/theory-class/${id}`);
 	});
 	this.app.post("/theory-class-student/:id", (req, res) => {
 	    console.log(req.body);

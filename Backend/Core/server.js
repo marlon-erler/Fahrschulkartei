@@ -21,6 +21,8 @@ const pricingCharts_1 = __importDefault(require("../UI/Pages/pricingCharts"));
 const pricingChart_1 = __importDefault(require("../UI/Pages/pricingChart"));
 const students_1 = __importDefault(require("../UI/Pages/students"));
 const student_1 = __importDefault(require("../UI/Pages/student"));
+const theoryClasses_1 = __importDefault(require("../UI/Pages/theoryClasses"));
+const theoryClass_1 = __importDefault(require("../UI/Pages/theoryClass"));
 class Server {
     constructor(model) {
         this.app = (0, express_1.default)();
@@ -55,7 +57,7 @@ class Server {
             res.send(yield (0, pricingChart_1.default)(this.model, req.params.id));
         }));
         this.app.get("/new-pricing-chart", (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const chartId = (0, utility_1.generatePricingChartId)();
+            const chartId = (0, utility_1.generateDateBasedId)();
             yield this.model.setPricingChartData(chartId, keys_1.PricingChartKeys.Fahrstunde45Min, "");
             res.redirect(`/pricing-chart/${chartId}`);
         }));
@@ -89,22 +91,28 @@ class Server {
             res.send(req.params.id);
         });
         // Theory Classes
-        this.app.get("/theory-classes", (req, res) => {
-            res.send("theory-classes");
-        });
-        this.app.get("/theory-classes/date/:date", (req, res) => {
-            res.send(req.params.date);
-        });
+        this.app.get("/theory-classes", (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const queryDate = req.query.date;
+            const date = typeof queryDate == "string" ? req.query.date : (0, utility_1.generateDateString)();
+            res.send(yield (0, theoryClasses_1.default)(this.model, date));
+        }));
         this.app.get("/theory-classes/student/:id", (req, res) => {
             res.send(req.params.id);
         });
-        this.app.get("/theory-class/:id", (req, res) => {
-            res.send(req.params.id);
-        });
-        this.app.post("/theory-class/:id", (req, res) => {
-            console.log(req.body);
-            res.send(req.params.id);
-        });
+        this.app.get("/new-theory-class/:date", (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const date = req.params.date;
+            const newId = (0, utility_1.uuid)();
+            yield this.model.setTheoryClassData(newId, keys_1.TheoryClassKeys.Date, date);
+            res.redirect(`/theory-class/${newId}`);
+        }));
+        this.app.get("/theory-class/:id", (req, res) => __awaiter(this, void 0, void 0, function* () {
+            res.send(yield (0, theoryClass_1.default)(this.model, req.params.id));
+        }));
+        this.app.post("/theory-class/:id", (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield (0, utility_1.handleRequestFormData)((key, value) => this.model.setTheoryClassData(id, keys_1.TheoryClassKeys[key], value), keys_1.TheoryClassKeys, Object.entries(req.body));
+            res.redirect(`/theory-class/${id}`);
+        }));
         this.app.post("/theory-class-student/:id", (req, res) => {
             console.log(req.body);
             res.send(req.params.id);

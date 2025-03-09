@@ -1,5 +1,5 @@
 import {ButtonStyles} from "../../Core/types";
-import {formatStringifiedDateAndTime} from "../../Core/utility";
+import {formatStringifiedDateAndTime, getFormattedClassDate} from "../../Core/utility";
 import Model from "../../Model/model";
 import UIBase from "../base";
 import UIFormInline from "../formInline";
@@ -9,20 +9,19 @@ import UIInput from "../input";
 import UIModelItems from "../modelItem";
 import * as T from "../translations";
 
-export default async function theoryClassesPage(model: Model, date: string): Promise<string> {
+export default async function theoryClassesPage(model: Model, day: string): Promise<string> {
     const items = await UIModelItems(async () => {
-	const keys: string[] = await model.getTheoryClassesForDay(date);
-	return keys
-	    .map(key => [formatStringifiedDateAndTime(key), `/pricing-chart/${key}`])
-	    .sort((a, b) => b[0].localeCompare(a[0])) as [string, string][];
+	const keys: string[] = await model.getTheoryClassesForDay(day);
+	const mapped = await Promise.all(keys.map(async key => [await getFormattedClassDate(model, key), `/theory-class/${key}`]))
+	return mapped.sort((a, b) => a[0].localeCompare(b[0])) as [string, string][];
     });
 
     return UIBase(T.Generic.TheoryClasses, [
-	[ButtonStyles.Primary, T.Generic.CreateNew, "add", `/new-theory-class/${date}`],
+	[ButtonStyles.Primary, T.Generic.CreateNew, "add", `/new-theory-class/${day}`],
     ],
 	UIGroup(T.Generic.TheoryClasses, "",
 	    UIFormInline("/theory-classes", "GET", T.Generic.ClassDate,
-		UIInput(date, "date", "date"),
+		UIInput(day, "date", "date"),
 	    ),
 	    "<hr>",
 	    UIGrid(190,

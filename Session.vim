@@ -236,10 +236,10 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +0 Backend/UI/Pages/pricingCharts.ts
+badd +0 Backend/Core/server.ts
 argglobal
 %argdel
-edit Backend/UI/Pages/pricingCharts.ts
+edit Backend/Core/server.ts
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -260,8 +260,8 @@ exe 'vert 1resize ' . ((&columns * 31 + 94) / 188)
 exe 'vert 2resize ' . ((&columns * 156 + 94) / 188)
 argglobal
 enew
-file NERD_tree_tab_1
-balt Backend/UI/Pages/pricingCharts.ts
+file NERD_tree_tab_2
+balt Backend/Core/server.ts
 let s:cpo_save=&cpo
 set cpo&vim
 nnoremap <buffer> <silent> <NL> :call nerdtree#ui_glue#invokeKeyMap("<C-j>")
@@ -299,9 +299,9 @@ nnoremap <buffer> <silent> go :call nerdtree#ui_glue#invokeKeyMap("go")
 nnoremap <buffer> <silent> gb :call nerdtree#ui_glue#invokeKeyMap("gb")
 nnoremap <buffer> <silent> gi :call nerdtree#ui_glue#invokeKeyMap("gi")
 nnoremap <buffer> <silent> gs :call nerdtree#ui_glue#invokeKeyMap("gs")
+nnoremap <buffer> <silent> i :call nerdtree#ui_glue#invokeKeyMap("i")
 xmap <buffer> ic <Plug>(GitGutterTextObjectInnerVisual)
 omap <buffer> ic <Plug>(GitGutterTextObjectInnerPending)
-nnoremap <buffer> <silent> i :call nerdtree#ui_glue#invokeKeyMap("i")
 nnoremap <buffer> <silent> m :call nerdtree#ui_glue#invokeKeyMap("m")
 nnoremap <buffer> <silent> o :call nerdtree#ui_glue#invokeKeyMap("o")
 nnoremap <buffer> <silent> p :call nerdtree#ui_glue#invokeKeyMap("p")
@@ -455,7 +455,7 @@ setlocal nowrap
 setlocal wrapmargin=0
 wincmd w
 argglobal
-balt Backend/UI/Pages/pricingCharts.ts
+balt Backend/Core/server.ts
 let s:cpo_save=&cpo
 set cpo&vim
 nmap <buffer> [c <Plug>(GitGutterPrevHunk)
@@ -607,12 +607,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 20) / 41)
+let s:l = 106 - ((25 * winheight(0) + 20) / 41)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 0
+keepjumps 106
+normal! 09|
 wincmd w
 2wincmd w
 exe 'vert 1resize ' . ((&columns * 31 + 94) / 188)
@@ -631,7 +631,6 @@ if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

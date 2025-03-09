@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StudentTranslations = exports.PricingChartTranslations = exports.SchoolTranslations = exports.Generic = void 0;
+exports.TheoryClassTranslations = exports.StudentTranslations = exports.PricingChartTranslations = exports.SchoolTranslations = exports.Generic = void 0;
 const types_1 = require("../Core/types");
 const utility_1 = require("../Core/utility");
 var Generic;
@@ -13,8 +13,10 @@ var Generic;
     Generic["Save"] = "Speichern";
     Generic["Delete"] = "L\u00F6schen";
     Generic["CreateNew"] = "Erstellen";
+    Generic["ClassDate"] = "Datum";
     Generic["RegisterStudent"] = "Registrieren";
     Generic["StudentNameUnknown"] = "(Name unbekannt)";
+    Generic["DateUnknown"] = "(Datum unbekannt)";
     Generic["ShowStudentPrices"] = "Preistabelle";
 })(Generic || (exports.Generic = Generic = {}));
 exports.SchoolTranslations = {
@@ -190,6 +192,38 @@ exports.StudentTranslations = {
     },
     PartnerSchool: {
         translation: "Partnerschule",
+        inputType: "text",
+        converter: x => x,
+    },
+};
+exports.TheoryClassTranslations = {
+    Date: {
+        translation: "Datum",
+        inputType: "date",
+        converter: x => (0, utility_1.formatStringifiedDate)(x),
+    },
+    StartTime: {
+        translation: "Startzeit",
+        inputType: "time",
+        converter: x => x,
+    },
+    Duration: {
+        translation: "Dauer",
+        inputType: "text",
+        converter: x => x,
+    },
+    Type: {
+        translation: "Typ",
+        inputType: "text",
+        converter: x => x,
+    },
+    Unit: {
+        translation: "Einheit",
+        inputType: "text",
+        converter: x => x,
+    },
+    Class: {
+        translation: "Klasse",
         inputType: "text",
         converter: x => x,
     },

@@ -1,6 +1,6 @@
 import {SelectTypes, TranslationDataMap} from "../Core/types";
 import {formatStringifiedDate} from "../Core/utility";
-import {PricingChartKeys, SchoolKeys, StudentKeys} from "../Model/keys";
+import {PricingChartKeys, SchoolKeys, StudentKeys, TheoryClassKeys} from "../Model/keys";
 
 export enum Generic {
     SchoolData = "Schuldaten",    
@@ -17,6 +17,7 @@ export enum Generic {
 
     RegisterStudent = "Registrieren",
     StudentNameUnknown = "(Name unbekannt)",
+    DateUnknown = "(Datum unbekannt)",
     
     ShowStudentPrices = "Preistabelle",
 }
@@ -198,3 +199,36 @@ export const StudentTranslations: TranslationDataMap<keyof typeof StudentKeys> =
 	converter: x => x,
     },
 }
+
+export const TheoryClassTranslations: TranslationDataMap<keyof typeof TheoryClassKeys> = {
+    Date: {
+	translation: "Datum",
+	inputType: "date",
+	converter: x => formatStringifiedDate(x),
+    },
+    StartTime: {
+	translation: "Startzeit",
+	inputType: "time",
+	converter: x => x,
+    },
+    Duration: {
+	translation: "Dauer",
+	inputType: "text",
+	converter: x => x,
+    },
+    Type: {
+	translation: "Typ",
+	inputType: "text",
+	converter: x => x,
+    },
+    Unit: {
+	translation: "Einheit",
+	inputType: "text",
+	converter: x => x,
+    },
+    Class: {
+	translation: "Klasse",
+	inputType: "text",
+	converter: x => x,
+    },
+};
