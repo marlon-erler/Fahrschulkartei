@@ -1,6 +1,6 @@
 import * as UUID from "uuid";
 import Model from "../Model/model";
-import {StudentKeys, TheoryClassKeys} from "../Model/keys";
+import {PracticalClassKeys, StudentKeys, TheoryClassKeys} from "../Model/keys";
 import * as T from "../UI/translations";
 
 /*
@@ -63,16 +63,23 @@ export function formatDateStamp(date: string, time: string): string {
     return `${formattedDate} ${time}`
 }
 
-export async function getFormattedName(model: Model, studentId: string): Promise<string> {
+export async function getStudentName(model: Model, studentId: string): Promise<string> {
     const lastName: string = await model.getStudentData(studentId, StudentKeys.LastName) ?? "";
     const firstName: string = await model.getStudentData(studentId, StudentKeys.FirstName) ?? "";
     return formatName(lastName, firstName) || T.Generic.StudentNameUnknown;
 }
 
-export async function getFormattedClassDate(model: Model, classId: string): Promise<string> {
+export async function getTheoryClassName(model: Model, classId: string): Promise<string> {
     const date: string = await model.getTheoryClassData(classId, TheoryClassKeys.Date) ?? "";
     const time: string = await model.getTheoryClassData(classId, TheoryClassKeys.StartTime) ?? "00:00";
     return formatDateStamp(date, time) || T.Generic.DateUnknown;
+}
+
+export async function getPracticalClassName(model: Model, classId: string): Promise<string> {
+    const date: string = await model.getPracticalClassData(classId, PracticalClassKeys.Date) ?? "";
+    const time: string = await model.getPracticalClassData(classId, PracticalClassKeys.StartTime) ?? "00:00";
+    const student: string = await model.getPracticalClassData(classId, PracticalClassKeys.Student) ?? T.Generic.StudentNameUnknown;
+    return `${formatDateStamp(date, time)}, ${student}`
 }
 
 /*

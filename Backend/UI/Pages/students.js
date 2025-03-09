@@ -57,7 +57,7 @@ function StudentsPage(model) {
     return __awaiter(this, void 0, void 0, function* () {
         const items = yield (0, modelItem_1.default)(() => __awaiter(this, void 0, void 0, function* () {
             const keys = yield model.getStudents();
-            const mapped = yield Promise.all(keys.map((key) => __awaiter(this, void 0, void 0, function* () { return [yield (0, utility_1.getFormattedName)(model, key), `/student/${key}`]; })));
+            const mapped = yield Promise.all(keys.map((key) => __awaiter(this, void 0, void 0, function* () { return [yield (0, utility_1.getStudentName)(model, key), `/student/${key}`]; })));
             return mapped.sort((a, b) => a[0].localeCompare(b[0]));
         }));
         return (0, base_1.default)(T.Generic.Students, [

@@ -23,6 +23,7 @@ const students_1 = __importDefault(require("../UI/Pages/students"));
 const student_1 = __importDefault(require("../UI/Pages/student"));
 const theoryClasses_1 = __importDefault(require("../UI/Pages/theoryClasses"));
 const theoryClass_1 = __importDefault(require("../UI/Pages/theoryClass"));
+const practicalClasses_1 = __importDefault(require("../UI/Pages/practicalClasses"));
 class Server {
     constructor(model) {
         this.app = (0, express_1.default)();
@@ -96,9 +97,6 @@ class Server {
             const date = typeof queryDate == "string" ? req.query.date : (0, utility_1.generateDateString)();
             res.send(yield (0, theoryClasses_1.default)(this.model, date));
         }));
-        this.app.get("/theory-classes/student/:id", (req, res) => {
-            res.send(req.params.id);
-        });
         this.app.get("/new-theory-class/:date", (req, res) => __awaiter(this, void 0, void 0, function* () {
             const date = req.params.date;
             const newId = (0, utility_1.uuid)();
@@ -118,15 +116,17 @@ class Server {
             res.send(req.params.id);
         });
         // Practical Classes
-        this.app.get("/practical-classes", (req, res) => {
-            res.send("practical-classes");
-        });
-        this.app.get("/practical-classes/date/:date", (req, res) => {
-            res.send(req.params.date);
-        });
-        this.app.get("/practical-classes/student/:id", (req, res) => {
-            res.send(req.params.id);
-        });
+        this.app.get("/practical-classes", (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const queryDate = req.query.date;
+            const date = typeof queryDate == "string" ? req.query.date : (0, utility_1.generateDateString)();
+            res.send(yield (0, practicalClasses_1.default)(this.model, date));
+        }));
+        this.app.get("/new-practical-class/:date", (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const date = req.params.date;
+            const newId = (0, utility_1.uuid)();
+            yield this.model.setPracticalClassData(newId, keys_1.PracticalClassKeys.Date, date);
+            res.redirect(`/practical-class/${newId}`);
+        }));
         this.app.get("/practical-class/:id", (req, res) => {
             res.send(req.params.id);
         });

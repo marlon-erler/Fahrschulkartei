@@ -1,5 +1,5 @@
 import {ButtonStyles} from "../../Core/types";
-import {formatStringifiedDateAndTime, getFormattedClassDate} from "../../Core/utility";
+import {getTheoryClassName} from "../../Core/utility";
 import Model from "../../Model/model";
 import UIBase from "../base";
 import UIFormInline from "../formInline";
@@ -12,7 +12,7 @@ import * as T from "../translations";
 export default async function theoryClassesPage(model: Model, day: string): Promise<string> {
     const items = await UIModelItems(async () => {
 	const keys: string[] = await model.getTheoryClassesForDay(day);
-	const mapped = await Promise.all(keys.map(async key => [await getFormattedClassDate(model, key), `/theory-class/${key}`]))
+	const mapped = await Promise.all(keys.map(async key => [await getTheoryClassName(model, key), `/theory-class/${key}`]));
 	return mapped.sort((a, b) => a[0].localeCompare(b[0])) as [string, string][];
     });
 

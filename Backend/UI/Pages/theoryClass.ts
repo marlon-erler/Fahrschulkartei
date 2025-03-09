@@ -1,5 +1,5 @@
 import {ButtonStyles} from "../../Core/types";
-import {getFormattedClassDate} from "../../Core/utility";
+import {getTheoryClassName} from "../../Core/utility";
 import {TheoryClassKeys} from "../../Model/keys";
 import Model from "../../Model/model";
 import UIBase from "../base";
@@ -17,7 +17,7 @@ export default async function TheoryClassPage(model: Model, classId: string): Pr
 	T.TheoryClassTranslations
     );
 
-    const title: string = await getFormattedClassDate(model, classId);
+    const title: string = await getTheoryClassName(model, classId);
 
     const buttons: UISidebarOption[] = [
 	[ButtonStyles.Destructive, T.Generic.Delete, "delete", "/"],

@@ -59,7 +59,7 @@ function theoryClassesPage(model, day) {
     return __awaiter(this, void 0, void 0, function* () {
         const items = yield (0, modelItem_1.default)(() => __awaiter(this, void 0, void 0, function* () {
             const keys = yield model.getTheoryClassesForDay(day);
-            const mapped = yield Promise.all(keys.map((key) => __awaiter(this, void 0, void 0, function* () { return [yield (0, utility_1.getFormattedClassDate)(model, key), `/theory-class/${key}`]; })));
+            const mapped = yield Promise.all(keys.map((key) => __awaiter(this, void 0, void 0, function* () { return [yield (0, utility_1.getTheoryClassName)(model, key), `/theory-class/${key}`]; })));
             return mapped.sort((a, b) => a[0].localeCompare(b[0]));
         }));
         return (0, base_1.default)(T.Generic.TheoryClasses, [

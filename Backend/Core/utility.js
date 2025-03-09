@@ -50,8 +50,9 @@ exports.formatStringifiedDateAndTime = formatStringifiedDateAndTime;
 exports.formatStringifiedDate = formatStringifiedDate;
 exports.formatName = formatName;
 exports.formatDateStamp = formatDateStamp;
-exports.getFormattedName = getFormattedName;
-exports.getFormattedClassDate = getFormattedClassDate;
+exports.getStudentName = getStudentName;
+exports.getTheoryClassName = getTheoryClassName;
+exports.getPracticalClassName = getPracticalClassName;
 exports.generateDateBasedId = generateDateBasedId;
 exports.generateDateString = generateDateString;
 const UUID = __importStar(require("uuid"));
@@ -110,7 +111,7 @@ function formatDateStamp(date, time) {
     const formattedDate = formatStringifiedDate(date);
     return `${formattedDate} ${time}`;
 }
-function getFormattedName(model, studentId) {
+function getStudentName(model, studentId) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b;
         const lastName = (_a = yield model.getStudentData(studentId, keys_1.StudentKeys.LastName)) !== null && _a !== void 0 ? _a : "";
@@ -118,12 +119,17 @@ function getFormattedName(model, studentId) {
         return formatName(lastName, firstName) || T.Generic.StudentNameUnknown;
     });
 }
-function getFormattedClassDate(model, classId) {
+function getTheoryClassName(model, classId) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b;
         const date = (_a = yield model.getTheoryClassData(classId, keys_1.TheoryClassKeys.Date)) !== null && _a !== void 0 ? _a : "";
         const time = (_b = yield model.getTheoryClassData(classId, keys_1.TheoryClassKeys.StartTime)) !== null && _b !== void 0 ? _b : "00:00";
         return formatDateStamp(date, time) || T.Generic.DateUnknown;
+    });
+}
+function getPracticalClassName(date_1) {
+    return __awaiter(this, arguments, void 0, function* (date, time = "00:00", student = T.Generic.StudentNameUnknown) {
+        return `${formatDateStamp(date, time)}, ${student}`;
     });
 }
 /*

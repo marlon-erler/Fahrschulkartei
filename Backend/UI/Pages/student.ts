@@ -1,5 +1,5 @@
 import {ButtonStyles} from "../../Core/types";
-import {getFormattedName} from "../../Core/utility";
+import {getStudentName} from "../../Core/utility";
 import {StudentKeys} from "../../Model/keys";
 import Model from "../../Model/model";
 import UIBase from "../base";
@@ -17,7 +17,7 @@ export default async function StudentPage(model: Model, studentId: string): Prom
 	T.StudentTranslations
     );
 
-    const title: string = await getFormattedName(model, studentId);
+    const title: string = await getStudentName(model, studentId);
     const pricingChartId: string|undefined = await model.getStudentData(studentId, StudentKeys.Prices);
 
     const buttons: UISidebarOption[] = [

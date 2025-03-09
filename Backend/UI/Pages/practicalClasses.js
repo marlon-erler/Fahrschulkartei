@@ -45,27 +45,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = StudentPage;
+exports.default = practicalClassesPage;
 const types_1 = require("../../Core/types");
 const utility_1 = require("../../Core/utility");
 const keys_1 = require("../../Model/keys");
 const base_1 = __importDefault(require("../base"));
-const button_1 = __importDefault(require("../button"));
-const form_1 = __importDefault(require("../form"));
+const formInline_1 = __importDefault(require("../formInline"));
+const grid_1 = __importDefault(require("../grid"));
 const group_1 = __importDefault(require("../group"));
-const modelEntryLabel_1 = __importDefault(require("../modelEntryLabel"));
+const input_1 = __importDefault(require("../input"));
+const modelItem_1 = __importDefault(require("../modelItem"));
 const T = __importStar(require("../translations"));
-function StudentPage(model, studentId) {
+function practicalClassesPage(model, day) {
     return __awaiter(this, void 0, void 0, function* () {
-        const inputs = yield (0, modelEntryLabel_1.default)(model, (key) => model.getStudentData(studentId, keys_1.StudentKeys[key]), T.StudentTranslations);
-        const title = yield (0, utility_1.getStudentName)(model, studentId);
-        const pricingChartId = yield model.getStudentData(studentId, keys_1.StudentKeys.Prices);
-        const buttons = [
-            [types_1.ButtonStyles.Destructive, T.Generic.Delete, "delete", "/"],
-        ];
-        if (pricingChartId != undefined) {
-            buttons.push([types_1.ButtonStyles.Standard, T.Generic.ShowStudentPrices, "arrow_forward", `/pricing-chart/${pricingChartId}`]);
-        }
-        return (0, base_1.default)(T.Generic.Students, buttons, (0, form_1.default)(`/student/${studentId}`, "POST", (0, group_1.default)(title, "student", ...inputs, (0, button_1.default)(T.Generic.Save, "primary"))));
+        const items = yield (0, modelItem_1.default)(() => __awaiter(this, void 0, void 0, function* () {
+            const keys = yield model.getPracticalClassesForDay(day);
+            const mapped = yield Promise.all(keys.map((key) => __awaiter(this, void 0, void 0, function* () {
+                var _a;
+                const date = (_a = yield model.getPracticalClassData(key, keys_1.PracticalClassKeys.Date)) !== null && _a !== void 0 ? _a : "";
+                const time = yield model.getPracticalClassData(key, keys_1.PracticalClassKeys.StartTime);
+                const student = yield model.getPracticalClassData(key, keys_1.PracticalClassKeys.Student);
+                return [yield (0, utility_1.getPracticalClassName)(date, time, student), `/pratcical-class/${key}`];
+            })));
+            return mapped.sort((a, b) => a[0].localeCompare(b[0]));
+        }));
+        return (0, base_1.default)(T.Generic.PracticalClasses, [
+            [types_1.ButtonStyles.Primary, T.Generic.CreateNew, "add", `/new-practical-class/${day}`],
+        ], (0, group_1.default)(T.Generic.PracticalClasses, "", (0, formInline_1.default)("/practical-classes", "GET", T.Generic.ClassDate, (0, input_1.default)(day, "date", "date")), "<hr>", (0, grid_1.default)(190, ...items)));
     });
 }

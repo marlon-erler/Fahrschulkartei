@@ -58,7 +58,7 @@ const T = __importStar(require("../translations"));
 function TheoryClassPage(model, classId) {
     return __awaiter(this, void 0, void 0, function* () {
         const inputs = yield (0, modelEntryLabel_1.default)(model, (key) => model.getTheoryClassData(classId, keys_1.TheoryClassKeys[key]), T.TheoryClassTranslations);
-        const title = yield (0, utility_1.getFormattedClassDate)(model, classId);
+        const title = yield (0, utility_1.getTheoryClassName)(model, classId);
         const buttons = [
             [types_1.ButtonStyles.Destructive, T.Generic.Delete, "delete", "/"],
         ];
